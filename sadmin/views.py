@@ -312,3 +312,12 @@ def slider_image_edit(request,image_id):
 
 def slider_image_status_change(request,image_id):
     pass
+
+
+# video view section
+def video_list(request):
+    # sliders = Slider.objects.all().order_by('slider_status')
+    # context = {
+    #     'sliders' : sliders
+    # }
+    return render(request,'super-admin/video/video-list.html')
