@@ -39,7 +39,8 @@ urlpatterns += [
 # slider image urls section
 urlpatterns += [
     path('slider-image-list',views.slider_image_list,name='slider_image_list'),
-    path('slider-image-add',views.slider_image_list,name='slider_image_list'),
-    path('slider-image-<int:image_id>-edit',views.slider_image_edit,name='slider_image_edit'),
+    path('slider-image-add',views.slider_image_add,name='slider_image_add'),
+    path('slider-image-edit',views.slider_image_edit,name='slider_image_edit'),
     path('slider-image-<int:image_id>-status-change',views.slider_image_status_change,name='slider_image_status_change'),
+    path('slide-get',views.get_slide,name='get_slide')
 ]

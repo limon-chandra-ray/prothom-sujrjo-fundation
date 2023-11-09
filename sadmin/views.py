@@ -300,18 +300,61 @@ def staff_delete(request,staff_id):
     
 
 def slider_image_list(request):
-    sliders = Slider.objects.all().order_by('slider_status')
+    sliders = Slider.objects.all().order_by('-slider_status')
     context = {
         'sliders' : sliders
     }
     return render(request,'super-admin/slider/slider-list.html',context)
 def slider_image_add(request):
-    pass
-def slider_image_edit(request,image_id):
-    pass
+    if request.method == 'POST':
+        slide_title = request.POST['slide_title']
+        slide_description = request.POST['slider_description']
+        slide_image = request.FILES['slide_image']
+        slider = Slider.objects.create(
+            slider_caption = slide_title,
+            slider_image = slide_image,
+            slider_description = slide_description
+        )
+        if slider:
+            messages.add_message(request,messages.SUCCESS,'new slide created successfully')
+            return redirect('sadmin:slider_image_list')
+
+def get_slide(request):
+    if request.method == 'POST':
+        slide_id = request.POST['slide']
+        slide = Slider.objects.filter(id = int(slide_id)).values('id','slider_caption','slider_image','slider_description').first()
+        return JsonResponse({"status":"success",'slide':slide},safe=True)
+def slider_image_edit(request):
+    if request.method == 'POST':
+        slide_id = request.POST['slide']
+        slide_title = request.POST['slide_title']
+        slide_description = request.POST['slider_description']
+        try:
+            slide_image = request.FILES['eidt_slide_image']
+        except:
+            slide_image = None
+        slider = Slider.objects.get(id = int(slide_id))
+        slider.slider_caption = slide_title
+        slider.slider_description = slide_description
+        if slide_image is not None:
+             slider.slider_image = slide_image
+        if slider:
+            slider.save()
+            messages.add_message(request,messages.SUCCESS,' slide image update successfully')
+            return redirect('sadmin:slider_image_list')
+
 
 def slider_image_status_change(request,image_id):
-    pass
+    slide = Slider.objects.get(id = image_id)
+
+    if slide.slider_status == True:
+        slide.slider_status = False
+    else:
+        slide.slider_status = True
+    
+    slide.save()
+    messages.add_message(request,messages.SUCCESS,'slider status change successfully')
+    return redirect("sadmin:slider_image_list")
 
 
 # video view section
