@@ -1,0 +1,116 @@
+{% extends "super-admin/base/index.html" %}
+{% load static %}
+{% block sadminTitle %}
+update children data
+{% endblock sadminTitle %}
+{% block sadminMain %}
+
+<div class="bg-gray-300 px-4 py-5 sm:p-6">
+    <div class="flex justify-center">
+        <div class="mt-3 sm:mt-0 sm:text-left w-2/3 text-black text-[1rem]">
+            <form action="{% url "sadmin:children_info_update_save" child.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="flex gap-x-3">
+                    <div class="py-1 w-2/3">
+                        <label for="f_name" class=" text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Full Name</label>
+                        <input type="text" id="f_name" name="f_name" value="{{child.child_full_name}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                    <div class="py-1 w-1/3">
+                        <label for="user_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Short Name</label>
+                        <input type="text" id="user_name" name="user_name" value="{{child.child_name}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                </div>
+                <div class="flex gap-x-3">
+                    <div class="py-1 w-1/2">
+                        <label for="father_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Father Name</label>
+                        <input type="text" id="father_name" name="father_name" value="{{child.child_father_name}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                    <div class="py-1 w-1/2">
+                        <label for="mother_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Mother Name</label>
+                        <input type="text" id="mother_name" name="mother_name" value="{{child.child_mother_name}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                </div>
+                <div class="flex gap-x-3">
+                    <div class="py-1 w-1/2">
+                        <label for="date_of_birth" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Date Of Birth</label>
+                        <input type="date" id="date_of_birth" value="{{child.child_date_of_birth|date:"Y-m-d"}}" name="date_of_birth" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                    <div class="py-1 w-1/2">
+                        <label for="birth_certificate" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Birth Certificate Number</label>
+                        <input type="text" id="birth_certificate" name="birth_certificate" value="{{child.child_birth_certificate_number}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                </div>
+                <div class="flex gap-x-3">
+                    <div class="py-1 w-1/3">
+                        <label for="child_height" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Height (feet)</label>
+                        <input type="text" id="child_height" name="child_height" value="{{child.child_height}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                    <div class="py-1 w-1/3">
+                        <label for="child_weight" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Weight (kg)</label>
+                        <input type="text" id="child_weight" name="child_weight" value="{{child.child_weight}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    </div>
+                    <div class="py-1 w-1/3">
+                        <label for="child_blood" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Blood Group</label>
+                        <select name="child_blood" id="child_blood" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                            <option >select blood group</option>
+                            {% for blood in blood_group %}
+                                {% if blood == child.child_blood %}
+                                    <option value="{{blood}}" selected>{{blood}}</option>
+                                {% else %}
+                                    <option value="{{blood}}" >{{blood}}</option>
+                                {% endif %}
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+                <div class="py-1">
+                    <label for="pre_address" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Present Address </label>
+                    <textarea rows="4"  name="pre_address" id="pre_address" class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] p-[10px] w-[100%]"
+                        placeholder="village: Kamarhaat ; thana: Chatmohar ; district:Pabna"
+                    >{{child.child_present_address}}</textarea>
+                </div>
+                <div class="py-1">
+                    <label for="par_address" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Parmanent Address </label>
+                    <textarea rows="4"  name="par_address" id="par_address" class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] p-[10px] w-[100%]"
+                    >{{child.child_parmanent_address}}</textarea>
+                </div>
+                <div class="py-1">
+                    <label for="description" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Description </label>
+                    <textarea rows="7"  name="description" id="description" class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] p-[10px] w-[100%]"
+                    >{{child.child_description}}</textarea>
+                </div>
+                
+                <div class="py-1">
+                    <label for="child_image" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">
+                        <div class="flex justify-center w-full rounded border-dashed border-2 border-indigo-600">
+                            <div class="w-1/3 py-5 flex flex-col items-center cursor-pointer">
+                                {% if child.child_image %}
+                                    <img id="uploadImage" src="{{child.child_image.url}}" class="w-full h-[17rem]" alt="">
+                                {% else %}
+                                    <span class="py-5"><i class="fas fa-image text-[5rem] text-stone-950"></i></span>
+                                    <p>Upload a file or drag and drop </p>
+                                    <p>PNG,JPG OR GIF up to 2 MB</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </label>
+                    <input type="file" name="child_image" id="child_image" class="hidden border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                </div>
+                
+                <div class="py-4 flex justify-center space-x-4 items-center">
+                    <button type="submit" class="text-[#000] uppercase bg-green-400 py-2 px-8 hover:bg-[rgba(26,26,26,.9)] hover:text-[#FFCB05] font-semibold">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock sadminMain %}
+{% block sadminScript %}
+<script>
+    $("#child_image").on('change',()=>{
+        var upload_image = document.getElementById('child_image');
+        $("#uploadImage").attr('src',URL.createObjectURL(upload_image.files[0]))
+    })
+</script>
+{% endblock sadminScript %}

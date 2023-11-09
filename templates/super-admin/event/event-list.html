@@ -1,0 +1,86 @@
+{% extends "super-admin/base/index.html" %}
+{% block sadminTitle %}
+Event list
+{% endblock sadminTitle %}
+{% block sadminMain %}
+{% include "super-admin/event/table.html" %}
+{% include "super-admin/event/event-add-modal.html" %}
+{% include "super-admin/event/event-edit-modal.html" %}
+{% endblock sadminMain %}
+{% block sadminScript %}
+<script>
+    $("#addEventButton").on('click',()=>{
+        $("#addEventModal").removeClass('hidden')
+
+    })
+    var closeButton = document.querySelectorAll('#successCloseButton');
+    closeButton.forEach((c_button)=>{
+            c_button.addEventListener('click',()=>{
+                $("#addEventModal").addClass("hidden");
+            })
+    })
+    var closeButton = document.querySelectorAll('#successCloseButton');
+    closeButton.forEach((c_button)=>{
+            c_button.addEventListener('click',()=>{
+                $("#editEventModal").addClass("hidden");
+            })
+    })
+
+    var all_event = document.querySelectorAll('#editEvent');
+    all_event.forEach((event)=>{
+        event.addEventListener('click',()=>{
+            var event_id = event.getAttribute('data-id');
+            
+            $.ajax({
+                type:"POST",
+                url:"{% url 'sadmin:event_get' %}",
+                data:{
+                    event_id:event_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success:(res)=>{
+                    if(res['status'] == 'Success'){
+                        var event_data = res['event'];
+                        $("#event_status_edit").attr('checked',false);
+                        $("#event_type_edit").empty();
+                        $("#updateImageShow").empty();
+                        $("#editEventModal").removeClass('hidden');
+                        $("#event_title_edit").val(event_data['event_title']);
+                        var event_date = new Date(event_data["event_date"]);
+                     
+                        $("#event_date_edit").val(event_date.getFullYear()+'-'+String(event_date.getMonth()+1).padStart(2,'0')+'-'+String(event_date.getDate()).padStart(2,'0'));
+                        $("#event_time_edit").val(event_data['event_time'].slice(0,5))
+                        if(event_data['event_status'] == true){
+                            $("#event_status_edit").attr('checked',true)
+                        }
+                        $("#event_description_edit").val(event_data['event_description'])
+                        var type_text= '';
+                        if(event_data['event_type'] == 'National'){
+                            type_text = '<option value="national" selected>National</option><option value="global">Global</option>'
+                        }else{
+                            type_text = '<option value="national">National</option><option value="global" selected>Global</option>'
+                        }
+                        $("#event_type_edit").append(type_text);
+                        var event_image_show = '';
+                        if(event_data['event_image'] != ' '){
+                            
+                            event_image_show = '<img id="uploadImage" src="/media/'+event_data['event_image']+'" class="w-full h-[8rem]" alt="">';
+              
+                        }else{
+                            event_image_show = '<span class="py-5"><i class="fas fa-image text-[5rem] text-stone-950"></i></span>'+
+                                                '<p>Upload a file or drag and drop </p>'+
+                                                '<p>PNG,JPG OR GIF up to 2 MB</p>';
+                        }
+                        $("#updateImageShow").append(event_image_show);
+                        $('#event_id_edit').val(event_data['id']);
+                    }
+                }
+            })
+        })
+    });
+    $("#event_image_edit").on("change",()=>{
+        var upload_image = document.getElementById('event_image_edit');
+        $("#uploadImage").attr('src',URL.createObjectURL(upload_image.files[0]))
+    })
+</script>
+{% endblock sadminScript %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "super-admin/base/head.html" %}
+    <title>{% block sadminTitle %}{% endblock sadminTitle %}|prothom surjo fundation</title>
+</head>
+<body>
+    <div class="flex h-screen overflow-hidden">
+        {% include "super-admin/base/sidebar.html" %}
+        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+            {% include "super-admin/base/header.html" %}
+            <main class="bg-slate-200 min-h-screen">
+                {% block sadminMain %}
+                {% endblock sadminMain %}
+            </main>
+        </div>
+    </div>
+    
+    {% include "super-admin/base/footer.html" %}
+    {% include "super-admin/base/script.html" %}
+    {% block sadminScript %}{% endblock sadminScript %}
+</body>
+</html>

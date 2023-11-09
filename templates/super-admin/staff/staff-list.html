@@ -1,0 +1,62 @@
+{% extends "super-admin/base/index.html" %}
+{% block sadminTitle %}
+office staff list
+{% endblock sadminTitle %}
+{% block sadminMain %}
+{% include "super-admin/staff/staff-table.html" %}
+{% include "super-admin/staff/staff-edit.html" %}
+{% endblock sadminMain %}
+{% block sadminScript %}
+<script>
+    var all_staff_profile = document.querySelectorAll('#editStaffProfile');
+    all_staff_profile.forEach((staff)=>{
+        staff.addEventListener('click',()=>{
+            var staff_id = staff.getAttribute('data-id');
+            $("#editStaffModal").removeClass('hidden')
+            $.ajax({
+                type:"POST",
+                url:'{% url "sadmin:staff_get" %}',
+                data:{
+                    staff :staff_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success:(res)=>{
+                    var user = res['userstaff'];
+                    var profile = res['staffProfile'];
+                    $("#staffProfile").empty();
+                    if(res['status'] == 'success'){
+    
+                        $("#f_name").val(profile['staff_full_name']);
+                        $("#email_address").val(user['email']);
+                        $("#phone_number").val(profile['staff_phone_number']);
+                        $("#user_name").val(user['user_name']);
+                        $("#user_id").val(user['id']);
+                        var profile_image_show = '';
+                        if(profile['staff_image'] != ' '){
+                            
+                            profile_image_show = '<img id="uploadImage" src="/media/'+profile['staff_image']+'" class="w-full h-[8rem]" alt="">';
+              
+                        }else{
+                            profile_image_show = '<span class="py-5"><i class="fas fa-image text-[5rem] text-stone-950"></i></span>'+
+                                                '<p>Upload a file or drag and drop </p>'+
+                                                '<p>PNG,JPG OR GIF up to 2 MB</p>';
+                        }
+                        $("#staffProfile").append(profile_image_show);
+                    }
+                    console.log(res)
+                }
+            })
+        })
+    })
+    var closeButton = document.querySelectorAll('#successCloseButton');
+    closeButton.forEach((c_button)=>{
+            c_button.addEventListener('click',()=>{
+                $("#editStaffModal").addClass("hidden");
+            })
+    })
+    $("#staff_image").on("change",()=>{
+        var upload_image = document.getElementById('staff_image');
+        $("#uploadImage").attr('src',URL.createObjectURL(upload_image.files[0]))
+    })
+</script>
+{% endblock sadminScript %}

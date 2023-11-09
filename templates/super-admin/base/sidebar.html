@@ -1,0 +1,27 @@
+{% load static %}
+<aside class="absolute left-0 top-0 
+    z-9999 flex h-screen w-72.5 flex-col 
+    overflow-y-hidden bg-black duration-300 
+    ease-linear dark:bg-boxdark lg:static 
+    lg:translate-x-0 -translate-x-full"
+>   
+    <!-- sidebar header -->
+    <div class="flex items-center justify-between gap-2 px-6 py-5 lg:py-6">
+        <a href="{% url 'sadmin:dashboard' %}">
+            <img src="{% static 'image/super-admin/logo.svg' %}" alt="">
+        </a>
+    </div>
+    <!-- sidebar header -->
+    <div class="text-white">
+        <nav>
+            <ul>
+                <li><a href="{% url 'sadmin:dashboard' %}" class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4">DashBoard</a></li>
+                <li><a href="{% url 'sadmin:event_list' %}" class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4">Event</a></li>
+                <li><a href="{% url 'sadmin:children_list' %}" class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4">Children</a></li>
+                <li><a href="#" class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4">Donate</a></li>
+                <li><a href="{% url 'sadmin:office_staff_list' %}" class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4">Office Member</a></li>
+                <li><a href="{% url 'sadmin:slider_image_list' %}" class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4">Slider Image</a></li>
+            </ul>
+        </nav>
+    </div>
+</aside>

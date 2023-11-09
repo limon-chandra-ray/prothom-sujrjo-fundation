@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "base/head.html" %}
+    <title>{% block titleblock %}{% endblock titleblock %}</title>
+</head>
+
+<body>
+    {% include "base/navbar.html" %}
+    {% block mainBody %}{% endblock mainBody %}
+
+    {% include "base/footer.html" %}
+    {% include "base/scripts.html" %}
+    {% block mainScript %}{% endblock mainScript %}
+</body>
+</html>

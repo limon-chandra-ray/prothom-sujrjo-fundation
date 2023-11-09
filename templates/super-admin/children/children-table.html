@@ -1,0 +1,54 @@
+<div class="text-black">
+    <div class="flex justify-between px-6 py-4 bg-slate-400 items-center">
+        <div>
+            <h1 class="text-[1.5rem] text-bold">Children List</h1>
+        </div>
+        <!-- <div>
+            <div>
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search" id="searchText">
+            </div>
+        </div> -->
+        <div>
+            <a href="{% url "sadmin:children_create_view" %}" class="py-2 px-6 bg-blue-500 text-white text-[1.1rem] rounded-md hover:bg-blue-700">Add New</a>
+        </div>
+    </div>
+    <div class="overflow-auto shadow">
+        <table class="w-full">
+            <thead class="bg-blue-500 border-b-2 border-gray-300 text-white">
+              <tr>
+                <th class="p-3">Image</th>
+                <th class="p-3">NickName</th>
+                <th class="p-3">Father Name</th>
+                <th class="p-3">Mother Name</th>
+                <th class="p-3">Date of Birth</th>
+                <th class="p-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for children in childrens %}
+                <tr>
+                    <td class="flex justify-center">
+                        <img src="{{children.child_image.url}}" class="w-[5rem] p-2 rounded-md"  alt="">
+                    </td>
+                    <td class="whitespace-nowrap">{{children.child_name}}</td>
+                    <td class="whitespace-nowrap">{{children.child_father_name}}</td>
+                    <td class="whitespace-nowrap text-center">{{children.child_mother_name}}</td>
+                    <td class="whitespace-nowrap text-center">{{children.child_date_of_birth}}</td>
+                    <td class="whitespace-nowrap">
+                        <div class="flex justify-between px-2">
+                            <a href="#"><i class="far fa-eye text-blue-500"></i></a>
+                            <a href="{% url "sadmin:children_info_update_view" children.id %}"><i class="far fa-edit text-green-500"></i></a>
+                            <a href="{% url "sadmin:children_info_delete" children.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                        </div>
+                        
+                    </td>
+                </tr>
+              {% endfor %}
+              
+              
+            </tbody>
+        </table>
+    </div>
+    
+</div>
