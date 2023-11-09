@@ -7,6 +7,7 @@ class CustomUser(AbstractBaseUser):
         ADMIN = 'ADMIN','Admin'
         DONAR = 'DONAR','Donar'
         STAFF = 'STAFF', 'Staff'
+        CHILD = 'CHILD', 'Child'
     base_role = Role.ADMIN
 
     user_name = models.CharField(max_length=50)
