@@ -42,6 +42,10 @@ def org_new(request):
 def annual_report(request):
     return render (request,'psf/update/annual-report.html')
 
+# gallery view
+def gallery_view(request):
+    return render(request,'psf/gallery/gallery.html')
+
 # donate view
 def donate_view(request):
     return render(request,'psf/donate/donate.html')
