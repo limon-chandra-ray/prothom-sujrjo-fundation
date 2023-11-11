@@ -51,10 +51,13 @@
                             </div>
                         </div>
                         <div>
-                            <a href="{% url "psf:donate_view" %}" class="text-white text-[18px] font-bold border-b-2 border-transparent hover:border-blue-500 hover:transition-colors hover:duration-300 hover:text-[#ffcd05]">Donate</a>
+                            <a href='{% url "psf:gallery_view" %}' class="text-white text-[18px] font-bold border-b-2 border-transparent hover:border-blue-500 hover:transition-colors hover:duration-300 hover:text-[#ffcd05]">Gallery</a>
+                        </div>
+                        <div>
+                            <a href='{% url "psf:donate_view" %}' class="text-white text-[18px] font-bold border-b-2 border-transparent hover:border-blue-500 hover:transition-colors hover:duration-300 hover:text-[#ffcd05]">Donate</a>
                         </div>
                         <div class="flex justify-center items-center">
-                            <a href="{% url "psf:sponsor_view" %}" class="text-[#000] uppercase rounded-lg bg-[#FFCB05] py-1 px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Sponsor A Child</a>
+                            <a href='{% url "psf:sponsor_view" %}' class="text-[#000] uppercase rounded-lg bg-[#FFCB05] py-1 px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Sponsor A Child</a>
                         </div>
                     </div>
                 </div>
@@ -64,7 +67,7 @@
         <div class="lg:hidden block w-full lg:w-auto mx-auto">
             <div class="flex justify-between items-center py-[8px] px-[5px]">
                 <div>
-                    <a href="{% url "psf:home" %}">
+                    <a href='{% url "psf:home" %}'>
                         <h1 class="w-[200px] text-[#ffcd05] text-[24px]">PSF</h1>
                     </a>
                 </div>
@@ -119,11 +122,14 @@
                         </div>
                     </div>
                     <div>
-                        <a href="donate.php" class="">Donate</a>
+                        <a href='{% url "psf:gallery_view" %}' class="">Gallery</a>
+                    </div>
+                    <div>
+                        <a href='{% url "psf:donate_view" %}' class="">Donate</a>
                     </div>
                 </div>
                 <div class="pb-4 flex justify-center items-center">
-                    <a href="Sponsor.php" class="text-[#000] uppercase rounded-lg bg-[#FFCB05] py-2 px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Sponsor A Child</a>
+                    <a href='{% url "psf:sponsor_view" %}' class="text-[#000] uppercase rounded-lg bg-[#FFCB05] py-2 px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Sponsor A Child</a>
                 </div>
             </div>
         </div>

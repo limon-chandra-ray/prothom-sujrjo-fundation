@@ -36,6 +36,24 @@ $('.carousel2').owlCarousel({
         }
     }
 })
+$('.carousel3').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    dots:true,
+    autoplay:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:3
+        }
+    }
+    })
 //navbar show-hide
  // JavaScript code to handle the dropdown functionality 
  const dropdownButton = document.getElementById("dropdownButton");
@@ -51,38 +69,22 @@ $('.carousel2').owlCarousel({
          dropdownMenu.classList.add("hidden");
      }
  });
-//  faq html
-const question1 = document.getElementById("question1");
-const answer1 = document.getElementById("answer1");
-const sign1 = document.getElementById("sign1");
-question1.addEventListener("click", function() {
-    answer1.classList.toggle("hidden");
-    question1.classList.remove("text-[#54595F]");
-    question1.classList.add("text-black");
-    sign1.innerHTML = '<i class="fas fa-minus"></i>';
-    });
-window.addEventListener("click", function(event) {
-        if (!question1.contains(event.target) && !answer1.contains(event.target)) {
-        answer1.classList.add("hidden");
-        question1.classList.remove("text-black");
-        question1.classList.add("text-[#54595F]");
-        sign1.innerHTML = '<i class="fas fa-plus"></i>';
+// Sponser page js
+
+function openLightbox(number) {
+    const question = document.getElementById(`question${number}`);
+    const answer = document.getElementById(`answer${number}`);
+    const sign = document.getElementById(`sign${number}`);
+    answer.classList.toggle("hidden");
+    question.classList.remove("text-[#54595F]");
+    question.classList.add("text-[#FFCB05]");
+    sign.innerHTML = '<i class="fas fa-minus"></i>';
+    window.addEventListener("click", function(event) {
+        if (!question.contains(event.target) && !answer.contains(event.target)) {
+            answer.classList.add("hidden");
+            question.classList.remove("text-[#FFCB05]");
+            question.classList.add("text-[#54595F]");
+            sign.innerHTML = '<i class="fas fa-plus"></i>';
         }
     });
-const question2 = document.getElementById("question2");
-const answer2 = document.getElementById("answer2");
-const sign2 = document.getElementById("sign2");
-question2.addEventListener("click", function() {
-    answer2.classList.toggle("hidden");
-    question2.classList.remove("text-[#54595F]");
-    question2.classList.add("text-black");
-    sign2.innerHTML = '<i class="fas fa-minus"></i>';
-    });
-window.addEventListener("click", function(event) {
-        if (!question2.contains(event.target) && !answer2.contains(event.target)) {
-        answer2.classList.add("hidden");
-        question2.classList.remove("text-black");
-        question2.classList.add("text-[#54595F]");
-        sign2.innerHTML = '<i class="fas fa-plus"></i>';
-        }
-    });
+}

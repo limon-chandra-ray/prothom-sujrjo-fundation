@@ -1,0 +1,62 @@
+{% extends "base/index.html" %}
+{% load static %}
+{% block mainBody %}
+<div class="lg:mx-[200px] mx-[20px] my-[50px]">
+    <div>
+        <h1 class="lg:text-[42px] text-[24px] text-center font-semibold my-4">Exclusive Photo Gallery</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="relative">
+                <img src="{% static 'image/user.JPG' %}" alt="Photo 1" class="w-full h-64 object-cover object-center cursor-pointer"
+                    onclick="openLightbox(`{% static 'image/user.JPG' %}`, 'Description for Photo 1.')">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold">Photo 1</h2>
+                    <p class="text-gray-600">Description for Photo 1.</p>
+                </div>
+            </div>
+
+            <div class="relative">
+                <img src="{% static 'image/user.JPG' %}" alt="Photo 2" class="w-full h-64 object-cover object-center cursor-pointer"
+                    onclick="openLightbox(`{% static 'image/user.JPG' %}`, 'Description for Photo 2')">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold">Photo 2</h2>
+                    <p class="text-gray-600">Description for Photo 2.</p>
+                </div>
+            </div>
+
+            <div class="relative">
+                <img src="{% static 'image/user.JPG' %}" alt="Photo 3" class="w-full h-64 object-cover object-center cursor-pointer"
+                    onclick="openLightbox(`{% static 'image/user.JPG' %}`, 'Description for Photo 3')">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold">Photo 3</h2>
+                    <p class="text-gray-600">Description for Photo 3.</p>
+                </div>
+            </div>
+
+            <!-- Add more photo cards as needed -->
+
+        </div>
+        <div id="lightbox" class="fixed lg:top-9 top-7 left-0 w-screen h-screen bg-black bg-opacity-70 flex justify-center items-center hidden">
+            <div class="bg-white p-4 rounded-lg shadow-lg">
+                <div class="flex justify-end mb-4">
+                    <button id="close-lightbox" class="bg-red-500 text-white mt-4 p-2 rounded hover:bg-red-600" onclick="closeLightbox()">Close</button>
+                </div>
+                <img id="lightbox-image" src="" alt="Lightbox Image" class="w-full h-[70vh]">
+                <!-- <p id="lightbox-description" class="mt-4 text-center text-gray-600"></p> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock mainBody %}
+{% block mainScript %}
+<script>
+    function openLightbox(imageSrc, description) {
+            document.getElementById('lightbox-image').src = imageSrc;
+            // document.getElementById('lightbox-description').textContent = description;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+</script>
+{% endblock mainScript %}
