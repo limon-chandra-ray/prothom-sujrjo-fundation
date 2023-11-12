@@ -53,7 +53,7 @@ $('.carousel3').owlCarousel({
             items:3
         }
     }
-    })
+})
 //navbar show-hide
  // JavaScript code to handle the dropdown functionality 
  const dropdownButton = document.getElementById("dropdownButton");
