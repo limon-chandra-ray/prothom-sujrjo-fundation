@@ -8,11 +8,11 @@
         {% for children in shelter_childrens %}
         <div class="shadow-xl bg-[#ffffff] rounded-md transform transition-transform duration-300 hover:scale-105">
             <div>
-                <a href="#"><img class="h-[250px] lg:h-[450px] w-[100%]" src="{{children.child_image.url}}" alt="">
+                <a href="{% url 'psf:child_details' children.id %}"><img class="h-[250px] lg:h-[450px] w-[100%]" src="{{children.child_image.url}}" alt="">
             </div>
             <div class="px-[20px] text-[#54595F] text-center">
                 <div class="pt-[30px] text-[32px] font-bold">
-                    <a href="#">{{children.child_name}}</a>
+                    <a href="{% url 'psf:child_details' children.id %}">{{children.child_name}}</a>
                 </div>
                 <div class="pb-[20px]">
                     <p>Age: {{children.age}}, Reads in Class VII</p>

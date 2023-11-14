@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from psf.models import ShelterChild
 # Create your views here.
 def home(request):
@@ -7,11 +7,12 @@ def home(request):
 # event show
 def current_event(request):
     return render(request,'psf/event/current-event.html')
-
 def complete_event(request):
     return render(request,'psf/event/complete-event.html')
 def global_giving_event(request):
     return render(request,'psf/event/global-event.html')
+def event_details(request):
+    return render(request,'psf/event/event_details.html')
 
 # shelter home show
 def about_shelter_home(request):
@@ -22,6 +23,12 @@ def children_shelter_home(request):
         'shelter_childrens':shelter_children
     }
     return render(request,'psf/shelter/shelter-home-children.html',context)
+def child_details(request, id):
+    shelter_child = get_object_or_404(ShelterChild, id=id)
+    context = {
+        'shelter_child': shelter_child
+    }
+    return render(request, 'psf/shelter/child_details.html', context)
 
 # abouts us show
 def org_team(request):
