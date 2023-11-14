@@ -1,15 +1,35 @@
 {% extends "base/index.html" %}
 {% block mainBody %}
 <div class="lg:mx-[200px] mx-[20px] my-[100px] flex flex-col justify-center">
+    <div class="my-4">
+        <h1 class="lg:text-[42px] text-[28px] text-center font-semibold mb-2">Contact Us</h1>
+        <p class="lg:text-[24px] text-[20px] text-center font-['adobe-garamond-pro'] text-[rgba(0,0,0,.68)]">Any
+            questions or remarks? Just write us a message!</p><br>
+        <p class="lg:text-[24px] text-[20px] text-center font-['adobe-garamond-pro'] text-[rgba(0,0,0,.68)]">Thank you
+            for your interest in contacting PSF Foundation. We
+            value your feedback, suggestions, and inquiries, and we are committed to providing you with the information
+            and support you need.</p><br>
+        <p class="lg:text-[24px] text-[20px] text-center font-['adobe-garamond-pro'] text-[rgba(0,0,0,.68)]">To contact
+            us, please fill out the form on this page with your
+            name, email address, and message. We will respond to your inquiry as soon as possible, usually within 24-48
+            hours.</p>
+    </div>
     <div class="w-[100%]">
         <div class="w-[100%] pb-[17px] flex lg:flex-row flex-col justify-between">
             <div class="lg:w-[50%] w-[100%]">
-                <img src="https://images.squarespace-cdn.com/content/v1/5d94a2dd7046bc4760c90517/1616334255887-OFJC7PPE9FKCDAFHOMUP/unsplash-image-xG8IQMqMITM.jpg?format=2500w" alt="">
+                <img src="https://images.squarespace-cdn.com/content/v1/5d94a2dd7046bc4760c90517/1616334255887-OFJC7PPE9FKCDAFHOMUP/unsplash-image-xG8IQMqMITM.jpg?format=2500w"
+                    alt="">
             </div>
-            <div class="lg:w-[50%] w-[100%] lg:text-[24px] text-[20px] lg:p-[42px] p-[34.7px] flex flex-col justify-center items-center space-y-2 text-center text-[rgba(0,0,0,.68)]">
-                <p class="text-[#bdbdbd] font-semibold font-['proxima-nova'] leading-[24px] uppercase tracking-[.3rem] mb-2">LET’S CONNECT</p>
-                <p class="font-['adobe-garamond-pro']">If you are looking at this page, you probably share our passion for security studies !</p>
-                <p class="font-['adobe-garamond-pro']">Feel free to discover and discuss our content, and if you have questions, wish to develop a partnership or to become an author, drop us a message.</p>
+            <div
+                class="lg:w-[50%] w-[100%] lg:text-[24px] text-[20px] lg:p-[42px] p-[34.7px] flex flex-col justify-center items-center space-y-2 text-center text-[rgba(0,0,0,.68)]">
+                <p
+                    class="text-[#bdbdbd] font-semibold font-['proxima-nova'] leading-[24px] uppercase tracking-[.3rem] mb-2">
+                    LET’S CONNECT</p>
+                <p class="font-['adobe-garamond-pro']">We also encourage you to follow us on social media for updates on
+                    our programs, events, and initiatives. You can find us on Facebook, Twitter, and Instagram using the
+                    links at the bottom of this page.</p>
+                <p class="font-['adobe-garamond-pro']">Thank you for your interest in PSF Foundation. We look forward
+                    to hearing from you soon!</p>
             </div>
         </div>
         <div class="lg:w-[745px] w-[100%] text-[rgba(26,26,26,.7)]">
@@ -22,30 +42,54 @@
         <form action="#">
             <div class="grid lg:grid-cols-2 lg:gap-4 grid-cols-1">
                 <div class="py-2">
-                    <label for="fname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">First Name <span class="text-[12px]">(required)</span></label>
-                    <input type="text" class="fname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                    <label for="fname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">First
+                        Name <span class="text-[12px]">(required)</span></label>
+                    <input type="text"
+                        class="fname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                        id="fname">
                 </div>
                 <div class="py-2">
-                    <label for="lname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Last Name <span class="text-[12px]">(required)</span></label>
-                    <input type="text" class="lname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                    <label for="lname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Last
+                        Name <span class="text-[12px]">(required)</span></label>
+                    <input type="text"
+                        class="lname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                        id="fname">
                 </div>
             </div>
             <div class="py-2">
-                <label for="email" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Email <span class="text-[12px]">(required)</span></label>
-                <input type="email" class="email border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                <label for="email" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Email
+                    <span class="text-[12px]">(required)</span></label>
+                <input type="email"
+                    class="email border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                    id="fname">
             </div>
             <div class="py-2">
-                <label for="subject" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Subject <span class="text-[12px]">(required)</span></label>
-                <input type="text" class="subject border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                <label for="subject" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Subject
+                    <span class="text-[12px]">(required)</span></label>
+                <input type="text"
+                    class="subject border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                    id="fname">
             </div>
             <div class="py-2">
-                <label for="message" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Message <span class="text-[12px]">(required)</span></label>
-                <textarea name="message" id="message" rows="4" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] w-[100%]"></textarea>
+                <label for="message" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Message
+                    <span class="text-[12px]">(required)</span></label>
+                <textarea name="message" id="message" rows="4"
+                    class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] w-[100%]"></textarea>
             </div>
             <div class="py-4 flex justify-center items-center">
-                <button type="submit" class="text-[#000] uppercase bg-[#FFCB05] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">submit</button>
+                <button type="submit"
+                    class="text-[#000] uppercase bg-[#FFCB05] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">submit</button>
             </div>
         </form>
+    </div>
+    <div class="pb-[17px]">
+        <h1 class="lg:text-[42px] text-[28px] text-center font-semibold my-4">Find Us on Google Map</h1>
+        <div id="map" class="h-[500px] w-[100%] lg:mt-[60px] mt-[30px]">
+            <iframe class="h-[500px] w-[100%]"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15460.031058681341!2d90.40823419401276!3d23.886719717484098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c56240d9f1e7%3A0x4c9515711c4fce41!2sMember%20bari!5e0!3m2!1sen!2sbd!4v1699815228319!5m2!1sen!2sbd"
+                style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
     </div>
 </div>
 {% endblock mainBody %}

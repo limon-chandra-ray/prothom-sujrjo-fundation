@@ -3,6 +3,7 @@ app_name = 'psf'
 from . import views
 urlpatterns = [
     path('',views.home,name='home'),
+    path('gallery',views.gallery_view,name='gallery_view'),
     path('donate',views.donate_view,name='donate_view'),
     path('sponsor',views.sponsor_view,name='sponsor_view')
 ]
