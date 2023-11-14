@@ -6,6 +6,7 @@ class CustomUser(AbstractBaseUser):
     class Role(models.TextChoices):
         ADMIN = 'ADMIN','Admin'
         DONAR = 'DONAR','Donar'
+        SPONSOR = 'SPONSOR','Sponsor'
         STAFF = 'STAFF', 'Staff'
         CHILD = 'CHILD', 'Child'
     base_role = Role.ADMIN

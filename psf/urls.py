@@ -5,7 +5,6 @@ urlpatterns = [
     path('',views.home,name='home'),
     path('gallery',views.gallery_view,name='gallery_view'),
     path('donate',views.donate_view,name='donate_view'),
-    path('sponsor',views.sponsor_view,name='sponsor_view')
 ]
 # event links
 urlpatterns +=[
@@ -33,4 +32,9 @@ urlpatterns +=[
     path('update/blogs',views.blog,name='blog'),
     path('update/annual-reports',views.annual_report,name='annual_report'),
     path('update/org-news',views.org_new,name='org_new'),
+]
+
+urlpatterns +=[
+    path('sponsor',views.sponsor_view,name='sponsor_view'),
+    path('sponsor-save',views.sponsor_request,name='sponsor_request')
 ]

@@ -44,3 +44,9 @@ urlpatterns += [
     path('slider-image-<int:image_id>-status-change',views.slider_image_status_change,name='slider_image_status_change'),
     path('slide-get',views.get_slide,name='get_slide')
 ]
+
+
+# sponsor urls section
+urlpatterns +=[
+    path('sponsor-list',views.child_sponsor_list_view,name='child_sponsor_list_view')
+]

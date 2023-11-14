@@ -1,0 +1,62 @@
+<div class="text-black">
+    <div class="flex justify-between px-6 py-4 bg-slate-400 items-center">
+        <div>
+            <h1 class="text-[1.5rem] text-bold">Sponsor List</h1>
+        </div>
+        <!-- <div>
+            <div>
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search" id="searchText">
+            </div>
+        </div> -->
+        <div>
+            <a href="#" class="py-2 px-6 bg-blue-500 text-white text-[1.1rem] rounded-md hover:bg-blue-700">Add New</a>
+        </div>
+    </div>
+    <div class="overflow-auto shadow">
+        <table class="w-full">
+            <thead class="bg-blue-500 border-b-2 border-gray-300 text-white">
+              <tr>
+                <th class="p-3">User Name</th>
+                <th class="p-3">Full Name</th>
+                <th class="p-3">Phone Number</th>
+                <th class="p-3">Email Address</th>
+                <th class="p-3">Number Of Child</th>
+                <th class="p-3">Status</th>
+                <th class="p-3">Request Date</th>
+                <th class="p-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for sponsor in sponsors %}
+                <tr>
+                    <td class="whitespace-nowrap text-center py-4">{{sponsor.user_name}}</td>
+                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.sponsor_first_name}} {{sponsor.sponsorprofile.sponsor_last_name}}</td>
+                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.sponsor_phone_number}}</td>
+                    <td class="whitespace-nowrap text-center">{{sponsor.email}}</td>
+                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.sponsor_child_request}}</td>
+                    <td class="whitespace-nowrap text-center">
+                        {% if sponsor.is_active == True %}
+                            <span class="bg-green-500 px-3 py-2 rounded-lg">Accepted</span>
+                        {% else %}
+                            <span class="bg-red-500 px-3 py-2 rounded-lg">Requested</span>
+                        {% endif %}
+                    </td>
+                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.created_at|date:"d-M-Y"}}</td>
+                    <td class="whitespace-nowrap">
+                        <div class="flex justify-between px-2">
+                            <a href="#"><i class="far fa-eye text-blue-500"></i></a>
+                            <a href="{% url "sadmin:children_info_update_view" sponsor.id %}"><i class="far fa-edit text-green-500"></i></a>
+                            <a href="{% url "sadmin:children_info_delete" sponsor.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                        </div>
+                        
+                    </td>
+                </tr>
+              {% endfor %}
+              
+              
+            </tbody>
+        </table>
+    </div>
+    
+</div>

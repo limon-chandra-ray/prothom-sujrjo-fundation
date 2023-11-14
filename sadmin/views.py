@@ -4,6 +4,7 @@ from django.contrib import messages
 from psf.models import Event,ShelterChild,Slider
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff
+
 import json
 # Create your views here.
 def dashboard(request):
@@ -364,3 +365,12 @@ def video_list(request):
     #     'sliders' : sliders
     # }
     return render(request,'super-admin/video/video-list.html')
+
+
+
+def child_sponsor_list_view(request):
+    sponsors = CustomUser.objects.filter(role = "SPONSOR").order_by('is_active')
+    context = {
+        'sponsors':sponsors
+    }
+    return render(request,'super-admin/child-sponsor/child-sponsor-list.html',context)
