@@ -50,3 +50,8 @@ urlpatterns += [
 urlpatterns +=[
     path('sponsor-list',views.child_sponsor_list_view,name='child_sponsor_list_view')
 ]
+
+# authentication system section
+urlpatterns +=[
+    path('log-in',views.login_view,name='login_view')
+]

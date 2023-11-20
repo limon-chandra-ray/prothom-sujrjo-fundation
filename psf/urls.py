@@ -1,6 +1,7 @@
 from django.urls import path
 app_name = 'psf'
 from . import views
+from user.views import user_authenticated_check
 urlpatterns = [
     path('',views.home,name='home'),
     path('gallery',views.gallery_view,name='gallery_view'),
@@ -37,4 +38,9 @@ urlpatterns +=[
 urlpatterns +=[
     path('sponsor',views.sponsor_view,name='sponsor_view'),
     path('sponsor-save',views.sponsor_request,name='sponsor_request')
+]
+
+urlpatterns +=[
+    path('login',views.login_view,name='login_view'),
+    path('user-authenticate-check',user_authenticated_check,name='user_authenticated_check')  
 ]

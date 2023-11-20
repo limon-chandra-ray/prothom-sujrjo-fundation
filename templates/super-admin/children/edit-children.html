@@ -11,14 +11,26 @@ update children data
             <form action="{% url "sadmin:children_info_update_save" child.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="flex gap-x-3">
-                    <div class="py-1 w-2/3">
-                        <label for="f_name" class=" text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Full Name</label>
-                        <input type="text" id="f_name" name="f_name" value="{{child.child_full_name}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    <div class="py-1 w-1/2">
+                        <label for="first_name" class=" text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">First Name<span class="text-[12px]">(required)</span></label>
+                        <input type="text" id="first_name" name="first_name" 
+                        {% if child.child_first_name  %}value="{{child.child_first_name}}" {% else %}placeholder="Md. Masud" {% endif %}
+                        class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                     </div>
-                    <div class="py-1 w-1/3">
-                        <label for="user_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Short Name</label>
-                        <input type="text" id="user_name" name="user_name" value="{{child.child_name}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    <div class="py-1 w-1/2">
+                        <label for="last_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Last Name<span class="text-[12px]">(required)</span></label>
+                        <input type="text" id="last_name" name="last_name" 
+                        {% if child.child_last_name  %}value="{{child.child_last_name}}" {% else %}placeholder="Islam" {% endif %}
+                        class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                     </div>
+                </div>
+                <div class="py-1">
+                    <label for="user_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">User Name<span class="text-[12px]">(required)</span></label>
+                    <input type="text" id="user_name" name="user_name" value="{{child.child_user.user_name}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                </div>
+                <div class="py-1">
+                    <label for="phone_number" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Phone Number<span class="text-[12px]">(required)</span></label>
+                    <input type="tel" id="phone_number" name="phone_number" pattern="[0]{1}[1]{1}[0-9]{9}" value="{{child.child_phone_number}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                 </div>
                 <div class="flex gap-x-3">
                     <div class="py-1 w-1/2">

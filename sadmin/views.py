@@ -4,20 +4,26 @@ from django.contrib import messages
 from psf.models import Event,ShelterChild,Slider
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff
-
+from child.models import ChildProfile,Child
+from sadmin.decorators import super_admin_access_only
+from django.contrib.auth.decorators import login_required
 import json
 # Create your views here.
+@login_required()
+@super_admin_access_only()
 def dashboard(request):
     return render(request,'super-admin/dashboard/dashboard.html')
 
 
 # event view section
+@super_admin_access_only()
 def event_list(request):
     events = Event.objects.all()
     context = {
         'events':events
     }
     return render(request,'super-admin/event/event-list.html',context)
+@super_admin_access_only()
 def event_add(request):
     if request.method == 'POST':
         event_title = request.POST['event_title']
@@ -44,6 +50,7 @@ def event_add(request):
             messages.add_message(request,messages.SUCCESS,'new event create successfully')
             return redirect('sadmin:event_list')
 
+@super_admin_access_only()
 def event_get(request):
     if request.method == 'POST':
         event_id = request.POST['event_id']
@@ -57,7 +64,7 @@ def event_get(request):
                                                                      'event_description'
                                                                      ).first()
         return JsonResponse({'status':"Success",'event':event},safe=False)
-
+@super_admin_access_only()
 def event_edit(request):
     if request.method == 'POST':
         event_id_edit = request.POST['event_id_edit']
@@ -91,7 +98,7 @@ def event_edit(request):
     else:
         messages.add_message(request,messages.SUCCESS,'update not successfully')
         return redirect('sadmin:event_list')
-
+@super_admin_access_only()
 def event_delete(request,event_id):
     event = Event.objects.filter(id = event_id).first()
     if event:
@@ -102,77 +109,89 @@ def event_delete(request,event_id):
         messages.add_message(request,messages.WARNING,f'{event.event_title} event not delete')
         return redirect('sadmin:event_list')
 # children view section
+@super_admin_access_only()
 def children_list(request):
-    childrens = ShelterChild.objects.all()
+    childrens = ChildProfile.objects.all()
     context = {
         'childrens':childrens
     }
     return render(request,'super-admin/children/children-list.html',context)
-
+@super_admin_access_only()
 def children_create_view(request):
     blood_group = ['A+','A-','B+','B-','O+','O-','AB+','AB-']
     context = {
         'blood_group':blood_group
     }
     return render(request,'super-admin/children/add-children.html',context)
+@super_admin_access_only()
 def children_save(request):
     if request.method == 'POST':
-        try:
-            f_name = request.POST['f_name']
-            user_name = request.POST['user_name']
-            father_name = request.POST['father_name']
-            mother_name = request.POST['mother_name']
-            date_of_birth = request.POST['date_of_birth']
-            birth_certificate = request.POST['birth_certificate']
-            child_height = request.POST['child_height']
-            child_weight = request.POST['child_weight']
-            child_blood = request.POST['child_blood']
-            child_image = request.FILES['child_image']
-            pre_address = request.POST['pre_address']
-            par_address = request.POST['par_address']
-            description = request.POST['description']
-            check_birth_certificate = ShelterChild.objects.filter(
-                child_birth_certificate_number = birth_certificate
-            ).first()
-            if check_birth_certificate is None:
-                shelter_child = ShelterChild.objects.create(
-                    child_name = user_name,
-                    child_full_name = f_name,
-                    child_image = child_image,
-                    child_father_name = father_name,
-                    child_mother_name = mother_name,
-                    child_date_of_birth = date_of_birth,
-                    child_birth_certificate_number = birth_certificate,
-                    child_blood = child_blood,
-                    child_weight = child_height,
-                    child_height = child_weight,
-                    child_present_address = pre_address,
-                    child_parmanent_address = par_address,
-                    child_description = description 
-                )
-                if shelter_child:
-                    shelter_child.save()
-                    messages.add_message(request,messages.SUCCESS,'new children added successfully')
-                    return redirect('sadmin:children_list')
-            else:
-                messages.add_message(request,messages.WARNING,'birth certificate number all-ready added')
-            
-        except:
-            messages.add_message(request,messages.ERROR,'please fill-up all fields')
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        user_name = request.POST['user_name']
+        father_name = request.POST['father_name']
+        mother_name = request.POST['mother_name']
+        phone_number = request.POST['phone_number']
+        date_of_birth = request.POST['date_of_birth']
+        birth_certificate = request.POST['birth_certificate']
+        child_height = request.POST['child_height']
+        child_weight = request.POST['child_weight']
+        child_blood = request.POST['child_blood']
+        child_image = request.FILES['child_image']
+        pre_address = request.POST['pre_address']
+        par_address = request.POST['par_address']
+        description = request.POST['description']
+        check_birth_certificate = ChildProfile.objects.filter(
+            child_birth_certificate_number = birth_certificate
+        ).count()
+        check_phone_number = ChildProfile.objects.filter(
+            child_phone_number = phone_number
+        ).count()
+        if check_birth_certificate < 1 and check_phone_number < 1:
+            last_child = CustomUser.objects.last()
+            email_address = f"{user_name}{last_child.id}@gmail.com"
+            custom_user= Child.objects.create_child(
+                user_name = user_name,
+                email = email_address,
+                password = phone_number
+            )
+            custom_user.save()
+            child_profile = ChildProfile.objects.filter(child_user=custom_user).first()
+            child_profile.child_first_name = first_name
+            child_profile.child_last_name = last_name
+            child_profile.child_phone_number = phone_number
+            child_profile.child_image = child_image
+            child_profile.child_father_name = father_name
+            child_profile.child_mother_name = mother_name
+            child_profile.child_date_of_birth = date_of_birth
+            child_profile.child_birth_certificate_number = birth_certificate
+            child_profile.child_blood = child_blood
+            child_profile.child_weight = child_weight
+            child_profile.child_height = child_height
+            child_profile.child_present_address = pre_address
+            child_profile.child_parmanent_address = par_address
+            child_profile.child_description = description
+            child_profile.save()
+            messages.add_message(request,messages.SUCCESS,'new children added successfully')
+            return redirect('sadmin:children_list')
+        else:
+            messages.add_message(request,messages.WARNING,'birth certificate number all-ready added')
     return redirect('sadmin:children_create_view')
+@super_admin_access_only()
 def children_info_update_view(request,children_id):
-    update_child = ShelterChild.objects.get(id = children_id)
+    update_child = ChildProfile.objects.get(id = children_id)
     blood_group = ['A+','A-','B+','B-','O+','O-','AB+','AB-']
     context = {
         'child': update_child,
         'blood_group':blood_group
     }
     return render(request,'super-admin/children/edit-children.html',context)
-
+@super_admin_access_only()
 def children_info_update_save(request,children_id):
     if request.method == 'POST':
-        
-        f_name = request.POST['f_name']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        phone_number = request.POST['phone_number']
         user_name = request.POST['user_name']
         father_name = request.POST['father_name']
         mother_name = request.POST['mother_name']
@@ -189,33 +208,39 @@ def children_info_update_save(request,children_id):
         par_address = request.POST['par_address']
         description = request.POST['description']
         
-        shelter_child = ShelterChild.objects.get(id= children_id)
-        shelter_child.child_name = user_name
-        shelter_child.child_full_name = f_name
-        if child_image is not None:
-            shelter_child.child_image = child_image
-        shelter_child.child_father_name = father_name
-        shelter_child.child_mother_name = mother_name
-        shelter_child.child_date_of_birth = date_of_birth
-        shelter_child.child_birth_certificate_number = birth_certificate
-        shelter_child.child_blood = child_blood
-        shelter_child.child_weight = child_height
-        shelter_child.child_height = child_weight
-        shelter_child.child_present_address = pre_address
-        shelter_child.child_parmanent_address = par_address
-        shelter_child.child_description = description 
-        shelter_child.save()
-        
-        messages.add_message(request,messages.SUCCESS,'new children added successfully')
-        return redirect('sadmin:children_list')
-           
+        birth_certificate_check = ChildProfile.objects.exclude(id=children_id).filter(child_birth_certificate_number = birth_certificate).count()
+        if birth_certificate_check < 1:
+            child_profile = ChildProfile.objects.get(id= children_id)
+            child_profile.child_first_name = first_name
+            child_profile.child_last_name = last_name
+            child_profile.child_phone_number = phone_number
+            if child_image is not None:
+                child_profile.child_image = child_image
+            child_profile.child_father_name = father_name
+            child_profile.child_mother_name = mother_name
+            child_profile.child_date_of_birth = date_of_birth
+            child_profile.child_birth_certificate_number = birth_certificate
+            child_profile.child_blood = child_blood
+            child_profile.child_weight = child_height
+            child_profile.child_height = child_weight
+            child_profile.child_present_address = pre_address
+            child_profile.child_parmanent_address = par_address
+            child_profile.child_description = description 
+            child_profile.save()
+            user = CustomUser.objects.get(id = child_profile.child_user.id)
+            user.user_name = user_name
+            user.save()
+            messages.add_message(request,messages.SUCCESS,'new children added successfully')
+            return redirect('sadmin:children_list')
+        else:
+            messages.add_message(request,messages.SUCCESS,'Please add unique birth cirtificate number')
     return redirect('sadmin:children_info_update_view',children_id)
-    
+@super_admin_access_only()    
 def children_info_delete(request,children_id):
-    child_data = ShelterChild.objects.filter(id = children_id).first()
+    child_data = CustomUser.objects.filter(id = children_id).first()
     if child_data:
         child_data.delete()
-        messages.add_message(request,messages.SUCCESS,f'{child_data.child_name} information delete successfully')
+        messages.add_message(request,messages.SUCCESS,f'{child_data.user_name} information delete successfully')
         return redirect('sadmin:children_list')
     
 def children_detail_view(request,children_id):
@@ -374,3 +399,8 @@ def child_sponsor_list_view(request):
         'sponsors':sponsors
     }
     return render(request,'super-admin/child-sponsor/child-sponsor-list.html',context)
+
+
+# authentication system view section
+def login_view(request):
+    return render(request,'super-admin/auth/log-in.html')

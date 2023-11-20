@@ -11,14 +11,22 @@ New Children Create
             <form action="{% url "sadmin:children_save" %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="flex gap-x-3">
-                    <div class="py-1 w-2/3">
-                        <label for="f_name" class=" text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Full Name<span class="text-[12px]">(required)</span></label>
-                        <input type="text" id="f_name" name="f_name" placeholder="Md. Masud Islam" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                    <div class="py-1 w-1/2">
+                        <label for="first_name" class=" text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">First Name<span class="text-[12px]">(required)</span></label>
+                        <input type="text" id="first_name" name="first_name" placeholder="Md. Masud" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                     </div>
-                    <div class="py-1 w-1/3">
-                        <label for="user_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Short Name<span class="text-[12px]">(required)</span></label>
-                        <input type="text" id="user_name" name="user_name" placeholder="Masud" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                    <div class="py-1 w-1/2">
+                        <label for="last_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Last Name<span class="text-[12px]">(required)</span></label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Islam" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                     </div>
+                </div>
+                <div class="py-1">
+                    <label for="user_name" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">User Name<span class="text-[12px]">(required)</span></label>
+                    <input type="text" id="user_name" name="user_name" placeholder="Masud" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                </div>
+                <div class="py-1">
+                    <label for="phone_number" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Phone Number<span class="text-[12px]">(required)</span></label>
+                    <input type="tel" id="phone_number" name="phone_number" pattern="[0]{1}[1]{1}[0-9]{9}" placeholder="01521xxxxxx" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                 </div>
                 <div class="flex gap-x-3">
                     <div class="py-1 w-1/2">
@@ -64,17 +72,19 @@ New Children Create
                         </select>
                     </div>
                 </div>
-
-                <div class="flex gap-x-3 items-end">
-                    <div class="py-1 w-1/2">
-                        <label for="child_image" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Profile Image <span class="text-[12px]">(required)</span></label>
-                        <input type="file" name="child_image" id="child_image" class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
-                    </div>
-                    <div class="py-1 w-1/2 justify-center flex">
-                        <img src="{% static 'image/user.JPG' %}" class="w-[6rem] h-[6rem]" alt="">
-                    </div>
+                <div class="py-1">
+                    <label class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Profile Image <span class="text-[12px]">(required)</span></label>
+                    <label for="child_image" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">
+                        <div class="flex justify-center w-full rounded border-dashed border-2 border-indigo-600">
+                            <div class="w-1/3 py-5 flex flex-col items-center cursor-pointer" id="childImageShow">
+                                <span class="py-5"><i class="fas fa-image text-[5rem] text-stone-950"></i></span>
+                                <p>Upload a file or drag and drop </p>
+                                <p>PNG,JPG OR GIF up to 2 MB</p>
+                            </div>
+                        </div>
+                    </label>
+                    <input type="file" name="child_image" id="child_image" class="hidden border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
                 </div>
-                
                 <div class="py-1">
                     <label for="pre_address" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Present Address <span class="text-[12px]">(required)</span></label>
                     <textarea rows="4"  name="pre_address" id="pre_address" class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] p-[10px] w-[100%]"
@@ -101,3 +111,13 @@ New Children Create
     </div>
 </div>
 {% endblock sadminMain %}
+{% block sadminScript %}
+<script>
+    $("#child_image").on('change',()=>{
+        $("#childImageShow").empty()
+        var upload_image = document.getElementById('child_image');
+        var show_iamge_link = '<img src="'+URL.createObjectURL(upload_image.files[0])+'" class="w-full h-[17rem]" alt="">'
+        $("#childImageShow").append(show_iamge_link)
+    })
+</script>
+{% endblock sadminScript %}

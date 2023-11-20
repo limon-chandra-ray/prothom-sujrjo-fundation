@@ -5,6 +5,9 @@ from user.models import CustomUser
 from datetime import date
 from django.contrib import messages
 # Create your views here.
+def login_view(request):
+    return render(request,'user/login.html')
+
 def home(request):
     slides = Slider.objects.filter(slider_status = True).order_by('-id')
     context = {

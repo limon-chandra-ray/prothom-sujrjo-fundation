@@ -24,24 +24,25 @@ def create_child_profile(sender,instance,created,*args, **kwargs):
 
 class ChildProfile(models.Model):
     child_user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    child_full_name = models.CharField(max_length=250)
-    child_phone_number = models.CharField(max_length=11,unique=True,null=True,blank=True)
+    child_first_name = models.CharField(max_length=250,null=True,blank=True)
+    child_last_name = models.CharField(max_length=250,null=True,blank=True)
+    child_phone_number = models.CharField(max_length=11,null=True,blank=True)
     child_image = models.ImageField(upload_to=f'children/{date.today()}/',null=True,blank=True)
-    child_father_name = models.CharField(max_length=250)
-    child_mother_name = models.CharField(max_length=250)
-    child_date_of_birth = models.DateField()
-    child_birth_certificate_number = models.CharField(max_length=250,unique=True)
-    child_blood = models.CharField(max_length=250)
-    child_weight = models.FloatField()
-    child_height = models.FloatField()
-    child_present_address = models.TextField()
-    child_parmanent_address = models.TextField()
-    child_description = models.TextField()
+    child_father_name = models.CharField(max_length=250,null=True,blank=True)
+    child_mother_name = models.CharField(max_length=250,null=True,blank=True)
+    child_date_of_birth = models.DateField(null=True,blank=True)
+    child_birth_certificate_number = models.CharField(max_length=250,unique=True,null=True,blank=True)
+    child_blood = models.CharField(max_length=250,null=True,blank=True)
+    child_weight = models.FloatField(null=True,blank=True)
+    child_height = models.FloatField(null=True,blank=True)
+    child_present_address = models.TextField(null=True,blank=True)
+    child_parmanent_address = models.TextField(null=True,blank=True)
+    child_description = models.TextField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.staff_user.email
+        return self.child_user.email
     def save(self,*args, **kwargs):
         if self.id:
             existing = get_object_or_404(ChildProfile,id = self.id)
@@ -53,7 +54,6 @@ class ChildProfile(models.Model):
     def child_profile_image_delete_signal(instance,sender,*args, **kwargs):
         for field in instance._meta.fields:
             if field.name == 'child_image':
-
                 logo = getattr(instance,field.name)
                 if logo:
                     logo.delete(save = False)
