@@ -9,6 +9,7 @@ urlpatterns = [
     path('super-admin/',include('sadmin.urls',namespace='sadmin')),
     path('office-staff/',include('staff.urls',namespace='staff')),
     path('sponsor/',include('sponsor.urls',namespace='sponsor')),
+    path('user-authentication/',include('auth_user.urls',namespace='auth_user'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

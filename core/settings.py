@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'staff.apps.StaffConfig',
     'child.apps.ChildConfig',
     'sponsor.apps.SponsorConfig',
+    'auth_user.apps.AuthUserConfig'
 ]
 
 MIDDLEWARE = [

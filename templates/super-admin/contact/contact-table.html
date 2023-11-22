@@ -1,0 +1,60 @@
+<div class="text-black">
+    <div class="flex justify-between px-6 py-4 bg-slate-400">
+        <div>
+            <h1 class="text-[1.5rem] text-bold">Contact List</h1>
+        </div>
+        <!-- <div>
+            <div>
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search" id="searchText">
+            </div>
+        </div> -->
+        <div>
+            <button class="py-2 px-6 bg-blue-500 text-white text-[1.1rem] rounded-md hover:bg-blue-700" id="addEventButton">Add New</button>
+        </div>
+    </div>
+    <div class="overflow-auto shadow">
+        <table class="w-full">
+            <thead class="bg-blue-500 border-b-2 border-gray-300 text-white">
+              <tr>
+                <th class="p-3">Email Address</th>
+                <th class="p-3 text-start">User Name</th>
+                <th class="w-40 p-3">title</th>
+                <th class="w-40 p-3">Message</th>
+                <th class="w-40 p-3">Status</th>
+                <th class="w-40 p-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for contact in user_contacts %}
+                <tr>
+                    <td class="whitespace-nowrap">
+                        {{contact.email}}
+                    </td>
+                    <td class="whitespace-nowrap">{{contact.first_name}} {{contact.first_name}}</td>
+                    <td class="whitespace-nowrap">{{contact.title}}</td>
+                    <td class="whitespace-nowrap">{{contact.contact_message}}</td>
+                    <td class="whitespace-nowrap text-center">
+                        {% if contact.event_status == True %}
+                            <span class="bg-green-500 px-3 py-2 rounded-lg">Active</span>
+                        {% else %}
+                        <span class="bg-red-500 px-3 py-2 rounded-lg">In-Active</span>
+                        {% endif %}
+                    </td>
+                    <td class="whitespace-nowrap">
+                        <div class="flex justify-between px-2">
+                            <a href="#"><i class="far fa-eye text-blue-500"></i></a>
+                            <button id="editEvent" data-id="{{contact.id}}" ><i class="far fa-edit text-green-500"></i></button>
+                            <a href="{% url "sadmin:event_delete" contact.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                        </div>
+                        
+                    </td>
+                </tr>
+              {% endfor %}
+              
+              
+            </tbody>
+        </table>
+    </div>
+    
+</div>

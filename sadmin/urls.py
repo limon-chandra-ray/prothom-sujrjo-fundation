@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 app_name = 'sadmin'
 urlpatterns = [
-    path('',views.dashboard,name='dashboard')
+    path('',views.dashboard,name='dashboard'),
+    
 ]
 
 # event urls section
@@ -53,5 +54,15 @@ urlpatterns +=[
 
 # authentication system section
 urlpatterns +=[
-    path('log-in',views.login_view,name='login_view')
+    path('log-in',views.login_view,name='login_view'),
+    path('change-password',views.change_password_view,name='change_password_view'),
+    path('log-out',views.super_admin_logout,name='super_admin_logout'),
+    path('edit-profile',views.edit_profile_view,name='edit_profile_view'),
+    path('edit-profile-save',views.edit_profile_save,name='edit_profile_save')
+]
+
+# contact us section
+urlpatterns +=[
+    path('contact-information-save',views.contact_information_save,name='contact_information_save'),
+    path('contact-information-list',views.contact_information_list,name='contact_information_list')
 ]

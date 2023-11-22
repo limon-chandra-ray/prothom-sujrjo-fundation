@@ -39,36 +39,41 @@
         </div>
     </div>
     <div class="pb-[17px]">
-        <form action="#">
+        <form action="{% url "sadmin:contact_information_save" %}" method='post'>
+            {% csrf_token %}
             <div class="grid lg:grid-cols-2 lg:gap-4 grid-cols-1">
                 <div class="py-2">
-                    <label for="fname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">First
+                    <label for="first_name" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">First
                         Name <span class="text-[12px]">(required)</span></label>
                     <input type="text"
-                        class="fname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
-                        id="fname">
+                        name='first_name'
+                        class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                        id="first_name">
                 </div>
                 <div class="py-2">
-                    <label for="lname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Last
+                    <label for="last_name" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Last
                         Name <span class="text-[12px]">(required)</span></label>
                     <input type="text"
-                        class="lname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
-                        id="fname">
+                        name='last_name'
+                        class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                        id="last_name">
                 </div>
             </div>
             <div class="py-2">
                 <label for="email" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Email
                     <span class="text-[12px]">(required)</span></label>
                 <input type="email"
-                    class="email border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
-                    id="fname">
+                    name="email"
+                    class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                    id="email">
             </div>
             <div class="py-2">
-                <label for="subject" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Subject
+                <label for="title" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Subject
                     <span class="text-[12px]">(required)</span></label>
                 <input type="text"
-                    class="subject border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
-                    id="fname">
+                    name="title"
+                    class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]"
+                    id="title">
             </div>
             <div class="py-2">
                 <label for="message" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Message

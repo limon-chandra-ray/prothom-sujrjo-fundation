@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib import messages
-from psf.models import Event,ShelterChild,Slider
+from psf.models import Event,ShelterChild,Slider,UserContact
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff
 from child.models import ChildProfile,Child
 from sadmin.decorators import super_admin_access_only
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 import json
 # Create your views here.
 @login_required()
@@ -15,6 +16,30 @@ def dashboard(request):
     return render(request,'super-admin/dashboard/dashboard.html')
 
 
+def change_password_view(request):
+    return render(request,'super-admin/profile/change-password.html')
+
+def super_admin_logout(request):
+    logout(request)
+    return redirect('sadmin:dashboard')
+
+def edit_profile_view(request):
+    return render(request,'super-admin/profile/edit-profile.html')
+def edit_profile_save(request):
+    if request.method == 'POST':
+        user_name = request.POST['user_name']
+        email = request.POST['email']
+        
+        check_email = CustomUser.objects.filter(email = email).exclude(id = request.user.id).count()
+        if check_email == 0:
+            CustomUser.objects.filter(id = request.user.id).update(
+                user_name = user_name,
+                email = email
+            )
+            messages.add_message(request,messages.SUCCESS,'your profile information updated successfully')
+        else:
+            messages.add_message(request,messages.ERROR,'your profile not updated')
+    return redirect('sadmin:edit_profile_view')
 # event view section
 @super_admin_access_only()
 def event_list(request):
@@ -400,7 +425,39 @@ def child_sponsor_list_view(request):
     }
     return render(request,'super-admin/child-sponsor/child-sponsor-list.html',context)
 
+def sponsor_detail_view(request):
+    return render(request,'super-admin/child-sponsor/child-sponsor-detail.html')
 
 # authentication system view section
 def login_view(request):
     return render(request,'super-admin/auth/log-in.html')
+
+
+# contact us section
+def contact_information_save(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        title = request.POST['title']
+        message = request.POST['message']
+
+        user_contact = UserContact.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            email = email,
+            title = title,
+            contact_message = message
+        )
+        user_contact.save()
+        messages.add_message(request,messages.SUCCESS,'your contact information submit successfully')
+    else:
+        messages.add_message(request,messages.WARNING,'your contact information not submited')
+    return redirect("psf:contact_us")
+
+def contact_information_list(request):
+    user_contacts = UserContact.objects.all().order_by("uc_status")
+    context ={
+        'user_contacts': user_contacts
+    }
+    return render(request,'super-admin/contact/contact-list.html',context)
