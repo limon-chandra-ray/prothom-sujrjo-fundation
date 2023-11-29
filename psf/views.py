@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 from django.shortcuts import render,redirect
 from psf.models import ShelterChild,Slider,Event
 from sponsor.models import Sponsor,SponsorProfile
 from user.models import CustomUser
 from datetime import date
 from django.contrib import messages
-=======
 from django.shortcuts import render, get_object_or_404
 from psf.models import ShelterChild
->>>>>>> frontend
 # Create your views here.
 
 def home(request):
@@ -20,16 +17,13 @@ def home(request):
 
 # event show
 def current_event(request):
-<<<<<<< HEAD
     current_events = Event.objects.filter(event_status = True, event_date__gte = date.today()).order_by('-id')
     context = {
         'current_events':current_events
     }
     return render(request,'psf/event/current-event.html',context)
 
-=======
     return render(request,'psf/event/current-event.html')
->>>>>>> frontend
 def complete_event(request):
     complete_events = Event.objects.filter(event_status = False, event_date__lte = date.today()).order_by('-id')
     context = {
@@ -37,17 +31,14 @@ def complete_event(request):
     }
     return render(request,'psf/event/complete-event.html',context)
 def global_giving_event(request):
-<<<<<<< HEAD
     global_events = Event.objects.filter(event_type='global').order_by('-id')
     context = {
         'global_events':global_events
     }
     return render(request,'psf/event/global-event.html',context)
-=======
     return render(request,'psf/event/global-event.html')
 def event_details(request):
     return render(request,'psf/event/event_details.html')
->>>>>>> frontend
 
 # shelter home show
 def about_shelter_home(request):
