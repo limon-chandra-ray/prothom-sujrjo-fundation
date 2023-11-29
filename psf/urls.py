@@ -12,12 +12,14 @@ urlpatterns +=[
     path('current-event',views.current_event,name='current_event'),
     path('complete-event',views.complete_event,name='complete_event'),
     path('global-giving-event',views.global_giving_event,name='global_giving_event'),
+    path('event-details',views.event_details,name='event_details'),
 ]
 
 # shelter home links
 urlpatterns +=[
     path('about-shelter-home',views.about_shelter_home,name='about_shelter_home'),
     path('children-at-our-shelter-home',views.children_shelter_home,name='children_shelter_home'),
+    path('child-details/<int:id>',views.child_details,name='child_details'),
 ]
 
 # about us links

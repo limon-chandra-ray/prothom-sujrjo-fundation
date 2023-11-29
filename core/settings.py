@@ -114,7 +114,6 @@ AUTH_USER_MODEL = "user.CustomUser"
 
 STATIC_URL = 'static/'
 if DEBUG:
-
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR,'static')
     ]
