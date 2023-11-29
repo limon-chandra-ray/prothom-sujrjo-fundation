@@ -1,7 +1,6 @@
 {% extends "base/index.html" %}
 {% block mainBody %}
 <div class="lg:mx-[200px] mx-[20px] my-[100px] grid lg:grid-cols-3 grid-cols-1 gap-8">
-<<<<<<< HEAD
     {% for event in current_events %}
         <div class="shadow-xl bg-[#fff] rounded-md">
             <div>
@@ -14,7 +13,6 @@
                 <div class="py-[20px]">
                     <a href="#" class="text-[#FFCB05]">Read More »</a>
                 </div>
-=======
     <div class="shadow-xl bg-[#fff] rounded-md">
         <div>
             <a href="{% url 'psf:event_details' %}"><img class="h-[250px]" src="https://www.zdnet.com/a/img/resize/ba1b1ab92085d777ab5e313b34c66a94b7aa1236/2023/06/05/79a43eb8-ce38-488c-8cc0-e04699aaca7f/bing.jpg?auto=webp&width=1280" alt=""></a>
@@ -25,7 +23,6 @@
             </div>
             <div class="py-[20px]">
                 <a href="{% url 'psf:event_details' %}" class="text-[#FFCB05]">Read More »</a>
->>>>>>> frontend
             </div>
         </div>
     {% endfor %}
