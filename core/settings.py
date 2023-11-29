@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jlhg3fds3un73eckn8k$@ed^rnwy9@_+c8f)$w(i%7(9(vh=d$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*','psf.bsksbd.org','www.psf.bsksbd.org']
 
 
 # Application definition
@@ -113,9 +113,13 @@ USE_TZ = True
 AUTH_USER_MODEL = "user.CustomUser"
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
-]
+if DEBUG:
+
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR,'static')
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join('media')
