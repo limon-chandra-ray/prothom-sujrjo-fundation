@@ -4,14 +4,14 @@
     {% for event in global_events %}
         <div class="shadow-xl bg-[#fff] rounded-md">
             <div>
-                <a href="#"><img class="h-[250px] w-full" src="{{event.event_image.url}}" alt=""></a>
+                <a href="{% url 'psf:event_details' event.id %}"><img class="h-[250px] w-full" src="{{event.event_image.url}}" alt=""></a>
             </div>
             <div class="px-[20px]">
                 <div class="text-[#54595F] py-[30px] text-[20px] font-bold">
-                    <a href="#">{{event.event_title|truncatechars:150}}</a>
+                    <a href="{% url 'psf:event_details' event.id %}">{{event.event_title|truncatechars:150}}</a>
                 </div>
                 <div class="py-[20px]">
-                    <a href="#" class="text-[#FFCB05]">Read More »</a>
+                    <a href="{% url 'psf:event_details' event.id %}" class="text-[#FFCB05]">Read More »</a>
                 </div>
             </div>
         </div>

@@ -36,9 +36,13 @@ def global_giving_event(request):
         'global_events':global_events
     }
     return render(request,'psf/event/global-event.html',context)
-    return render(request,'psf/event/global-event.html')
-def event_details(request):
-    return render(request,'psf/event/event_details.html')
+
+def event_details(request,event_id):
+    event = Event.objects.get(id = int(event_id))
+    context = {
+        'event':event
+    }
+    return render(request,'psf/event/event_details.html',context)
 
 # shelter home show
 def about_shelter_home(request):

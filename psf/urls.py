@@ -12,7 +12,7 @@ urlpatterns +=[
     path('current-event',views.current_event,name='current_event'),
     path('complete-event',views.complete_event,name='complete_event'),
     path('global-giving-event',views.global_giving_event,name='global_giving_event'),
-    path('event-details',views.event_details,name='event_details'),
+    path('event-details-<int:event_id>',views.event_details,name='event_details'),
 ]
 
 # shelter home links

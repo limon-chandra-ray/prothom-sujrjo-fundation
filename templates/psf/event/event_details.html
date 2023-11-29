@@ -3,13 +3,14 @@
 <main class="text-justify">
     <div class="w-[100%] h-[70vh] relative">
         <img class="w-[100%] h-[100%]"
-            src="https://www.zdnet.com/a/img/resize/ba1b1ab92085d777ab5e313b34c66a94b7aa1236/2023/06/05/79a43eb8-ce38-488c-8cc0-e04699aaca7f/bing.jpg?auto=webp&width=1280"
+            src="{{event.event_image.url}}"
             alt="">
         <div
             class="absolute w-[100%] lg:bottom-[40%] bottom-[40%] text-center flex justify-center items-center text-white">
             <h1
                 class="lg:text-[42px] text-[24px] font-bold font-['Oswald'] text-center bg-opacity-[.6] bg-[#2b2b2b] px-4 py-2">
-                Operation and Management of the Edward M. Kennedy Center</h1>
+                {{event.event_title}}
+                </h1>
         </div>
     </div>
     <div class="lg:mx-[200px] mx-[20px] my-[50px]">
