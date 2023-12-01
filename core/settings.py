@@ -137,10 +137,7 @@ else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = 'media/'
-if DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-else:
-    MEDIA_ROOT = '/home/bsksnjpg/public_html/psf-media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 LOGIN_URL = '/login'
 # Default primary key field type
