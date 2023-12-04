@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jlhg3fds3un73eckn8k$@ed^rnwy9@_+c8f)$w(i%7(9(vh=d$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*','prothomsurjo.org','www.prothomsurjo.org']
 
@@ -70,27 +70,27 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'bsksnjpg_psf',
-#         'USER': 'bsksnjpg_psf',
-#         'PASSWORD': '62fuoh=Y@)X%',
-#         'HOST':'localhost',
-#         'PORT':'3306',
-#         'OPTIONS':{
-#             'charset': 'utf8mb4',
-#             'collation': 'utf8mb4_unicode_ci',
-#         },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bsksnjpg_psf',
+        'USER': 'bsksnjpg_psf',
+        'PASSWORD': '62fuoh=Y@)X%',
+        'HOST':'localhost',
+        'PORT':'3306',
+        'OPTIONS':{
+            'charset': 'utf8mb4',
+            'collation': 'utf8mb4_unicode_ci',
+        },
+    }
+}
 
 
 # Password validation
