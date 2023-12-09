@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib import messages
-from psf.models import Event,ShelterChild,Slider,UserContact
+from psf.models import Event,ShelterChild,Slider,UserContact,GalleryImage
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff
 from child.models import ChildProfile,Child
@@ -9,6 +9,10 @@ from sadmin.decorators import super_admin_access_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 import json
+from PIL import Image
+from datetime import date,datetime
+from django.core.files.storage import FileSystemStorage
+from . import utlis
 # Create your views here.
 @login_required()
 @super_admin_access_only()
@@ -361,14 +365,21 @@ def slider_image_add(request):
         slide_title = request.POST['slide_title']
         slide_description = request.POST['slider_description']
         slide_image = request.FILES['slide_image']
-        slider = Slider.objects.create(
-            slider_caption = slide_title,
-            slider_image = slide_image,
-            slider_description = slide_description
-        )
-        if slider:
-            messages.add_message(request,messages.SUCCESS,'new slide created successfully')
-            return redirect('sadmin:slider_image_list')
+        slide_image_show = Image.open(slide_image)
+        image_width,image_height = slide_image_show.size
+        image_aspect_ratio = image_height/image_width
+        if image_aspect_ratio >= 0.49 and image_aspect_ratio <= 0.59:
+            fs = FileSystemStorage()
+            slider = Slider.objects.create(
+                slider_caption = slide_title,
+                slider_image = fs.save(f'slider/{date.today()}/{utlis.date_to_str()}.webp',slide_image),
+                slider_description = slide_description
+            )
+            if slider:
+                messages.add_message(request,messages.SUCCESS,'new slide created successfully')
+        else:
+            messages.add_message(request,messages.WARNING,'Please slider image size 1220X600 pixels,try again')
+        return redirect('sadmin:slider_image_list')
 
 def get_slide(request):
     if request.method == 'POST':
@@ -388,11 +399,18 @@ def slider_image_edit(request):
         slider.slider_caption = slide_title
         slider.slider_description = slide_description
         if slide_image is not None:
-             slider.slider_image = slide_image
+            slide_image_show = Image.open(slide_image)
+            image_width,image_height = slide_image_show.size
+            image_aspect_ratio = image_height/image_width
+            if image_aspect_ratio >= 0.49 and image_aspect_ratio <= 0.59:
+                fs = FileSystemStorage()
+                slider.slider_image = fs.save(f'slider/{date.today()}/{utlis.date_to_str()}.webp',slide_image)
+            else:
+                messages.add_message(request,messages.WARNING,'Please slider image size 1220X600 pixels,try again')
         if slider:
             slider.save()
             messages.add_message(request,messages.SUCCESS,' slide image update successfully')
-            return redirect('sadmin:slider_image_list')
+    return redirect('sadmin:slider_image_list')
 
 
 def slider_image_status_change(request,image_id):
@@ -406,8 +424,14 @@ def slider_image_status_change(request,image_id):
     slide.save()
     messages.add_message(request,messages.SUCCESS,'slider status change successfully')
     return redirect("sadmin:slider_image_list")
-
-
+def slider_image_delete(request,image_id):
+    slide = Slider.objects.get(id = image_id)
+    if slide:
+        slide.delete()
+        messages.add_message(request,messages.SUCCESS,'Gallery image deleted successfully')
+    else:
+        messages.add_message(request,messages.WARNING,'Gallery image not Found')
+    return redirect('sadmin:slider_image_list')
 # video view section
 def video_list(request):
     # sliders = Slider.objects.all().order_by('slider_status')
@@ -461,3 +485,83 @@ def contact_information_list(request):
         'user_contacts': user_contacts
     }
     return render(request,'super-admin/contact/contact-list.html',context)
+
+# Start Gallery Image section
+def gallery_image_list(request):
+    images = GalleryImage.objects.all().order_by('-image_status')
+    context = {
+        'images':images
+    }
+    return render(request,'super-admin/gallery/gallery-image-list.html',context)
+def gallery_image_save(request):
+    if request.method == 'POST':
+        photo_title = request.POST['photo_title']
+        photo_description = request.POST['photo_description']
+        photo_image = request.FILES['photo_image']
+        image_show = Image.open(photo_image)
+        image_width,image_height = image_show.size
+        fs = FileSystemStorage()
+        if image_width >= 600 and image_height >= 600:
+
+            gallery_image = GalleryImage.objects.create(
+                image_title = photo_title,
+                image_description = photo_description,
+                gallery_image = fs.save('gallery/'+utlis.date_to_str()+".webp",photo_image)
+            )
+            gallery_image.save()
+            messages.add_message(request,messages.SUCCESS,'Gallery new image added successfully')
+        else:
+            messages.add_message(request,messages.WARNING,'please gallery image minimum size 600X600 pixel and try again')
+        return redirect('sadmin:gallery_image_list')
+
+def gallery_image_edit(request):
+    if request.method == 'POST':
+        gallery_image_id = request.POST['gallery_image_id']
+        image_title = request.POST['image_title']
+        image_description = request.POST['image_description']
+        try:
+            gallery_image = request.FILES['eidt_gallery_image']
+        except:
+            gallery_image = None
+        gallery = GalleryImage.objects.get(id = int(gallery_image_id))
+        gallery.image_title = image_title
+        gallery.image_description = image_description
+        if gallery_image is not None:
+            image_show = Image.open(gallery_image)
+            image_width,image_height = image_show.size
+            fs = FileSystemStorage()
+            if image_height >= 600 and image_width >= 600:
+                gallery.gallery_image = fs.save('gallery/'+utlis.date_to_str()+".webp",gallery_image)
+            else:
+                messages.add_message(request,messages.WARNING,'please gallery image minimum size 600X600 pixel and try again')
+        if gallery:
+            gallery.save()
+            messages.add_message(request,messages.SUCCESS,' slide image update successfully')
+            return redirect('sadmin:gallery_image_list')
+
+
+def gallery_image_status_change(request,image_id):
+    image = GalleryImage.objects.get(id = image_id)
+
+    if image.image_status == True:
+        image.image_status = False
+    else:
+        image.image_status = True
+    
+    image.save()
+    messages.add_message(request,messages.SUCCESS,'Gallery image status change successfully')
+    return redirect("sadmin:gallery_image_list")
+def gallery_image_get(request):
+    if request.method == 'POST':
+        image_id = request.POST['image_id']
+        gallery_image = GalleryImage.objects.filter(id = int(image_id)).values('id','image_title','gallery_image','image_description').first()
+        return JsonResponse({"status":"success",'gallery_image':gallery_image},safe=True)
+def gallery_image_delete(request,image_id):
+    gallery_image= GalleryImage.objects.get(id = image_id)
+    if gallery_image:
+        gallery_image.delete()
+        messages.add_message(request,messages.SUCCESS,'Gallery image deleted successfully')
+    else:
+        messages.add_message(request,messages.WARNING,'Gallery image not Found')
+    return redirect('sadmin:gallery_image_list')
+# End Gallery Image section

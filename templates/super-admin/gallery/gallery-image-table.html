@@ -1,16 +1,12 @@
+{% load static %}
 <div class="text-black">
     <div class="flex justify-between px-6 py-4 bg-slate-400">
         <div>
-            <h1 class="text-[1.5rem] text-bold">Slider Image List</h1>
+            <h1 class="text-[1.5rem] text-bold">Gallery Image List</h1>
         </div>
-        <!-- <div>
-            <div>
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search" id="searchText">
-            </div>
-        </div> -->
+
         <div>
-            <button id="sliderImage" class="py-2 px-6 bg-blue-500 text-white text-[1.1rem] rounded-md hover:bg-blue-700">Add New</button>
+            <button id="galleryImage" class="py-2 px-6 bg-blue-500 text-white text-[1.1rem] rounded-md hover:bg-blue-700">Add New</button>
         </div>
     </div>
     <div class="overflow-auto shadow">
@@ -26,35 +22,40 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-                {% for slider in sliders %}
+                {% for image in images %}
                 <tr>
                     <td class="flex justify-center">
-                        <img src="{{slider.slider_image.url}}" class="w-[5rem] p-2 rounded-md"  alt="">
+                        {% if image.gallery_image %}
+                        <img src="{{image.gallery_image.url}}" class="w-[5rem] p-2 rounded-md"  alt="">
+                        {% else %}
+                            <img src="{% static "image/logo.jpg" %}" class="w-[5rem] p-2 rounded-md"  alt="">
+                        {% endif %}
+                       
                     </td>
-                    <td class="whitespace-nowrap">{{slider.slider_caption|truncatechars:80}}</td>
-                    <td class="whitespace-nowrap">{{slider.slider_description|truncatechars:50}}</td>
+                    <td class="whitespace-nowrap">{{image.image_title|truncatechars:80}}</td>
+                    <td class="whitespace-nowrap">{{image.image_description|truncatechars:50}}</td>
                     
                     <td class="whitespace-nowrap">
-                        {% if slider.slider_status == True %}
+                        {% if image.image_status == True %}
                             <span class="bg-green-500 px-3 py-2 rounded-lg">Active</span>
                         {% else %}
                         <span class="bg-red-500 px-3 py-2 rounded-lg">In-Active</span>
                         {% endif %}
                     </td>
                     <td class="whitespace-nowrap">
-                        {{slider.created_at|date:"d-m-Y"}}
+                        {{image.created_at|date:"d-m-Y"}}
                     </td>
                     <td class="whitespace-nowrap">
                         <div class="flex justify-between px-2">
-                            <a href="{% url "sadmin:slider_image_status_change" slider.id %}">
-                                {% if slider.slider_status == True %}
+                            <a href="{% url "sadmin:gallery_image_status_change" image.id %}">
+                                {% if image.image_status == True %}
                                     <i class="far fa-eye-slash text-blue-500"></i>
                                 {% else %}
                                     <i class="far fa-eye text-blue-500"></i>
                                 {% endif %}
                             </a>
-                            <button id="editSliderImage" data-id="{{slider.id}}" ><i class="far fa-edit text-green-500"></i></button>
-                            <a href="{% url "sadmin:slider_image_delete" slider.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                            <button id="editSliderImage" data-id="{{image.id}}" ><i class="far fa-edit text-green-500"></i></button>
+                            <a href="{% url "sadmin:gallery_image_delete" image.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
                         </div>
                         
                     </td>

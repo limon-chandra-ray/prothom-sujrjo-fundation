@@ -2,6 +2,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 from datetime import date,datetime
+from PIL import Image
 # Create your models here.
 class Event(models.Model):
     event_title = models.CharField(max_length=250)
@@ -133,7 +134,37 @@ class Slider(models.Model):
             shelter_child_existing = Slider.objects.get(id = self.id)
             if shelter_child_existing.slider_image != self.slider_image:
                 shelter_child_existing.slider_image.delete(save=False)
+    
         super(Slider,self).save(*args, **kwargs)
+
+        if self.slider_image:
+            image = Image.open(self.slider_image.path)
+            if image.mode not in ("L", "RGB"):
+                image = image.convert("RGB")
+            x = 1220
+            y = 600
+            img_ratio = float(image.size[0]) / image.size[1]
+
+            if x==0.0:
+                x = y * img_ratio
+            elif y==0.0:
+                y = x / img_ratio
+            resize_ratio = float(x) / y
+            x = int(x); y = int(y)
+            if(img_ratio > resize_ratio):
+                output_width = x * image.size[1] / y
+                output_height = image.size[1]
+                originX = image.size[0] / 2 - output_width / 2
+                originY = 0
+            else:
+                output_width = image.size[0]
+                output_height = y * image.size[0] / x
+                originX = 0
+                originY = image.size[1] / 2 - output_height / 2
+            cropBox = (originX, originY, originX + output_width, originY + output_height)
+            image = image.crop(cropBox)
+            image.thumbnail([x, y])
+            image.save(self.slider_image.path)
 
     @receiver(pre_delete,sender="psf.Slider")
     def slider_image_update_signal(sender,instance,*args, **kwargs):
@@ -181,6 +212,34 @@ class UserContact(models.Model):
     def __str__(self):
         return self.title
     
-    
 
+class GalleryImage(models.Model):
+    image_title = models.CharField(max_length=250)
+    image_description = models.TextField(null=True,blank=True)
+    gallery_image = models.ImageField(upload_to='gallery/')
+    image_status = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_at = models.DateTimeField(auto_now=True,null=True,blank=True)
+    def __str__(self):
+        return self.image_title
+    
+    def save(self,*args, **kwargs):
+        if self.id:
+            gallery_image_existing = GalleryImage.objects.get(id = self.id)
+            if gallery_image_existing.gallery_image != self.gallery_image:
+                gallery_image_existing.gallery_image.delete(save=False)
+    
+        super(GalleryImage,self).save(*args, **kwargs)
+        if self.gallery_image:
+            image = Image.open(self.gallery_image.path)
+            image.thumbnail((600,600),Image.BICUBIC)
+            image.save(self.gallery_image.path)
+
+    @receiver(pre_delete,sender="psf.GalleryImage")
+    def gallery_image_update_signal(sender,instance,*args, **kwargs):
+        for field in instance._meta.fields:
+            if field.name == 'gallery_image':
+                p_image = getattr(instance,field.name)
+                if p_image:
+                    p_image.delete(save=False)
     
