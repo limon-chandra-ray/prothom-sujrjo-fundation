@@ -372,7 +372,7 @@ def slider_image_add(request):
             fs = FileSystemStorage()
             slider = Slider.objects.create(
                 slider_caption = slide_title,
-                slider_image = fs.save(f'slider/{date.today()}/{utlis.date_to_str()}.webp',slide_image),
+                slider_image = fs.save(f'slider/{date.today()}/image-{utlis.date_to_str()}.jpg',slide_image),
                 slider_description = slide_description
             )
             if slider:
@@ -404,7 +404,7 @@ def slider_image_edit(request):
             image_aspect_ratio = image_height/image_width
             if image_aspect_ratio >= 0.49 and image_aspect_ratio <= 0.59:
                 fs = FileSystemStorage()
-                slider.slider_image = fs.save(f'slider/{date.today()}/{utlis.date_to_str()}.webp',slide_image)
+                slider.slider_image = fs.save(f'slider/{date.today()}/image-{utlis.date_to_str()}.jpg',slide_image)
             else:
                 messages.add_message(request,messages.WARNING,'Please slider image size 1220X600 pixels,try again')
         if slider:
