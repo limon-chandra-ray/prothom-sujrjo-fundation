@@ -43,7 +43,8 @@ urlpatterns += [
     path('slider-image-add',views.slider_image_add,name='slider_image_add'),
     path('slider-image-edit',views.slider_image_edit,name='slider_image_edit'),
     path('slider-image-<int:image_id>-status-change',views.slider_image_status_change,name='slider_image_status_change'),
-    path('slide-get',views.get_slide,name='get_slide')
+    path('slide-get',views.get_slide,name='get_slide'),
+    path('slid-image-<int:image_id>-delete',views.slider_image_delete,name='slider_image_delete')
 ]
 
 
@@ -65,4 +66,15 @@ urlpatterns +=[
 urlpatterns +=[
     path('contact-information-save',views.contact_information_save,name='contact_information_save'),
     path('contact-information-list',views.contact_information_list,name='contact_information_list')
+]
+
+#Gallery Image section
+urlpatterns +=[
+    path('gallery-image-list',views.gallery_image_list,name='gallery_image_list'),
+    path('gallery-image-add',views.gallery_image_save,name='gallery_image_save'),
+    path('gallery-image-<int:image_id>-status-change',views.gallery_image_status_change,name='gallery_image_status_change'),
+    path('gallery-edit-image-get',views.gallery_image_get,name='gallery_image_get'),
+    path('gallery-image-edit',views.gallery_image_edit,name='gallery_image_edit'),
+    path('gallery-image-<int:image_id>-delete',views.gallery_image_delete,name='gallery_image_delete')
+
 ]

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from psf.models import ShelterChild,Slider,Event
+from psf.models import ShelterChild,Slider,Event,GalleryImage
 from sponsor.models import Sponsor,SponsorProfile
 from user.models import CustomUser
 from datetime import date
@@ -23,7 +23,6 @@ def current_event(request):
     }
     return render(request,'psf/event/current-event.html',context)
 
-    return render(request,'psf/event/current-event.html')
 def complete_event(request):
     complete_events = Event.objects.filter(event_status = False, event_date__lte = date.today()).order_by('-id')
     context = {
@@ -81,7 +80,12 @@ def annual_report(request):
 
 # gallery view
 def gallery_view(request):
-    return render(request,'psf/gallery/gallery.html')
+    gallery_images = GalleryImage.objects.filter(image_status = True).order_by('-id')[:6]
+
+    context={
+        'gallery_images':gallery_images
+    }
+    return render(request,'psf/gallery/gallery.html',context)
 
 # donate view
 def donate_view(request):
