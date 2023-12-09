@@ -506,7 +506,7 @@ def gallery_image_save(request):
             gallery_image = GalleryImage.objects.create(
                 image_title = photo_title,
                 image_description = photo_description,
-                gallery_image = fs.save('gallery/'+utlis.date_to_str()+".webp",photo_image)
+                gallery_image = fs.save('gallery/image-'+utlis.date_to_str()+".jpg",photo_image)
             )
             gallery_image.save()
             messages.add_message(request,messages.SUCCESS,'Gallery new image added successfully')
@@ -531,7 +531,7 @@ def gallery_image_edit(request):
             image_width,image_height = image_show.size
             fs = FileSystemStorage()
             if image_height >= 600 and image_width >= 600:
-                gallery.gallery_image = fs.save('gallery/'+utlis.date_to_str()+".webp",gallery_image)
+                gallery.gallery_image = fs.save('gallery/image-'+utlis.date_to_str()+".jpg",gallery_image)
             else:
                 messages.add_message(request,messages.WARNING,'please gallery image minimum size 600X600 pixel and try again')
         if gallery:
