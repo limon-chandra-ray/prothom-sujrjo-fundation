@@ -38,8 +38,10 @@ def global_giving_event(request):
 
 def event_details(request,event_id):
     event = Event.objects.get(id = int(event_id))
+    same_type_events = Event.objects.filter(event_type = event.event_type,event_status = True).exclude(id = int(event_id)).order_by('-id')
     context = {
-        'event':event
+        'event':event,
+        'same_type_events':same_type_events
     }
     return render(request,'psf/event/event_details.html',context)
 

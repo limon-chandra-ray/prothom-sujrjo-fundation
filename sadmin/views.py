@@ -1,16 +1,16 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib import messages
-from psf.models import Event,ShelterChild,Slider,UserContact,GalleryImage
+from psf.models import (Event,ShelterChild,Slider,UserContact,GalleryImage,Rank)
 from user.models import CustomUser
-from staff.models import StaffProfile,Staff
+from staff.models import StaffProfile,Staff,StaffRank
 from child.models import ChildProfile,Child
 from sadmin.decorators import super_admin_access_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 import json
 from PIL import Image
-from datetime import date,datetime
+from datetime import date,datetime,timedelta
 from django.core.files.storage import FileSystemStorage
 from . import utlis
 # Create your views here.
@@ -284,8 +284,11 @@ def office_staff_list(request):
     return render(request,'super-admin/staff/staff-list.html',context)
 
 def office_staff_add_view(request):
-    
-    return render(request,'super-admin/staff/staff-add.html')
+    ranks = Rank.objects.all().order_by('rank_name')
+    context = {
+        'ranks':ranks
+    }
+    return render(request,'super-admin/staff/staff-add.html',context)
 
 def office_staff_add(request):
     if request.method == 'POST':
@@ -294,6 +297,8 @@ def office_staff_add(request):
         phone_number = request.POST['phone_number']
         email_address = request.POST['email_address']
         staff_image = request.FILES['staff_image']
+        staff_rank = request.POST['rank']
+
         email_check = CustomUser.objects.filter(email = email_address).count()
         if email_check < 1:
             office_save = Staff.objects.create_office_staff(
@@ -306,6 +311,13 @@ def office_staff_add(request):
             staff_profile.staff_full_name = f_name
             staff_profile.staff_image = staff_image
             staff_profile.save()
+            custom_user = CustomUser.objects.get(email = email_address)
+            rank = StaffRank.objects.create(
+                strank_user = custom_user,
+                strank_level = Rank.objects.get(id = int(staff_rank)),
+                strank_start_date = date.today()
+            )
+            rank.save()
             messages.add_message(request,messages.SUCCESS,'New office member add successfully')
             return redirect('sadmin:office_staff_list')
         else:
@@ -318,8 +330,9 @@ def office_staff_edit(request):
         user_name  =request.POST['user_name']
         phone_number  =request.POST['phone_number']
         email  =request.POST['email_address']
+        select_rank = request.POST['rank']
+
         try:
-            
             staff_image  = request.FILES['staff_image']
         except:
             staff_image = None
@@ -334,6 +347,23 @@ def office_staff_edit(request):
         if staff_image is not None:
             profile.staff_image = staff_image
         profile.save()
+        staff_rank = StaffRank.objects.filter(strank_user = custom_user).last()
+        if staff_rank and staff_rank.strank_level.id != int(select_rank):
+            staff_rank.strank_end_date = date.today()
+            staff_rank.save()
+            new_rank = StaffRank.objects.create(
+                strank_user = custom_user,
+                strank_level = Rank.objects.get(id = int(select_rank)),
+                strank_start_date = date.today() + timedelta(days=1)
+            )
+            new_rank.save()
+        else:
+            new_rank = StaffRank.objects.create(
+                strank_user = custom_user,
+                strank_level = Rank.objects.get(id = int(select_rank)),
+                strank_start_date = date.today()
+            )
+            new_rank.save()
         messages.add_message(request,messages.SUCCESS,'Staff profile update successfully')
         return redirect('sadmin:office_staff_list')
     
@@ -342,8 +372,14 @@ def staff_get(request):
         staff_id = request.POST['staff']
         user = CustomUser.objects.filter(id = int(staff_id)).values('id','user_name','email').first()
         profile = StaffProfile.objects.filter(staff_user__id= int(staff_id)).values('staff_full_name','staff_phone_number','staff_image').first()
-        
-        return JsonResponse({'status':"success","userstaff":user,'staffProfile':profile},safe=False) 
+        ranks = Rank.objects.all().values('id','rank_name')
+        custom_user =CustomUser.objects.get(id =int(staff_id))
+        last_level = StaffRank.objects.filter(strank_user = custom_user).last()
+        if last_level:
+            user_last_level = last_level.strank_level.id
+        else:
+            user_last_level = 0
+        return JsonResponse({'status':"success","userstaff":user,"staffProfile":profile,"ranks":list(ranks),"user_last_level":user_last_level},safe=False) 
 
 def staff_delete(request,staff_id):
     user_active_status_change = CustomUser.objects.filter(id = staff_id).update(
@@ -565,3 +601,4 @@ def gallery_image_delete(request,image_id):
         messages.add_message(request,messages.WARNING,'Gallery image not Found')
     return redirect('sadmin:gallery_image_list')
 # End Gallery Image section
+
