@@ -17,31 +17,31 @@
         <table class="w-full">
             <thead class="bg-blue-500 border-b-2 border-gray-300 text-white">
               <tr>
-                <th class="p-3">Email Address</th>
+                <th class="p-3 text-start">Email Address</th>
                 <th class="p-3 text-start">User Name</th>
-                <th class="w-40 p-3">title</th>
-                <th class="w-40 p-3">Message</th>
-                <th class="w-40 p-3">Status</th>
-                <th class="w-40 p-3">Actions</th>
+                <th class="p-3 text-start">title</th>
+                <th class="p-3 text-start">Message</th>
+                <th class="p-3 text-center">Status</th>
+                <th class="p-3">Actions</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
                 {% for contact in user_contacts %}
                 <tr>
-                    <td class="whitespace-nowrap">
+                    <td class="whitespace-nowrap py-3 pl-3">
                         {{contact.email}}
                     </td>
-                    <td class="whitespace-nowrap">{{contact.first_name}} {{contact.first_name}}</td>
-                    <td class="whitespace-nowrap">{{contact.title}}</td>
-                    <td class="whitespace-nowrap">{{contact.contact_message}}</td>
-                    <td class="whitespace-nowrap text-center">
+                    <td class="whitespace-nowrap text-start py-3 pl-3">{{contact.first_name}} {{contact.first_name}}</td>
+                    <td class="whitespace-nowrap text-start py-3 pl-3">{{contact.title}}</td>
+                    <td class="whitespace-nowrap text-start py-3 pl-3">{{contact.contact_message}}</td>
+                    <td class="whitespace-nowrap text-center py-3 pl-3 text-center">
                         {% if contact.event_status == True %}
                             <span class="bg-green-500 px-3 py-2 rounded-lg">Active</span>
                         {% else %}
                         <span class="bg-red-500 px-3 py-2 rounded-lg">In-Active</span>
                         {% endif %}
                     </td>
-                    <td class="whitespace-nowrap">
+                    <td class="whitespace-nowrap py-3 pl-3">
                         <div class="flex justify-between px-2">
                             <a href="#"><i class="far fa-eye text-blue-500"></i></a>
                             <button id="editEvent" data-id="{{contact.id}}" ><i class="far fa-edit text-green-500"></i></button>
