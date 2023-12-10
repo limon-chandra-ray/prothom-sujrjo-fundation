@@ -199,14 +199,16 @@ class Document(models.Model):
                 if p_image:
                     p_image.delete(save=False)
 
-
+# 0 = Request
+# 1 = Approved
+# 2 = Cancel
 class UserContact(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=250)
     title = models.CharField(max_length=250)
     contact_message = models.TextField()
-    uc_status =models.BooleanField(default=False)
+    uc_status =models.IntegerField(default=0,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     updated_at = models.DateTimeField(auto_now=True,null=True,blank=True)
     def __str__(self):

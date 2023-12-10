@@ -49,3 +49,21 @@ class SponsorProfile(models.Model):
                 logo = getattr(instance,field.name)
                 if logo:
                     logo.delete(save = False)
+
+
+# 0 = Request
+# 1 = Approved
+# 2 = Cancel
+class SponsorCall(models.Model):
+    spcall_email = models.EmailField()
+    spcall_first_name = models.CharField(max_length=150)
+    spcall_last_name = models.CharField(max_length=150)
+    spcall_phone_number = models.CharField(max_length=11)
+    spcall_number_child = models.IntegerField(null=True,blank=True)
+    spcall_status = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.spcall_email
+    

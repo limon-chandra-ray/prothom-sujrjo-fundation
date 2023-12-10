@@ -5,6 +5,7 @@ from psf.models import (Event,ShelterChild,Slider,UserContact,GalleryImage,Rank)
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff,StaffRank
 from child.models import ChildProfile,Child
+from sponsor.models import SponsorCall
 from sadmin.decorators import super_admin_access_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -275,7 +276,7 @@ def children_info_delete(request,children_id):
 def children_detail_view(request,children_id):
     pass
 
-
+# Start Office staff section
 def office_staff_list(request):
     staffs = CustomUser.objects.filter(role = 'STAFF',is_active = True).order_by('-id')
     context = {
@@ -389,7 +390,8 @@ def staff_delete(request,staff_id):
         messages.add_message(request,messages.SUCCESS,'Staff Account deleted')
         return redirect('sadmin:office_staff_list')
     
-
+# End Office staff section
+# start image slide section
 def slider_image_list(request):
     sliders = Slider.objects.all().order_by('-slider_status')
     context = {
@@ -468,6 +470,7 @@ def slider_image_delete(request,image_id):
     else:
         messages.add_message(request,messages.WARNING,'Gallery image not Found')
     return redirect('sadmin:slider_image_list')
+# end image slide section
 # video view section
 def video_list(request):
     # sliders = Slider.objects.all().order_by('slider_status')
@@ -477,9 +480,10 @@ def video_list(request):
     return render(request,'super-admin/video/video-list.html')
 
 
-
+# Start child Sponsor section 
 def child_sponsor_list_view(request):
-    sponsors = CustomUser.objects.filter(role = "SPONSOR").order_by('is_active')
+    sponsors = SponsorCall.objects.all().order_by('spcall_status')
+    
     context = {
         'sponsors':sponsors
     }
@@ -488,6 +492,25 @@ def child_sponsor_list_view(request):
 def sponsor_detail_view(request):
     return render(request,'super-admin/child-sponsor/child-sponsor-detail.html')
 
+def sponsor_request_accept(request,request_id):
+    sponsor_call = SponsorCall.objects.get(id = int(request_id))
+    if sponsor_call:
+        sponsor_call.spcall_status = 1
+        sponsor_call.save()
+        messages.add_message(request,messages.SUCCESS,f'{sponsor_call.spcall_first_name} {sponsor_call.spcall_last_name} sponsor request approved successfully')
+    else:
+        messages.add_message(request,messages.SUCCESS,'Your request invalid')
+    return redirect('sadmin:child_sponsor_list_view')
+def sponsor_request_cancel(request,request_id):
+    sponsor_call = SponsorCall.objects.get(id = int(request_id))
+    if sponsor_call:
+        sponsor_call.spcall_status = 2
+        sponsor_call.save()
+        messages.add_message(request,messages.SUCCESS,f'{sponsor_call.spcall_first_name} {sponsor_call.spcall_last_name} sponsor request cancel successfully')
+    else:
+        messages.add_message(request,messages.SUCCESS,'Your request invalid')
+    return redirect('sadmin:child_sponsor_list_view')
+# End child Sponsor section 
 # authentication system view section
 def login_view(request):
     return render(request,'super-admin/auth/log-in.html')
@@ -521,7 +544,24 @@ def contact_information_list(request):
         'user_contacts': user_contacts
     }
     return render(request,'super-admin/contact/contact-list.html',context)
-
+def contact_request_accept(request,request_id):
+    contact_ = UserContact.objects.get(id = int(request_id))
+    if contact_:
+        contact_.uc_status = 1
+        contact_.save()
+        messages.add_message(request,messages.SUCCESS,f'{contact_.first_name} {contact_.last_name} sponsor request approved successfully')
+    else:
+        messages.add_message(request,messages.SUCCESS,'Your request invalid')
+    return redirect('sadmin:contact_information_list')
+def contact_request_cancel(request,request_id):
+    contact_ = UserContact.objects.get(id = int(request_id))
+    if contact_:
+        contact_.uc_status = 2
+        contact_.save()
+        messages.add_message(request,messages.SUCCESS,f'{contact_.first_name} {contact_.last_name} sponsor request cancel successfully')
+    else:
+        messages.add_message(request,messages.SUCCESS,'Your request invalid')
+    return redirect('sadmin:contact_information_list')
 # Start Gallery Image section
 def gallery_image_list(request):
     images = GalleryImage.objects.all().order_by('-image_status')

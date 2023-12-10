@@ -35,17 +35,23 @@
                     <td class="whitespace-nowrap text-start py-3 pl-3">{{contact.title}}</td>
                     <td class="whitespace-nowrap text-start py-3 pl-3">{{contact.contact_message}}</td>
                     <td class="whitespace-nowrap text-center py-3 pl-3 text-center">
-                        {% if contact.event_status == True %}
-                            <span class="bg-green-500 px-3 py-2 rounded-lg">Active</span>
+                        {% if contact.uc_status == 1 %}
+                            <span class="bg-green-500 px-3 py-2 rounded-lg">Accepted</span>
+                        {% elif contact.uc_status == 2 %}
+                            <span class="bg-amber-500 text-white px-3 py-2 rounded-lg">Cancel</span>
                         {% else %}
-                        <span class="bg-red-500 px-3 py-2 rounded-lg">In-Active</span>
+                            <span class="bg-red-500 px-3 py-2 rounded-lg">Requested</span>
                         {% endif %}
                     </td>
                     <td class="whitespace-nowrap py-3 pl-3">
                         <div class="flex justify-between px-2">
-                            <a href="#"><i class="far fa-eye text-blue-500"></i></a>
-                            <button id="editEvent" data-id="{{contact.id}}" ><i class="far fa-edit text-green-500"></i></button>
-                            <a href="{% url "sadmin:event_delete" contact.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                            <a href="#"><i class="far fa-edit text-blue-500"></i></a>
+                            {% if contact.uc_status == 0 %}
+                                <a href="{% url "sadmin:contact_request_accept" contact.id %}"><i class="fas fa-check text-green-500"></i></a>
+                            {% endif %}
+                            {% if contact.uc_status == 0 %}
+                                <a href="{% url "sadmin:contact_request_cancel" contact.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                            {% endif %}
                         </div>
                         
                     </td>

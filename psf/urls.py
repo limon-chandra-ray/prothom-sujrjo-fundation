@@ -38,11 +38,10 @@ urlpatterns +=[
 ]
 
 urlpatterns +=[
-    path('sponsor',views.sponsor_view,name='sponsor_view'),
+    path('sponsor-info',views.sponsor_view,name='sponsor_view'),
     path('sponsor-save',views.sponsor_request,name='sponsor_request')
 ]
 
 urlpatterns +=[
-    path('login',login_view,name='login_view'),
-
+    path('login',login_view,name='login_view')
 ]
