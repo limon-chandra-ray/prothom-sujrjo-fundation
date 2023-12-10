@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from psf.models import ShelterChild,Slider,Event,GalleryImage
-from sponsor.models import Sponsor,SponsorProfile
+from sponsor.models import Sponsor,SponsorProfile,SponsorCall
 from user.models import CustomUser
 from datetime import date
 from django.contrib import messages
@@ -97,6 +97,33 @@ def donate_view(request):
 def sponsor_view(request):
     return render(request,'psf/sponsor/sponsor.html')
 
+# def sponsor_request(request):
+#     if request.method == 'POST':
+#         f_name = request.POST['fname']
+#         l_name = request.POST['lname']
+#         email = request.POST['email']
+#         phone = request.POST['phone']
+#         number_of_child = request.POST['number_of_child']
+#         email_check = CustomUser.objects.filter(email = email).first()
+#         if email_check is None:
+
+#             sponsor = Sponsor.objects.create_sponsor(
+#                 email = email,
+#                 user_name = f_name,
+#                 password = phone
+#             )
+#             sponsor.save()
+#             sponsor_profile = SponsorProfile.objects.filter(sponsor_user = sponsor).first()
+#             sponsor_profile.sponsor_first_name = f_name
+#             sponsor_profile.sponsor_last_name = l_name
+#             sponsor_profile.sponsor_phone_number = phone
+#             sponsor_profile.sponsor_child_request = number_of_child
+#             sponsor_profile.save()
+#             messages.add_message(request,messages.SUCCESS,'your sponsor request create successfully')
+#         else:
+#             messages.add_message(request,messages.WARNING,'your input email already added')
+#         return redirect('psf:sponsor_view')
+
 def sponsor_request(request):
     if request.method == 'POST':
         f_name = request.POST['fname']
@@ -104,22 +131,21 @@ def sponsor_request(request):
         email = request.POST['email']
         phone = request.POST['phone']
         number_of_child = request.POST['number_of_child']
-        email_check = CustomUser.objects.filter(email = email).first()
-        if email_check is None:
+        sponsor_call = SponsorCall.objects.create(
+            spcall_email = email,
+            spcall_first_name = f_name,
+            spcall_last_name = l_name,
+            spcall_phone_number = phone,
+            spcall_number_child = number_of_child
+        )
+        sponsor_call.save()
+        messages.add_message(request,messages.SUCCESS,'your sponsor request create successfully')
+    else:
+        messages.add_message(request,messages.WARNING,'your input email already added')
+    return redirect('psf:sponsor_view')
 
-            sponsor = Sponsor.objects.create_sponsor(
-                email = email,
-                user_name = f_name,
-                password = phone
-            )
-            sponsor.save()
-            sponsor_profile = SponsorProfile.objects.filter(sponsor_user = sponsor).first()
-            sponsor_profile.sponsor_first_name = f_name
-            sponsor_profile.sponsor_last_name = l_name
-            sponsor_profile.sponsor_phone_number = phone
-            sponsor_profile.sponsor_child_request = number_of_child
-            sponsor_profile.save()
-            messages.add_message(request,messages.SUCCESS,'your sponsor request create successfully')
-        else:
-            messages.add_message(request,messages.WARNING,'your input email already added')
-        return redirect('psf:sponsor_view')
+# Error 404 and 500 Handler 
+def error_404_view(request,exception):
+    return render(request,'notifications/error_404.html')
+def error_500_view(request):
+    return render(request,'notifications/error_500.html')

@@ -17,37 +17,41 @@
         <table class="w-full">
             <thead class="bg-blue-500 border-b-2 border-gray-300 text-white">
               <tr>
-                <th class="p-3">User Name</th>
-                <th class="p-3">Full Name</th>
-                <th class="p-3">Phone Number</th>
-                <th class="p-3">Email Address</th>
-                <th class="p-3">Number Of Child</th>
-                <th class="p-3">Status</th>
-                <th class="p-3">Request Date</th>
-                <th class="p-3">Actions</th>
+                <th class="p-3 text-left">Full Name</th>
+                <th class="p-3 text-left">Phone Number</th>
+                <th class="p-3 text-left">Email Address</th>
+                <th class="p-3 text-left">Number Of Child</th>
+                <th class="p-3 text-left">Status</th>
+                <th class="p-3 text-left">Request Date</th>
+                <th class="p-3 text-left">Actions</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
                 {% for sponsor in sponsors %}
                 <tr>
-                    <td class="whitespace-nowrap text-center py-4">{{sponsor.user_name}}</td>
-                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.sponsor_first_name}} {{sponsor.sponsorprofile.sponsor_last_name}}</td>
-                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.sponsor_phone_number}}</td>
-                    <td class="whitespace-nowrap text-center">{{sponsor.email}}</td>
-                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.sponsor_child_request}}</td>
-                    <td class="whitespace-nowrap text-center">
-                        {% if sponsor.is_active == True %}
+                    <td class="whitespace-nowrap text-left p-3">{{sponsor.spcall_first_name}} {{sponsor.spcall_last_name}}</td>
+                    <td class="whitespace-nowrap text-left p-3">{{sponsor.spcall_phone_number}}</td>
+                    <td class="whitespace-nowrap text-left p-3">{{sponsor.spcall_email}}</td>
+                    <td class="whitespace-nowrap text-left p-3">{{sponsor.spcall_number_child}}</td>
+                    <td class="whitespace-nowrap text-left p-3">
+                        {% if sponsor.spcall_status == 1 %}
                             <span class="bg-green-500 px-3 py-2 rounded-lg">Accepted</span>
+                        {% elif sponsor.spcall_status == 2 %}
+                            <span class="bg-amber-500 text-white px-3 py-2 rounded-lg">Cancel</span>
                         {% else %}
                             <span class="bg-red-500 px-3 py-2 rounded-lg">Requested</span>
                         {% endif %}
                     </td>
-                    <td class="whitespace-nowrap text-center">{{sponsor.sponsorprofile.created_at|date:"d-M-Y"}}</td>
-                    <td class="whitespace-nowrap">
+                    <td class="whitespace-nowrap text-left p-3">{{sponsor.created_at|date:"d-M-Y"}}</td>
+                    <td class="whitespace-nowrap text-left p-3">
                         <div class="flex justify-between px-2">
-                            <a href="#"><i class="far fa-eye text-blue-500"></i></a>
-                            <a href="{% url "sadmin:children_info_update_view" sponsor.id %}"><i class="far fa-edit text-green-500"></i></a>
-                            <a href="{% url "sadmin:children_info_delete" sponsor.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                            <a href="#"><i class="far fa-edit text-blue-500"></i></a>
+                            {% if sponsor.spcall_status == 0 %}
+                                <a href="{% url "sadmin:sponsor_request_accept" sponsor.id %}"><i class="fas fa-check text-green-500"></i></a>
+                            {% endif %}
+                            {% if sponsor.spcall_status == 0 %}
+                                <a href="{% url "sadmin:sponsor_request_cancel" sponsor.id %}"><i class="far fa-trash-alt text-red-500"></i></a>
+                            {% endif %}
                         </div>
                         
                     </td>

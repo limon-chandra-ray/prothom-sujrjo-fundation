@@ -50,7 +50,9 @@ urlpatterns += [
 
 # sponsor urls section
 urlpatterns +=[
-    path('sponsor-list',views.child_sponsor_list_view,name='child_sponsor_list_view')
+    path('sponsor-list',views.child_sponsor_list_view,name='child_sponsor_list_view'),
+    path('sponsor-<int:request_id>-request-approve',views.sponsor_request_accept,name='sponsor_request_accept'),
+    path('sponsor-<int:request_id>-request-cancel',views.sponsor_request_cancel,name='sponsor_request_cancel')
 ]
 
 # authentication system section
@@ -65,7 +67,9 @@ urlpatterns +=[
 # contact us section
 urlpatterns +=[
     path('contact-information-save',views.contact_information_save,name='contact_information_save'),
-    path('contact-information-list',views.contact_information_list,name='contact_information_list')
+    path('contact-information-list',views.contact_information_list,name='contact_information_list'),
+    path('contact-<int:request_id>-request-approve',views.contact_request_accept,name='contact_request_accept'),
+    path('contact-<int:request_id>-request-cancel',views.contact_request_cancel,name='contact_request_cancel')
 ]
 
 #Gallery Image section
