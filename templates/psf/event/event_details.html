@@ -1,25 +1,41 @@
 {% extends "base/index.html" %}
 {% block mainBody %}
 <main class="text-justify">
+<<<<<<< HEAD
     <div class="w-[100%] h-[70vh] relative">
         <img class="w-[100%] h-[100%]"
             src="https://www.zdnet.com/a/img/resize/ba1b1ab92085d777ab5e313b34c66a94b7aa1236/2023/06/05/79a43eb8-ce38-488c-8cc0-e04699aaca7f/bing.jpg?auto=webp&width=1280"
+=======
+    <div class="w-[100%] h-[27vh] sm:h-[27vh] md:h-[45vh] lg:h-[70vh] relative">
+        <img class="w-[100%] h-[100%]"
+            src="{{event.event_image.url}}"
+>>>>>>> a29efb9e8d7ef21cb3f8f7d18a38dfcd4109f262
             alt="">
         <div
             class="absolute w-[100%] lg:bottom-[40%] bottom-[40%] text-center flex justify-center items-center text-white">
             <h1
                 class="lg:text-[42px] text-[24px] font-bold font-['Oswald'] text-center bg-opacity-[.6] bg-[#2b2b2b] px-4 py-2">
+<<<<<<< HEAD
                 Operation and Management of the Edward M. Kennedy Center</h1>
         </div>
     </div>
     <div class="lg:mx-[200px] mx-[20px] my-[50px]">
         <div class="my-[20px]">
+=======
+                {{event.event_title}}
+                </h1>
+        </div>
+    </div>
+    <div class="lg:mx-[200px] mx-[20px] my-[50px]">
+        {% comment %} <div class="my-[20px]">
+>>>>>>> a29efb9e8d7ef21cb3f8f7d18a38dfcd4109f262
             <h1 class="lg:text-[42px] text-[24px] font-semibold">Goal</h1>
             <p class="mt-[15px]">Create a platform for Bangladeshi youth and young professionals to engage in open
                 discussions,
                 develop critical skills, engage in creative and innovative projects, and exchange ideas, values, and
                 cultures with the people of the United States with the aim of creating people to people connection.
             </p>
+<<<<<<< HEAD
         </div>
         <div class="my-[20px]">
             <h1 class="lg:text-[42px] text-[24px] font-semibold">Project Summary</h1>
@@ -55,10 +71,17 @@
                 culture. It contributes to enhancing their knowledge, skills, and overall capacity, which ultimately
                 benefits their personal and professional growth and the development of their communities.
             </p>
+=======
+        </div> {% endcomment %}
+        <div class="my-[20px]">
+            <h1 class="lg:text-[42px] text-[24px] font-semibold">Project Summary</h1>
+            <p class="mt-[15px]">{{event.event_description}}</p>
+>>>>>>> a29efb9e8d7ef21cb3f8f7d18a38dfcd4109f262
         </div>
         <div>
             <h1 class="lg:text-[42px] text-[24px] text-center font-semibold">Read More Completed Projects</h1>
             <div class="mt-[30px] grid lg:grid-cols-3 grid-cols-1 gap-8">
+<<<<<<< HEAD
                 <div class="shadow-xl bg-[#fff] rounded-md">
                     <div>
                         <a href="event_details.php"><img class="h-[250px]"
@@ -146,6 +169,34 @@
                         </div>
                     </div>
                 </div>
+=======
+                {% if same_type_events|length > 0 %}
+                    {% for event in same_type_events %}
+                        <div class="shadow-xl bg-[#fff] rounded-md">
+                            <div>
+                                <a href="{% url "psf:event_details" event.id %}"><img class="h-[250px] w-full"
+                                        src="{{event.event_image.url}}"
+                                        alt=""></a>
+                            </div>
+                            <div class="px-[20px]">
+                                <div class="text-[#54595F] py-[30px] text-[20px] font-bold">
+                                    <a href="{% url "psf:event_details" event.id %}">{{event.event_title|truncatechars:55}}</a>
+                                </div>
+                                <div class="py-[20px]">
+                                    <a href="{% url "psf:event_details" event.id %}" class="text-[#FFCB05]">Read More »</a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    {% endfor %}
+                {% else %}
+                    <div class="shadow-xl bg-[#fff] rounded-md">
+                        <h1 class="text-[3rem]">Related Event not Found</h1>
+                    </div>
+                {% endif %}
+                
+                
+>>>>>>> a29efb9e8d7ef21cb3f8f7d18a38dfcd4109f262
             </div>
         </div>
     </div>

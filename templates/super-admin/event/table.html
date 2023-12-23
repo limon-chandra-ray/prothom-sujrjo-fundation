@@ -19,6 +19,7 @@
               <tr>
                 <th class="w-32 p-3">Event Image</th>
                 <th class="p-3 text-start">Event Title</th>
+                <th class="w-40 p-3">Event Type</th>
                 <th class="w-40 p-3">Event Date-Time</th>
                 <th class="w-40 p-3">Event Status</th>
                 <th class="w-40 p-3">Actions</th>
@@ -31,6 +32,7 @@
                         <img src="{{event.event_image.url}}" class="w-full p-2 rounded-md"  alt="">
                     </td>
                     <td class="whitespace-nowrap">{{event.event_title|truncatechars:140}}</td>
+                    <td class="whitespace-nowrap">{{event.event_type|upper}}</td>
                     <td class="whitespace-nowrap">{{event.event_date|date:"d-m-Y"}} - {{event.event_time|date:"H:i a"}}</td>
                     <td class="whitespace-nowrap text-center">
                         {% if event.event_status == True %}

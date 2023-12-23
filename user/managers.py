@@ -11,7 +11,6 @@ class CustomUserManager(BaseUserManager):
         office_staff.save(using = self._db)
         return office_staff
     
-
     def create_donar(self,user_name,email,password=None):
         donar = self.model(
             user_name = user_name,
@@ -20,6 +19,16 @@ class CustomUserManager(BaseUserManager):
         donar.set_password(password)
         donar.save(using = self._db)
         return donar
+    def create_sponsor(self,user_name,email,password=None):
+        sponsor = self.model(
+            user_name = user_name,
+            email=email
+        )
+        sponsor.is_active = False
+        sponsor.set_password(password)
+        sponsor.save(using = self._db)
+        return sponsor
+
     def create_child(self,user_name,email,password=None):
         child = self.model(
             user_name = user_name,

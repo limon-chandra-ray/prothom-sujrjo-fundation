@@ -42,8 +42,19 @@ office staff list
                                                 '<p>PNG,JPG OR GIF up to 2 MB</p>';
                         }
                         $("#staffProfile").append(profile_image_show);
+                        $("#rank").empty()
+                        var select_staff_level = '<option>select staff level</option>';
+                        $("#rank").append(select_staff_level)
+                        res['ranks'].forEach((rank)=>{
+                            if(rank.id == res['user_last_level']){
+                                select_staff_level = '<option value="'+rank.id+'" selected>'+rank.rank_name+'</option>';
+                            }else{
+                                select_staff_level = '<option value="'+rank.id+'">'+rank.rank_name+'</option>';
+                            }
+                            $("#rank").append(select_staff_level)
+                        })
+                        
                     }
-                    console.log(res)
                 }
             })
         })

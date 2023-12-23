@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jlhg3fds3un73eckn8k$@ed^rnwy9@_+c8f)$w(i%7(9(vh=d$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*','prothomsurjo.org','www.prothomsurjo.org']
 
 
 # Application definition
@@ -30,11 +30,14 @@ INSTALLED_APPS = [
     'psf.apps.PsfConfig',
     'sadmin.apps.SadminConfig',
     'staff.apps.StaffConfig',
-    'child.apps.ChildConfig'
+    'child.apps.ChildConfig',
+    'sponsor.apps.SponsorConfig',
+    'auth_user.apps.AuthUserConfig'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -67,10 +70,25 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bsksnjpg_psf',
+        'USER': 'bsksnjpg_psf',
+        'PASSWORD': '62fuoh=Y@)X%',
+        'HOST':'localhost',
+        'PORT':'3306',
+        'OPTIONS':{
+            'charset': 'utf8mb4',
+            'collation': 'utf8mb4_unicode_ci',
+        },
     }
 }
 
@@ -111,13 +129,17 @@ USE_TZ = True
 AUTH_USER_MODEL = "user.CustomUser"
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
-]
+if DEBUG:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR,'static')
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join('media')
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
+LOGIN_URL = '/login'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

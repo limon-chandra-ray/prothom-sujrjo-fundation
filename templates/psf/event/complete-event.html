@@ -1,19 +1,21 @@
 {% extends "base/index.html" %}
 {% block mainBody %}
-<div class="owl-carousel carousel1 owl-theme w-[100%] h-[80vh]">
-    <div class="item w-[100%] h-[80vh]"><img class="w-[100%] h-[80vh]" src="https://th.bing.com/th/id/R.1abee17234dca9feaf9d0064bf491f6e?rik=Gs1TTKs9hDMyHg&pid=ImgRaw&r=0" alt=""></div>
-    <div class="item w-[100%] h-[80vh]"><img class="w-[100%] h-[80vh]" src="https://th.bing.com/th/id/R.5bc6a94ca0114ea56198bccc0a2b0d98?rik=eDteuVFFJ12iYg&pid=ImgRaw&r=0" alt=""></div>
-    <div class="item w-[100%] h-[80vh]"><img class="w-[100%] h-[80vh]" src="https://th.bing.com/th/id/OIP.KoKk_vYZW-dFP-YSdRSOZwHaEo?pid=ImgDet&rs=1" alt=""></div>
-    <div class="item w-[100%] h-[80vh]"><img class="w-[100%] h-[80vh]" src="https://th.bing.com/th/id/R.a8192cf132a9089096def41228ad9273?rik=du2ssBCYE6rnhQ&riu=http%3a%2f%2fradiusblocks.com%2fwp-content%2fuploads%2f2022%2f09%2fimage-grid_2.jpg&ehk=RRAlBzs%2bnQb42FU1oz82jqvc0Aeni0dVkTMRkJPqW1k%3d&risl=&pid=ImgRaw&r=0" alt=""></div>
-    <div class="item w-[100%] h-[80vh]"><img class="w-[100%] h-[80vh]" src="https://th.bing.com/th/id/R.1ac8616cc26c5ffa5d4a124e068c447d?rik=Q3ad8plACqWAMQ&riu=http%3a%2f%2flovelyfotos.l.o.pic.centerblog.net%2fo%2f98a8ed98.jpg&ehk=oMZ4%2bUZ%2b2P7UvBelRgLJi%2fXMGMrpqfqtm%2bTC58Gqtbg%3d&risl=&pid=ImgRaw&r=0" alt=""></div>
-    <div class="item w-[100%] h-[80vh]"><img class="w-[100%] h-[80vh]" src="https://th.bing.com/th/id/R.ed4c5c82883ef4309eb02f8e2417646c?rik=L7mq4JeVSZO0Gw&riu=http%3a%2f%2fradiusblocks.com%2fwp-content%2fuploads%2f2022%2f09%2fimage-grid_3.jpg&ehk=lsdi%2bBpjRQvuIvmtlegfvmYOtqp0reJX%2baon5vAL4F4%3d&risl=&pid=ImgRaw&r=0" alt=""></div>
-    <div class="item w-[100%] h-[80vh]"><img class="w-[100%] h-[80vh]" src="https://th.bing.com/th/id/R.c327c0e4318b08c3f9ed9c4dc57f7dec?rik=v1rQ%2foEyL7vjbg&pid=ImgRaw&r=0" alt=""></div>
-</div>
-<div class="w-[100%] h-[20vh]">vsas</div>
-<div class="lg:mx-[200px] mx-[20px] my-[100px]">
-    <div class="owl-carousel carousel2 owl-theme w-[100%] h-[80vh]">
-        <div class="item w-[100%] h-[80vh]"><iframe class="w-[100%] h-[100%]" allowfullscreen src="video/video1.mp4" frameborder="0"></iframe></div>
-        <div class="item w-[100%] h-[80vh]"><iframe class="w-[100%] h-[100%]" allowfullscreen src="video/Btv news.mp4" frameborder="0"></iframe></div>
-    </div>
+<div class="lg:mx-[200px] mx-[20px] my-[100px] grid lg:grid-cols-3 grid-cols-1 gap-8">
+    {% for event in complete_events %}
+        <div class="shadow-xl bg-[#fff] rounded-md">
+            <div>
+                <a href="{% url 'psf:event_details' event.id %}"><img class="h-[250px] w-full" src="{{event.event_image.url}}" alt=""></a>
+            </div>
+            <div class="px-[20px]">
+                <div class="text-[#54595F] py-[30px] text-[20px] font-bold">
+                    <a href="{% url 'psf:event_details' event.id %}">{{event.event_title|truncatechars:150}}</a>
+                </div>
+                <div class="py-[20px]">
+                    <a href="{% url 'psf:event_details' event.id %}" class="text-[#FFCB05]">Read More »</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+   
 </div>
 {% endblock mainBody %}

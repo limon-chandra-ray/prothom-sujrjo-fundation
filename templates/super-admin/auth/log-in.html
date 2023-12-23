@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "super-admin/base/head.html" %}
+    <title>login super-admin|prothom surjo fundation</title>
+</head>
+<body>
+    <main>
+        <div class="flex justify-center h-screen w-full items-center">
+            <div class="w-1/4 bg-slate-700 rounded  p-[50px] mx-4">
+                <h1 class="text-center text-[1.5rem] text-white">Log in</h1>
+                <div>
+                    <form action="{% url "sadmin:authenticate_check" %}" method="post">
+                        {% csrf_token %}
+                        <div class="flex flex-col">
+                            <label for="email" class="text-[15px] py-2 text-white">Email Address</label>
+                            <input class="border-2 border-gray-600 text-[15px] py-3 px-2 rounded" type="email" name="email" id="email" placeholder="email address" required>
+                        </div>
+                        <div class="flex flex-col my-3">
+                            <label for="password" class="text-[15px] py-2 text-white">Password</label>
+                            <input class="border-2 border-gray-600 text-[15px] py-3 px-2 rounded" type="password" name="password" id="password" placeholder="password">
+                        </div>
+                        <div class="flex justify-center ">
+                            <button type="submit" class="py-3 px-5 bg-blue-600 hover:bg-blue-500 rounded text-white">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    {% include "super-admin/base/script.html" %}
+
+</body>
+</html>

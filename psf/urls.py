@@ -1,18 +1,22 @@
 from django.urls import path
 app_name = 'psf'
 from . import views
+from auth_user.views import login_view
 urlpatterns = [
     path('',views.home,name='home'),
     path('gallery',views.gallery_view,name='gallery_view'),
     path('donate',views.donate_view,name='donate_view'),
-    path('sponsor',views.sponsor_view,name='sponsor_view')
 ]
 # event links
 urlpatterns +=[
     path('current-event',views.current_event,name='current_event'),
     path('complete-event',views.complete_event,name='complete_event'),
     path('global-giving-event',views.global_giving_event,name='global_giving_event'),
+<<<<<<< HEAD
     path('event-details',views.event_details,name='event_details'),
+=======
+    path('event-details-<int:event_id>',views.event_details,name='event_details'),
+>>>>>>> a29efb9e8d7ef21cb3f8f7d18a38dfcd4109f262
 ]
 
 # shelter home links
@@ -35,4 +39,13 @@ urlpatterns +=[
     path('update/blogs',views.blog,name='blog'),
     path('update/annual-reports',views.annual_report,name='annual_report'),
     path('update/org-news',views.org_new,name='org_new'),
+]
+
+urlpatterns +=[
+    path('sponsor-info',views.sponsor_view,name='sponsor_view'),
+    path('sponsor-save',views.sponsor_request,name='sponsor_request')
+]
+
+urlpatterns +=[
+    path('login',login_view,name='login_view')
 ]

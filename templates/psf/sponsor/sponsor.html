@@ -73,28 +73,29 @@
     <div class="lg:mx-[450px] mx-[20px] mb-[20px] p-8 flex flex-col justify-center bg-[#FFCB05]">
         <div class="pb-[17px]">
             <h1 class="lg:text-[24px] text-[20px] font-['Oswald',Sans-serif] pb-4">Child Sponsorship Information Form</h1>
-            <form action="#">
+            <form action="{% url "psf:sponsor_request" %}" method="post">
+                {% csrf_token %}
                 <div class="grid lg:grid-cols-2 lg:gap-4 grid-cols-1">
                     <div class="py-1">
                         <label for="fname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">First Name <span class="text-[12px]">(required)</span></label>
-                        <input type="text" class="fname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                        <input type="text" name="fname" id="fname" class="fname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                     </div>
                     <div class="py-1">
                         <label for="lname" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Last Name <span class="text-[12px]">(required)</span></label>
-                        <input type="text" class="lname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                        <input type="text" name='lname' id="lname" class="lname border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                     </div>
                 </div>
                 <div class="py-1">
                     <label for="email" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Email <span class="text-[12px]">(required)</span></label>
-                    <input type="email" class="email border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                    <input type="email" name="email" id="email" class="email border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                 </div>
                 <div class="py-1">
                     <label for="phone" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Phone Number <span class="text-[12px]">(required)</span></label>
-                    <input type="text" class="subject border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" id="fname">
+                    <input type="tel" name="phone" id="phone" pattern="[0]{1}[1]{1}[0-9]{9}" class="subject border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                 </div>
                 <div class="py-1">
                     <label for="number_of_child" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Number of Child/Children you want to sponsor? <span class="text-[12px]">(required)</span></label>
-                    <select name="number_of_child" id="number_of_child" class="subject border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                    <select name="number_of_child" id="number_of_child" class="subject border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
                         <option selected>Select Number</option>
                         <option value="1">1</option>
                         <option value="2">2</option>

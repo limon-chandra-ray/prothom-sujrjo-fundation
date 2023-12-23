@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 app_name = 'sadmin'
 urlpatterns = [
-    path('',views.dashboard,name='dashboard')
+    path('',views.dashboard,name='dashboard'),
+    
 ]
 
 # event urls section
@@ -42,5 +43,42 @@ urlpatterns += [
     path('slider-image-add',views.slider_image_add,name='slider_image_add'),
     path('slider-image-edit',views.slider_image_edit,name='slider_image_edit'),
     path('slider-image-<int:image_id>-status-change',views.slider_image_status_change,name='slider_image_status_change'),
-    path('slide-get',views.get_slide,name='get_slide')
+    path('slide-get',views.get_slide,name='get_slide'),
+    path('slid-image-<int:image_id>-delete',views.slider_image_delete,name='slider_image_delete')
+]
+
+
+# sponsor urls section
+urlpatterns +=[
+    path('sponsor-list',views.child_sponsor_list_view,name='child_sponsor_list_view'),
+    path('sponsor-<int:request_id>-request-approve',views.sponsor_request_accept,name='sponsor_request_accept'),
+    path('sponsor-<int:request_id>-request-cancel',views.sponsor_request_cancel,name='sponsor_request_cancel')
+]
+
+# authentication system section
+urlpatterns +=[
+    path('log-in',views.login_view,name='login_view'),
+    path('change-password',views.change_password_view,name='change_password_view'),
+    path('log-out',views.super_admin_logout,name='super_admin_logout'),
+    path('edit-profile',views.edit_profile_view,name='edit_profile_view'),
+    path('edit-profile-save',views.edit_profile_save,name='edit_profile_save')
+]
+
+# contact us section
+urlpatterns +=[
+    path('contact-information-save',views.contact_information_save,name='contact_information_save'),
+    path('contact-information-list',views.contact_information_list,name='contact_information_list'),
+    path('contact-<int:request_id>-request-approve',views.contact_request_accept,name='contact_request_accept'),
+    path('contact-<int:request_id>-request-cancel',views.contact_request_cancel,name='contact_request_cancel')
+]
+
+#Gallery Image section
+urlpatterns +=[
+    path('gallery-image-list',views.gallery_image_list,name='gallery_image_list'),
+    path('gallery-image-add',views.gallery_image_save,name='gallery_image_save'),
+    path('gallery-image-<int:image_id>-status-change',views.gallery_image_status_change,name='gallery_image_status_change'),
+    path('gallery-edit-image-get',views.gallery_image_get,name='gallery_image_get'),
+    path('gallery-image-edit',views.gallery_image_edit,name='gallery_image_edit'),
+    path('gallery-image-<int:image_id>-delete',views.gallery_image_delete,name='gallery_image_delete')
+
 ]
