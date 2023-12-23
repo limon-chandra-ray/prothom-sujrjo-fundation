@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'psf.apps.PsfConfig',
     'sadmin.apps.SadminConfig',
     'staff.apps.StaffConfig',
+    'child.apps.ChildConfig'
 ]
 
 MIDDLEWARE = [

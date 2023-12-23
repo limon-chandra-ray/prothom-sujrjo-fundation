@@ -20,7 +20,14 @@ class CustomUserManager(BaseUserManager):
         donar.set_password(password)
         donar.save(using = self._db)
         return donar
-
+    def create_child(self,user_name,email,password=None):
+        child = self.model(
+            user_name = user_name,
+            email=email
+        )
+        child.set_password(password)
+        child.save(using = self._db)
+        return child
     def create_superuser(self,user_name,email,password=None):
         admin = self.model(
             user_name    = user_name,
