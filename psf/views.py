@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from psf.models import ShelterChild,Slider,Event,GalleryImage
 from sponsor.models import Sponsor,SponsorProfile,SponsorCall
 from user.models import CustomUser
+from child.models import ChildProfile
 from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
@@ -49,13 +50,13 @@ def event_details(request,event_id):
 def about_shelter_home(request):
     return render(request,'psf/shelter/about-shelter-home.html')
 def children_shelter_home(request):
-    shelter_children = ShelterChild.objects.all()
+    shelter_children = ChildProfile.objects.all()
     context = {
         'shelter_childrens':shelter_children
     }
     return render(request,'psf/shelter/shelter-home-children.html',context)
 def child_details(request, id):
-    shelter_child = get_object_or_404(ShelterChild, id=id)
+    shelter_child = get_object_or_404(ChildProfile, id=id)
     context = {
         'shelter_child': shelter_child
     }
