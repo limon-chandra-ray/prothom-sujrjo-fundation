@@ -3,10 +3,20 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 from datetime import date,datetime
 from PIL import Image
+import os
+from sadmin.utlis import date_to_str
 # Create your models here.
+
+def event_image_path(instance,filename):
+    file_name,extension = os.path.splitext(filename)
+    new_file_path = f"{date_to_str()}.{extension}"
+
+    return os.path.join('event',new_file_path)
+
+
 class Event(models.Model):
     event_title = models.CharField(max_length=250)
-    event_image = models.ImageField(upload_to=f'event/{date.today()}/')
+    event_image = models.ImageField(upload_to=event_image_path)
     event_date = models.DateField()
     event_time = models.TimeField()
     event_status = models.BooleanField()
@@ -33,11 +43,17 @@ class Event(models.Model):
                 if p_image:
                     p_image.delete(save=False)
 
+
+def member_image_path(instance,filename):
+    file_name,extension = os.path.splitext(filename)
+    new_file_path = f"{date_to_str()}.{extension}"
+
+    return os.path.join('team-member',new_file_path)
 class TeamMember(models.Model):
     tm_name = models.CharField(max_length=250,unique=True)
     tm_email = models.EmailField(unique=True)
     tm_phone = models.CharField(max_length=11,unique=True)
-    tm_image = models.ImageField(upload_to=f'team-member/{date.today()}/')
+    tm_image = models.ImageField(upload_to=member_image_path)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
@@ -49,6 +65,10 @@ class TeamMember(models.Model):
             if team_member_existing.tm_image != self.tm_image:
                 team_member_existing.tm_image.delete(save=False)
         super(TeamMember,self).save(*args, **kwargs)
+        if self.tm_image:
+            image = Image.open(self.tm_image.path)
+            image.thumbnail((300,300))
+            image.save(self.tm_image.path)
 
     @receiver(pre_delete,sender="psf.TeamMember")
     def tm_image_update_signal(sender,instance,*args, **kwargs):
@@ -119,10 +139,14 @@ class ChildProgress(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+def slider_image_path(instance,filename):
+    file_name,extension = os.path.splitext(filename)
+    new_file_path = f"{date_to_str()}.{extension}"
+    return os.path.join('slider',new_file_path)
 
 class Slider(models.Model):
     slider_caption = models.CharField(max_length=250)
-    slider_image = models.ImageField(upload_to=f'slider/{date.today()}/')
+    slider_image = models.ImageField(upload_to=slider_image_path)
     slider_description = models.TextField(null=True,blank=True)
     slider_status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -214,11 +238,15 @@ class UserContact(models.Model):
     def __str__(self):
         return self.title
     
+def gallery_image_path(instance,filename):
+    file_name,extension = os.path.splitext(filename)
+    new_file_path = f"{date_to_str()}.{extension}"
 
+    return os.path.join('gallery',new_file_path)
 class GalleryImage(models.Model):
     image_title = models.CharField(max_length=250)
     image_description = models.TextField(null=True,blank=True)
-    gallery_image = models.ImageField(upload_to='gallery/')
+    gallery_image = models.ImageField(upload_to=gallery_image_path)
     image_status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     updated_at = models.DateTimeField(auto_now=True,null=True,blank=True)
