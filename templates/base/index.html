@@ -7,6 +7,19 @@
 
 <body class="bg-[#fffae6]">
     {% include "base/navbar.html" %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                {% include "notifications/success.html" %}
+            {% endif %}
+            {% if message.tags == 'warning' %}
+                    {% include "notifications/warning.html" %}
+            {% endif %}
+                 {% if message.tags == 'error' %}
+                    {% include "notifications/error.html" %}
+                 {% endif %}
+        {% endfor %}
+    {% endif %}
     {% block mainBody %}{% endblock mainBody %}
 
     {% include "base/footer.html" %}
