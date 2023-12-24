@@ -5,6 +5,19 @@
     <title>{% block sadminTitle %}{% endblock sadminTitle %}|prothom surjo fundation</title>
 </head>
 <body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                {% include "notifications/success.html" %}
+            {% endif %}
+            {% if message.tags == 'warning' %}
+                    {% include "notifications/warning.html" %}
+            {% endif %}
+                 {% if message.tags == 'error' %}
+                    {% include "notifications/error.html" %}
+                 {% endif %}
+        {% endfor %}
+    {% endif %}
     <div class="flex h-screen overflow-hidden">
         {% include "super-admin/base/sidebar.html" %}
         <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
