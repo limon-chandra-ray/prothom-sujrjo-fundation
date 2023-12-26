@@ -1,4 +1,5 @@
 {% extends "base/index.html" %}
+{% load static %}
 {% block mainBody %}
 <div class="lg:mx-[200px] mx-[20px] my-[100px]">
     <div class="text-center w-full">
@@ -27,10 +28,10 @@
     </div>
     <div class="grid lg:grid-cols-2 grid-cols-1 gap-4 mt-[20px]">
         <div class="w-[100%]">
-            <img class="w-[100%]" src="image/shelter-home-1.jpg" alt="">
+            <img class="w-[100%]" src="{% static 'image/footer-top.jpg' %}" alt="">
         </div>
         <div class="w-[100%]">
-            <img class="w-[100%]" src="image/shelter-home-2.jpg" alt="">
+            <img class="w-[100%]" src="{% static 'image/sponsor-head.jpg' %}" alt="">
         </div>
     </div>
     <div class="mt-[20px]">
@@ -43,7 +44,7 @@
     </div>
     <div class="grid grid-cols-1 mt-[20px]">
         <div class="w-[100%] flex justify-center items-center">
-            <img class="w-[100%] lg:w-[500px] h-[100%] lg:h-[400px]" src="image/shelter-home-3.jpg" alt="">
+            <img class="w-[100%] lg:w-[500px] h-[100%] lg:h-[400px]" src="{% static 'image/shelter1.jpg' %}" alt="">
         </div>
     </div>
     <div class="mt-[20px]">

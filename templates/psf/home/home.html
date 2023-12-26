@@ -13,10 +13,10 @@
     <div class="my-[30px] grid lg:grid-cols-4 grid-cols-1 gap-2">
             <div class="shadow-xl bg-[#fff] rounded-md w-[100%]">
                 <div>
-                    <a href="event_details.php"><img class="h-[280px] w-[100%]" src="https://jaago.com.bd/wp-content/uploads/2023/03/Zakat-for-Education-donate-for-zakat-1.webp" alt=""></a>
+                    <a href="{% url 'psf:donate_view' %}"><img class="h-[280px] w-[100%]" src="{% static 'image/donate1.jpg' %}" alt=""></a>
                 </div>
                 <div class="w-[100%]">
-                    <button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button>
+                    <a href="{% url 'psf:donate_view' %}"><button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button></a>
                 </div>
                 <div class="px-[20px] py-[10px]">
                     <h1 class="text-[24px] font-semibold text-center">ZAKAT for Education</h1>
@@ -25,10 +25,10 @@
             </div>
             <div class="shadow-xl bg-[#fff] rounded-md w-[100%]">
                 <div>
-                    <a href="event_details.php"><img class="h-[280px] w-[100%]" src="https://jaago.com.bd/wp-content/uploads/2023/03/Donate-for-School-Uniform.webp" alt=""></a>
+                    <a href="{% url 'psf:donate_view' %}"><img class="h-[280px] w-[100%]" src="{% static 'image/donate2.jpg' %}" alt=""></a>
                 </div>
                 <div class="w-[100%]">
-                    <button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button>
+                    <a href="{% url 'psf:donate_view' %}"><button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button></a>
                 </div>
                 <div class="px-[20px] py-[10px]">
                     <h1 class="text-[24px] font-semibold text-center">School Uniform</h1>
@@ -37,10 +37,10 @@
             </div>
             <div class="shadow-xl bg-[#fff] rounded-md w-[100%]">
                 <div>
-                    <a href="event_details.php"><img class="h-[280px] w-[100%]" src="https://jaago.com.bd/wp-content/uploads/2023/03/Donate-for-School-Stationary.webp" alt=""></a>
+                    <a href="{% url 'psf:donate_view' %}"><img class="h-[280px] w-[100%]" src="{% static 'image/donate3.jpg' %}" alt=""></a>
                 </div>
                 <div class="w-[100%]">
-                    <button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button>
+                    <a href="{% url 'psf:donate_view' %}"><button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button></a>
                 </div>
                 <div class="px-[20px] py-[10px]">
                     <h1 class="text-[24px] font-semibold text-center">School Stationary</h1>
@@ -49,10 +49,10 @@
             </div>
             <div class="shadow-xl bg-[#fff] rounded-md w-[100%] h-[520px]">
                 <div class="">
-                    <a href="event_details.php"><img class="h-[280px] w-[100%]" src="https://jaago.com.bd/wp-content/uploads/2023/03/Donate-for-School-Bag.webp" alt=""></a>
+                    <a href="{% url 'psf:donate_view' %}"><img class="h-[280px] w-[100%]" src="{% static 'image/donate4.jpg' %}" alt=""></a>
                 </div>
                 <div class="w-[100%]">
-                    <button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button>
+                    <a href="{% url 'psf:donate_view' %}"><button class="text-[#000] uppercase bg-[#FFCB05] w-[100%] py-[14px] px-6 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button></a>
                 </div>
                 <div class="px-[20px] py-[10px]">
                     <h1 class="text-[24px] font-semibold text-center">School Bag</h1>
@@ -100,7 +100,7 @@
 </div>
 <div class="mt-[100px]">
     <div class="lg:h-[40vh] w-[100%] h-[80vh] relative">
-        <img class="lg:h-[40vh] w-[100%] h-[80vh] object-cover" src="https://jaago.com.bd/wp-content/uploads/2023/03/Sponsor-A-Child.webp" alt="">
+        <img class="lg:h-[40vh] w-[100%] h-[80vh] object-cover" src="{% static 'image/footer-top.jpg' %}" alt="">
         <div class="lg:h-[40vh] w-[100%] h-[80vh] absolute bottom-0 flex justify-center items-center bg-opacity-[.5] bg-[#2b2b2b]">
             <div class="flex lg:flex-row flex-col justify-center lg:space-x-[100px] space-x-0 lg:space-y-0 space-y-[50px]">
                 <div class="flex flex-col justify-center items-center space-y-6">

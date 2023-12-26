@@ -1,7 +1,8 @@
 {% extends "base/index.html" %}
+{% load static %}
 {% block mainBody %}
 <div class="lg:h-[80vh] h-[45vh] relative">
-    <img class="lg:h-[80vh] h-[45vh] object-cover" src="https://jaago.com.bd/wp-content/uploads/2023/03/Sponsor-A-Child.webp" alt="">
+    <img class="lg:h-[80vh] h-[45vh] object-cover w-full" src="{% static 'image/footer-top.jpg' %}" alt="">
     <div class="absolute w-[100%] bottom-0 flex justify-center items-center bg-opacity-[.85] bg-[#2b2b2b]">
         <div class="lg:w-[65%] w-[100%] lg:py-3 py-2">
             <h1 class="text-[#FFCB05] lg:text-[42px] text-[24px] font-bold font-['Oswald'] text-center">HELP BRING A SUSTAINABLE SOCIAL CHANGE</h1>

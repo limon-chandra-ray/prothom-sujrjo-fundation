@@ -1,9 +1,9 @@
 {% extends "base/index.html" %}
 {% load static %}
 {% block mainBody %}
-<div class="lg:mx-[200px] mx-[20px] my-[50px]">
+<div class="lg:mx-[200px] mx-[20px] my-[100px]">
     <div>
-        <h1 class="lg:text-[42px] text-[24px] text-center font-semibold my-4">Exclusive Photo Gallery</h1>
+        <h1 class="lg:text-[40px] text-[32px] font-bold text-center my-[50px] text-green-500">Exclusive Photo Gallery</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for image in gallery_images %}
                 <div class="relative">

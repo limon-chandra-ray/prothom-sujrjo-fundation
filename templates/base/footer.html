@@ -10,10 +10,10 @@
         <div class="flex lg:justify-center">
             <div class="flex flex-col space-y-2">
                 <div><h1 class="font-bold text-[32px] mb-6 font-['Oswald']">About Us</h1></div>
-                <div><a href="Sponsor.php" class="text-[#FFCB05]">Sponsor A Child</a></div>
-                <div><a href="donate.php" class="text-[#FFCB05]">General Donation</a></div>
+                <div><a href="{% url 'psf:sponsor_view' %}" class="text-[#FFCB05]">Sponsor A Child</a></div>
+                <div><a href="{% url 'psf:donate_view' %}" class="text-[#FFCB05]">General Donation</a></div>
                 <div><a href="#" class="text-[#FFCB05]">News & Updates</a></div>
-                <div><a href="contact.php" class="text-[#FFCB05]">Contact Us</a></div>
+                <div><a href="{% url 'psf:contact_us' %}" class="text-[#FFCB05]">Contact Us</a></div>
             </div>
         </div>
         <div class="flex flex-col space-y-2">

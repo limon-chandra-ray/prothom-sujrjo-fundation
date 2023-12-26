@@ -1,6 +1,9 @@
 {% extends "base/index.html" %}
 {% block mainBody %}
-<div class="lg:mx-[200px] mx-[20px] my-[100px] grid lg:grid-cols-3 grid-cols-1 gap-8">
+<div class="text-center w-full mt-[100px] mb-[50px]">
+    <h1 class="lg:text-[40px] text-[32px] font-bold text-center text-green-500">Global Events</h1>
+</div>
+<div class="lg:mx-[200px] mx-[20px] mb-[100px] grid lg:grid-cols-3 grid-cols-1 gap-8">
     {% for event in global_events %}
         <div class="shadow-xl bg-[#fff] rounded-md">
             <div>

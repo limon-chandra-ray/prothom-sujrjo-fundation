@@ -1,8 +1,9 @@
 {% extends "base/index.html" %}
+{% load static %}
 {% block mainBody %}
 <div class="lg:mx-[200px] mx-[20px] my-[100px] flex flex-col justify-center">
     <div class="my-4">
-        <h1 class="lg:text-[42px] text-[28px] text-center font-semibold mb-2">Contact Us</h1>
+        <h1 class="lg:text-[42px] text-[28px] text-center font-bold mb-2 text-green-500">Contact Us</h1>
         <p class="lg:text-[24px] text-[20px] text-center font-['adobe-garamond-pro'] text-[rgba(0,0,0,.68)]">Any
             questions or remarks? Just write us a message!</p><br>
         <p class="lg:text-[24px] text-[20px] text-center font-['adobe-garamond-pro'] text-[rgba(0,0,0,.68)]">Thank you
@@ -17,7 +18,7 @@
     <div class="w-[100%]">
         <div class="w-[100%] pb-[17px] flex lg:flex-row flex-col justify-between">
             <div class="lg:w-[50%] w-[100%]">
-                <img src="https://images.squarespace-cdn.com/content/v1/5d94a2dd7046bc4760c90517/1616334255887-OFJC7PPE9FKCDAFHOMUP/unsplash-image-xG8IQMqMITM.jpg?format=2500w"
+                <img src="{% static 'image/contact.jpg' %}"
                     alt="">
             </div>
             <div
