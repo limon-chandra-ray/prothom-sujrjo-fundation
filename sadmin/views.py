@@ -4,7 +4,7 @@ from django.contrib import messages
 from psf.models import (Event,ShelterChild,Slider,UserContact,GalleryImage,Rank)
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff,StaffRank
-from child.models import ChildProfile,Child
+from child.models import ChildProfile,Child,ChildProgress
 from sponsor.models import SponsorCall
 from sadmin.decorators import super_admin_access_only
 from django.contrib.auth.decorators import login_required
@@ -275,6 +275,75 @@ def children_info_delete(request,children_id):
     
 def children_detail_view(request,children_id):
     pass
+
+# children progress section
+def child_progress_list(request,child_id):
+    child = CustomUser.objects.get(id=int(child_id))
+    child_progress = ChildProgress.objects.filter(child_user = child)
+    context={
+        'child_id':child_id,
+        'child_progress':child_progress
+    }
+    return render(request,'super-admin/children/progress/progress-list.html',context)
+def child_progress_add_view(request,child_id):
+    context={
+        'child_id':child_id
+    }
+    return render(request,'super-admin/children/progress/progress-add.html',context)
+def child_progress_add_save(request,child_id):
+    if request.method == 'POST':
+        title = request.POST['progress_title']
+        progress_year  = request.POST['progress_year']
+        description  = request.POST['description']
+        progress_image = request.FILES['progress_image']
+        child = CustomUser.objects.get(id=int(child_id))
+        child_progress = ChildProgress.objects.create(
+            child_user = child,
+            progress_year = progress_year,
+            progress_title = title,
+            progress_description = description,
+            progress_image = progress_image
+        )
+        child_progress.save()
+        messages.add_message(request,messages.SUCCESS,f'{child.user_name} {progress_year} years new progress added success')
+        return redirect('sadmin:child_progress_list',child_id)
+
+def child_progress_edit_view(request,child_id,progress_id):
+    progress = ChildProgress.objects.get(id = int(progress_id))
+    context={
+        'child_id':child_id,
+        'progress':progress
+    }
+    return render(request,'super-admin/children/progress/progress-edit.html',context)
+
+def child_progress_edit_save(request,child_id,progress_id):
+    if request.method == 'POST':
+        title = request.POST['progress_title']
+        progress_year  = request.POST['progress_year']
+        description  = request.POST['description']
+        try:
+            progress_image = request.FILES['progress_image']
+        except:
+            progress_image = None
+        child = CustomUser.objects.get(id=int(child_id))
+        child_progress = ChildProgress.objects.filter(
+            id=int(progress_id),
+            child_user = child).first()
+        child_progress.progress_title = title
+        child_progress.progress_description = description
+        child_progress.progress_year = progress_year
+        if progress_image is not None:
+            child_progress.progress_image = progress_image
+        child_progress.save()
+        messages.add_message(request,messages.SUCCESS,f'{child.user_name} {progress_year} years progress updated success')
+        return redirect('sadmin:child_progress_list',child_id)
+
+def child_progress_delete(request,child_id,progress_id):
+    progress = ChildProgress.objects.get(id = int(progress_id))
+    if progress:
+        progress.delete()
+        messages.add_message(request,messages.SUCCESS,f'{progress.progress_title} deleted successfully')
+        return redirect('sadmin:child_progress_list', child_id)
 
 # Start Office staff section
 def office_staff_list(request):

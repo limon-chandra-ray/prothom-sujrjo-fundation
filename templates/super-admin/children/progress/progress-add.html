@@ -1,0 +1,70 @@
+{% extends "super-admin/base/index.html" %}
+{% load static %}
+{% block sadminTitle %}
+New Children Create
+{% endblock sadminTitle %}
+{% block sadminMain %}
+
+<div class="bg-gray-300 px-4 py-5 sm:p-6">
+    <div class="flex justify-center">
+        <div class="mt-3 sm:mt-0 sm:text-left w-2/3 text-black text-[1rem]">
+            <form action="{% url "sadmin:child_progress_add_save" child_id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="py-1">
+                    <label for="progress_title" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Progress Title</label>
+                    <input type="text" id="progress_title" name="progress_title" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                </div>
+                <div class="py-1">
+                    <label for="progress_year" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Progress Year<span class="text-[12px]">(required)</span></label>
+                    <select name="progress_year" id="progress_year" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                        <option >select progress year</option>
+                    </select>
+                </div>
+
+                <div class="py-1">
+                    <label class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">progress Image <span class="text-[12px]">(required)</span></label>
+                    <label for="progress_image" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">
+                        <div class="flex justify-center w-full rounded border-dashed border-2 border-indigo-600">
+                            <div class="w-1/3 py-5 flex flex-col items-center cursor-pointer" id="progressImageShow">
+                                <span class="py-5"><i class="fas fa-image text-[5rem] text-stone-950"></i></span>
+                                <p>Upload a file or drag and drop </p>
+                                <p>PNG,JPG OR GIF up to 2 MB</p>
+                            </div>
+                        </div>
+                    </label>
+                    <input type="file" name="progress_image" id="progress_image" class="hidden border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                </div>
+                
+                <div class="py-1">
+                    <label for="description" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Description <span class="text-[12px]">(required)</span></label>
+                    <textarea rows="7"  name="description" id="description" class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] p-[10px] w-[100%]"
+                    required
+                    ></textarea>
+                </div>
+                <div class="py-4 flex justify-center space-x-4 items-center">
+                    <button type="submit" class="text-[#000] uppercase bg-green-400 py-2 px-8 hover:bg-[rgba(26,26,26,.9)] hover:text-[#FFCB05] font-semibold">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock sadminMain %}
+{% block sadminScript %}
+<script>
+    $("#progress_image").on('change',()=>{
+        $("#progressImageShow").empty()
+        var upload_image = document.getElementById('progress_image');
+        var show_iamge_link = '<img src="'+URL.createObjectURL(upload_image.files[0])+'" class="w-full h-[17rem]" alt="">'
+        $("#progressImageShow").append(show_iamge_link)
+    })
+    var today_date = new Date()
+    var progress_start = today_date.getFullYear() - 10;
+    var progress_end = today_date.getFullYear() + 10;
+    var select_option = '';
+    while (progress_start != progress_end) {
+        select_option = '<option value="'+progress_start+'" >'+progress_start+'</option>';
+        $("#progress_year").append(select_option);
+        progress_start++;
+    }
+</script>
+{% endblock sadminScript %}

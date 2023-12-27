@@ -66,3 +66,43 @@ class ChildProfile(models.Model):
                 logo = getattr(instance,field.name)
                 if logo:
                     logo.delete(save = False)
+
+def progress_image_path(instance,filename):
+    file_name,extension = os.path.splitext(filename)
+    new_file_path = f"{date_to_str()}.{extension}"
+    return os.path.join('child-progress',new_file_path)
+
+class ChildProgress(models.Model):
+    child_user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    progress_year = models.IntegerField(null=True,blank=True)
+    progress_title = models.CharField(max_length=250)
+    progress_description = models.TextField(null=True,blank=True)
+    progress_image = models.ImageField(upload_to=progress_image_path)
+    progress_status = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_at = models.DateTimeField(auto_now=True,null=True,blank=True)
+    def __str__(self):
+        return self.progress_title
+    
+    def save(self,*args, **kwargs):
+        if self.id:
+            progess_image_existing = ChildProgress.objects.get(id = self.id)
+            if progess_image_existing.progress_image != self.progress_image:
+                progess_image_existing.progress_image.delete(save=False)
+    
+        super(ChildProgress,self).save(*args, **kwargs)
+        if self.progress_image:
+            image = Image.open(self.progress_image.path)
+            image.thumbnail((600,600),Image.BICUBIC)
+            image.save(self.progress_image.path)
+
+    @receiver(pre_delete,sender="psf.ChildProgress")
+    def progress_image_update_signal(sender,instance,*args, **kwargs):
+        for field in instance._meta.fields:
+            if field.name == 'progress_image':
+                p_image = getattr(instance,field.name)
+                if p_image:
+                    p_image.delete(save=False)
+
+
+

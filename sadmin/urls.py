@@ -25,6 +25,16 @@ urlpatterns +=[
     path('children-<int:children_id>-delete',views.children_info_delete,name='children_info_delete')
 
 ]
+# children progress section
+urlpatterns +=[
+    path('children-<int:child_id>-progress-list',views.child_progress_list,name='child_progress_list'),
+    path('children-<int:child_id>-progress-add',views.child_progress_add_view,name='child_progress_add_view'),
+    path('children-<int:child_id>-progress-save',views.child_progress_add_save,name='child_progress_add_save'),
+    path('children-<int:child_id>-progress-<int:progress_id>-edit',views.child_progress_edit_view,name='child_progress_edit_view'),
+    path('children-<int:child_id>-progress-<int:progress_id>-save',views.child_progress_edit_save,name='child_progress_edit_save'),
+    path('children-<int:child_id>-progress-<int:progress_id>-delete',views.child_progress_delete,name='child_progress_delete'),
+]   
+
 
 # staff urls section
 urlpatterns += [
