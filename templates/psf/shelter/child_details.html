@@ -1,103 +1,153 @@
 {% extends "base/index.html" %}
+{% load static %}
 {% block mainBody %}
-<main class="text-justify">
-    <div class=" flex flex-col justify-center items-center bg-opacity-[.6] bg-[#2b2b2b]">
-        <img class="lg:w-[300px] w-[200px] lg:h-[300px] h-[200px] lg:mt-[50px] mt-[30px]"
-            src="{{shelter_child.child_image.url}}"
+<main class="">
+    <div class="lg:h-[60vh] h-[28vh] relative flex justify-center items-center"
+        style="background:linear-gradient(to top, #f3c9c9, rgba(255,255,255.9), rgba(255,255,255,.7), rgba(255,255,255,.4), rgba(255,255,255,0));">
+        <img class="lg:h-[60vh] h-[28vh] object-cover lg:w-[80%] w-full" src="{% static 'image/footer-top.jpg' %}"
             alt="">
-        <div class="mt-[10px] lg:w-[300px] w-[200px] lg:mb-[50px] mb-[30px] text-center flex flex-col justify-center items-center text-white bg-opacity-[.6] bg-[#2b2b2b] px-4 py-2">
-            <h1 class="lg:text-[42px] text-[24px] font-bold font-['Oswald'] text-center">
-                {{shelter_child.child_name}}
-            </h1>
-            <div class="flex justify-between space-x-4">
-                <h1>Age: {{shelter_child.age}}</h1>
-                <h1>Class: 10</h1>
+        <div
+            class="absolute lg:w-[80%] w-full bottom-0 lg:mb-[-160px] mb-[-130px] lg:pl-4 flex lg:flex-row flex-col lg:justify-start justify-center items-center">
+            <img class="lg:w-[250px] w-[120px] lg:h-[250px] h-[120px] rounded-[100%] object-cover  border-[5px] border-solid border-[#fffae6]"
+                src="{{ shelter_child.child_image.url }}" alt="">
+            <div
+                class="mt-[10px] lg:w-[300px] w-[200px] lg:h-[100px] h-[60px] text-center flex flex-col justify-center items-center text-black px-4 py-2">
+                <h1 class="lg:text-[32px] text-[24px] font-semibold font-['Oswald'] text-center">
+                    {{ shelter_child.child_user }}
+                </h1>
+                <div class="flex justify-between space-x-4">
+                    <h1>Age: {{ shelter_child.age }} 14 year</h1>
+                    <h1>Class: 10</h1>
+                </div>
             </div>
         </div>
     </div>
-    <div class="lg:mx-[200px] mx-[20px] my-[50px]">
-        <div>
-            <h1 class="lg:text-[42px] text-[24px] text-center font-semibold">Progress Report</h1>
-            <div class=" overflow-x-auto overflow-y-auto p-6">
-                <table class="w-full h-[100px] text-sm text-left text-white">
-                    <thead>
-                        <tr class=" border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th class="px-3 py-3">
-                                Year
-                            </th>
-                            <th class="px-3 py-3">
-                                Progress
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td  class="px-3 py-3">
-                                2022
-                            </td>
-                            <td  class="px-3 py-3">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, dolore!
-                            </td>
-                        </tr>
-                        <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td  class="px-3 py-3">
-                                2023
-                            </td>
-                            <td  class="px-3 py-3">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, asperiores.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="lg:mx-[200px] mx-[20px] my-[50px] lg:mt-[180px] mt-[130px]">
+        <div class="flex lg:flex-row flex-col justify-between lg:space-y-0 space-y-4">
+            <div>
+                <h1 class="lg:text-[32px] text-[24px] font-semibold text-green-500">Intro</h1>
+                <h1 class="lg:text-[20px] text-[16px]"><span class="font-semibold">Full Name:</span> {{ shelter_child.child_first_name }} {{ shelter_child.child_last_name }}</h1>
+                <h1 class="lg:text-[20px] text-[16px]"><span class="font-semibold">Father:</span> {{ shelter_child.child_father_name }}</h1>
+                <h1 class="lg:text-[20px] text-[16px]"><span class="font-semibold">Mother:</span> {{ shelter_child.child_mother_name }}</h1>
+                <h1 class="lg:text-[20px] text-[16px]"><span class="font-semibold">Date Of Birth:</span> {{ shelter_child.child_date_of_birth }}</h1>
+                <h1 class="lg:text-[20px] text-[16px]"><span class="font-semibold">Blood Group:</span> {{ shelter_child.child_blood }}</h1>
+                <h1 class="lg:text-[20px] text-[16px]"><span class="font-semibold">Present Address:</span> {{ shelter_child.child_present_address }}</h1>
+                <h1 class="lg:text-[20px] text-[16px]"><span class="font-semibold">Parmanent Address:</span> {{ shelter_child.child_parmanent_address }}</h1>
+            </div>
+            <div>
+                <h1 class="lg:text-[20px] text-[16px]">If you want to Donation on this Child, Please Click on the Donate Button</h1>
+                <div class="flex justify-end mt-2">
+                    <button class="text-[#000] uppercase bg-[#FFCB05] rounded-[8px] lg:text-[16px] text-[14px] lg:py-[12px] py-[10px] lg:px-6 px-4 hover:bg-[#000] hover:text-[#FFCB05] font-semibold">Donate Now</button>
+                </div>
             </div>
         </div>
         <div>
-            <h1 class="lg:text-[42px] text-[24px] text-center font-semibold">Doner List</h1>
-            <div class=" overflow-x-auto overflow-y-auto p-6">
-                <table class="w-full h-[100px] text-sm text-left text-white">
+            <h1 class="lg:text-[32px] text-[24px] font-semibold text-green-500 mt-[20px]">Bio</h1>
+            <p class="lg:text-[16px] text-[16px] text-justify">{{ shelter_child.child_description }}</p>
+        </div>
+        <div>
+            <div class="flex lg:flex-row flex-col lg:items-center space-x-4 mt-[20px]">
+                <h1 class="lg:text-[32px] text-[24px] font-semibold text-green-500">Progress Report</h1>
+                <div class="lg:text-[32px] text-[20px] font-semibold">
+                    <label for="year">Select a Year:</label>
+                    <select id="year1" name="year"></select>
+                </div>
+            </div>
+            <div>
+                <h1 class="lg:text-[32px] text-[24px] font-semibold text-center my-[20px]"><span class="text-green-500">2023</span> Progress Report</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="relative border-2 border-solid border-gray-700">
+                            <img src="{% static 'image/footer-top.jpg' %}" alt="{{image.image_title}}" class="w-full h-64 object-cover object-center cursor-pointer"
+                                onclick="openLightbox2(`{% static 'image/footer-top.jpg' %}`, 'Description for Photo 1.')">
+                            <div class="p-4 text-justify">
+                                <h2 class="text-xl font-semibold">fsvasv</h2>
+                                <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque qui quis corporis amet vitae sunt quam tempore sequi, corrupti officia dolores quidem inventore aperiam tempora error laborum fuga! Nemo atque eum nulla libero quas officia repellendus maiores voluptate iste odit. Temporibus reprehenderit culpa fuga expedita officia dicta modi nulla enim!</p>
+                            </div>
+                        </div>
+                        <div class="relative border-2 border-solid border-gray-700">
+                            <img src="{% static 'image/footer-top.jpg' %}" alt="{{image.image_title}}" class="w-full h-64 object-cover object-center cursor-pointer"
+                                onclick="openLightbox2(`{% static 'image/footer-top.jpg' %}`, 'Description for Photo 1.')">
+                            <div class="p-4 text-justify">
+                                <h2 class="text-xl font-semibold">fsvasv</h2>
+                                <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, optio voluptas. Fugit eos vel earum voluptas sunt consequuntur excepturi esse.</p>
+                            </div>
+                        </div>
+                        <div class="relative border-2 border-solid border-gray-700">
+                            <img src="{% static 'image/footer-top.jpg' %}" alt="{{image.image_title}}" class="w-full h-64 object-cover object-center cursor-pointer"
+                                onclick="openLightbox2(`{% static 'image/footer-top.jpg' %}`, 'Description for Photo 1.')">
+                            <div class="p-4 text-justify">
+                                <h2 class="text-xl font-semibold">fsvasv</h2>
+                                <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta doloribus est eum dolore, recusandae exercitationem nihil, adipisci eveniet tempora esse at sed. Repudiandae alias totam vitae ut velit quasi, vel saepe exercitationem delectus, dolor, quaerat aliquid doloremque assumenda? Quibusdam, ratione!</p>
+                            </div>
+                        </div>
+                </div>
+                <div id="lightbox2" class="fixed lg:top-9 top-7 left-0 w-screen h-screen bg-black bg-opacity-70 flex justify-center items-center hidden">
+                    <div class="bg-white p-4 rounded-lg shadow-lg">
+                        <div class="flex justify-end mb-4">
+                            <button id="close-lightbox" class="bg-red-500 text-white mt-4 p-2 rounded hover:bg-red-600" onclick="closeLightbox2()">Close</button>
+                        </div>
+                        <img id="lightbox-image2" src="" alt="Lightbox Image" class="w-full h-[500px]">
+                        <!-- <p id="lightbox-description" class="mt-4 text-center text-gray-600"></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="flex lg:flex-row flex-col lg:items-center space-x-4 mt-[20px]">
+                <h1 class="lg:text-[32px] text-[24px] font-semibold text-green-500">Donar List</h1>
+                <div class="lg:text-[32px] text-[24px] font-semibold">
+                    <label for="year">Select a Year:</label>
+                    <select id="year2" name="year"></select>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h1 class="lg:text-[32px] text-[24px] font-semibold text-center my-[20px]"><span class="text-green-500">2023</span> Donar List</h1>
+            <div class="overflow-x-auto overflow-y-auto p-6 lg:text-[20px] text-[16px]">
+                <table class="w-full h-[100px] text-left">
                     <thead>
-                        <tr class=" border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr class="border-b border-solid border-gray-700">
                             <th class="px-3 py-3">
                                 Name
                             </th>
                             <th class="px-3 py-3">
-                                Email
+                                Occupation
                             </th>
                             <th class="px-3 py-3">
-                                Sector
+                                Donation Type
                             </th>
                             <th class="px-3 py-3">
-                                Amount
+                                Date
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td  class="px-3 py-3">
-                                samrat
+                        <tr class="border-b border-solid border-gray-700">
+                            <td class="px-3 py-3">
+                                samrat biswas
                             </td>
-                            <td  class="px-3 py-3">
-                                samrat@gmail.com
+                            <td class="px-3 py-3">
+                                student
                             </td>
-                            <td  class="px-3 py-3">
+                            <td class="px-3 py-3">
                                 food
                             </td>
-                            <td  class="px-3 py-3">
-                                10000
+                            <td class="px-3 py-3">
+                                12/10/2023
                             </td>
                         </tr>
-                        <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td  class="px-3 py-3">
-                                biswas
+                        <tr class="border-b border-solid border-gray-700">
+                            <td class="px-3 py-3">
+                                limon roy
                             </td>
-                            <td  class="px-3 py-3">
-                                biswas@gmail.com
+                            <td class="px-3 py-3">
+                                teacher
                             </td>
-                            <td  class="px-3 py-3">
-                                food
+                            <td class="px-3 py-3">
+                                bag
                             </td>
-                            <td  class="px-3 py-3">
-                                50000
+                            <td class="px-3 py-3">
+                                05/11/2021
                             </td>
                         </tr>
                     </tbody>
@@ -106,4 +156,34 @@
         </div>
     </div>
 </main>
+<script>
+    var currentYear = new Date().getFullYear();
+    var yearSelect1 = document.getElementById("year1");
+    var yearSelect2 = document.getElementById("year2");
+    var startYear = currentYear - 10;
+    var endYear = currentYear + 10;
+    for (var year = startYear; year <= endYear; year++) {
+        var option = document.createElement("option");
+        option.value = year;
+        option.text = year;
+        yearSelect1.add(option);
+    }
+    for (var year = startYear; year <= endYear; year++) {
+        var option = document.createElement("option");
+        option.value = year;
+        option.text = year;
+        yearSelect2.add(option);
+    }
+</script>
+<script>
+    function openLightbox2(imageSrc, description) {
+        document.getElementById('lightbox-image2').src = imageSrc;
+        // document.getElementById('lightbox-description').textContent = description;
+        document.getElementById('lightbox2').style.display = 'flex';
+        console.log(svewv)
+    }
+    function closeLightbox2() {
+        document.getElementById('lightbox2').style.display = 'none';
+    }
+</script>
 {% endblock mainBody %}
