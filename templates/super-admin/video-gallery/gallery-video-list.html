@@ -1,0 +1,65 @@
+{% extends "super-admin/base/index.html" %}
+{% block sadminTitle %}
+slider image list
+{% endblock sadminTitle %}
+{% block sadminMain %}
+{% include "super-admin/video-gallery/gallery-video-table.html" %}
+{% include "super-admin/video-gallery/gallery-video-edit.html" %}
+{% include "super-admin/video-gallery/gallery-video-add.html" %}
+{% endblock sadminMain %}
+{% block sadminScript %}
+<script>
+    $("#galleryImage").on("click",()=>{
+        $("#galleryImageAddModal").removeClass('hidden')
+    })
+
+    var all_slider_image = document.querySelectorAll('#editGalleryVideo');
+    all_slider_image.forEach((slide)=>{
+        slide.addEventListener('click',()=>{
+            var video_id = slide.getAttribute('data-id');
+            $("#editGalleryVideoModal").removeClass('hidden')
+            $.ajax({
+                type:"POST",
+                url:'{% url "sadmin:gallery_video_get" %}',
+                data:{
+                    video_id :video_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success:(res)=>{
+                    var video = res['video'];
+                    console.log(video)
+                    if(res['status'] == 'success'){
+                        $("#gallery_video_id").val(video['id']);
+                        $("#evideo_title").val(video['video_title']);
+                        $("#evideo_description").val(video['video_description']);
+                        $("#evideo_link").val(video['video_link'])
+                    }
+                }
+            })
+        })
+    })
+
+    var closeButton = document.querySelectorAll('#successCloseButton');
+    closeButton.forEach((c_button)=>{
+            c_button.addEventListener('click',()=>{
+                $("#galleryImageAddModal").addClass("hidden");
+            })
+    })
+    var edit_modal_close_button = document.querySelectorAll('#successCloseButton');
+    edit_modal_close_button.forEach((c_button)=>{
+            c_button.addEventListener('click',()=>{
+                $("#editSliderImageModal").addClass("hidden");
+            })
+    })
+    $("#photo_image").on("change",()=>{
+        var upload_image = document.getElementById('photo_image');
+        var slide_image = '<img src="'+URL.createObjectURL(upload_image.files[0])+'">';
+        $("#sliderNewImage").empty();
+        $("#sliderNewImage").append(slide_image);
+    })
+    $("#eidt_gallery_image").on("change",()=>{
+        var upload_image = document.getElementById('eidt_gallery_image');
+        $("#uploadImage").attr('src',URL.createObjectURL(upload_image.files[0]))
+    })
+</script>
+{% endblock sadminScript %}

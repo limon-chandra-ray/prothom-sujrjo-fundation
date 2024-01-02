@@ -50,8 +50,14 @@
                                 <a href="#" class="block px-4 py-2 text-black hover:text-[#ffcd05] font-semibold hover:bg-[#2b2b2b] text-[14px]">Annual Reports</a>
                             </div>
                         </div>
-                        <div>
-                            <a href="{% url 'psf:gallery_view' %}" class="text-white text-[18px] font-bold border-b-2 border-transparent hover:border-blue-500 hover:transition-colors hover:duration-300 hover:text-[#ffcd05]">Gallery</a>
+                        <div class="relative parent inline-block text-left">
+                            <h1 class="cursor-pointer text-white text-[18px] font-bold border-b-2 border-transparent hover:border-blue-500 hover:transition-colors hover:duration-300 hover:text-[#ffcd05]">Gallery<span class="text-[13px]">▼</span></h1>
+                            <div class="hidden absolute child z-10 w-[200px] bg-[#fffae6] shadow-lg">
+                                <!-- Dropdown items go here -->
+                                <h1 class="block px-4 py-[7px] text-[14px] bg-[#2b2b2b]"></h1>
+                                <a href="{% url 'psf:gallery_view' %}" class="block px-4 py-2 text-black hover:text-[#ffcd05] font-semibold hover:bg-[#2b2b2b] text-[14px]">Image Gallery</a>
+                                <a href="{% url 'psf:video_gallery' %}" class="block px-4 py-2 text-black hover:text-[#ffcd05] font-semibold hover:bg-[#2b2b2b] text-[14px]">Video Gallery</a>
+                            </div>
                         </div>
                         <div>
                             <a href="{% url 'psf:donate_view' %}" class="text-white text-[18px] font-bold border-b-2 border-transparent hover:border-blue-500 hover:transition-colors hover:duration-300 hover:text-[#ffcd05]">Donate</a>
@@ -120,8 +126,14 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <a href="{% url 'psf:gallery_view' %}" class="">Gallery</a>
+                    <div class="parent flex flex-col justify-center items-center space-y-2">
+                        <h1 class="hover:text-blue-700 hover:font-bold">Gallery<span class="text-[13px]">▼</span></h1>
+                        <div class="hidden child">
+                            <div class="flex flex-col justify-center items-center space-y-2">
+                                <a href="{% url 'psf:gallery_view' %}">Image Gallery</a>
+                                <a href="{% url 'psf:video_gallery' %}">Video Gallery</a>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <a href="{% url 'psf:donate_view' %}" class="">Donate</a>

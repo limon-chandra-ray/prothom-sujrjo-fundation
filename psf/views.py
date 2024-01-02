@@ -7,7 +7,7 @@ from child.models import ChildProfile,ChildProgress
 from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
-from psf.models import ShelterChild
+from psf.models import ShelterChild,VideoGallery
 # Create your views here.
 
 def home(request):
@@ -129,7 +129,12 @@ def gallery_view(request):
         'gallery_images':gallery_images
     }
     return render(request,'psf/gallery/gallery.html',context)
-
+def video_gallery(request):
+    video_gallery = VideoGallery.objects.all().order_by('-created_at')[:4]
+    context={
+        'video_gallery':video_gallery
+    }
+    return render(request,'psf/gallery/video-gallery.html',context)
 # donate view
 def donate_view(request):
     return render(request,'psf/donate/donate.html')

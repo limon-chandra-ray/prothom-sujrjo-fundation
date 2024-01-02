@@ -98,3 +98,10 @@ urlpatterns +=[
     path('gallery-image-<int:image_id>-delete',views.gallery_image_delete,name='gallery_image_delete')
 
 ]
+
+urlpatterns +=[
+    path('video-gallery-list',views.video_gallery_list,name='video_gallery_list'),
+    path('video-add-gallery-list',views.video_add,name='video_add'),
+    path('gallery-video-get',views.gallery_video_get,name='gallery_video_get'),
+    path('gallery-video-update',views.video_update_save,name='video_update_save')
+]

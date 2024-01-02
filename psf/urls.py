@@ -4,7 +4,8 @@ from . import views
 from auth_user.views import login_view
 urlpatterns = [
     path('',views.home,name='home'),
-    path('gallery',views.gallery_view,name='gallery_view'),
+    path('image-gallery',views.gallery_view,name='gallery_view'),
+    path('video-gallery',views.video_gallery,name='video_gallery'),
     path('donate',views.donate_view,name='donate_view'),
 ]
 # event links

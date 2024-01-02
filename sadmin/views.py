@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib import messages
-from psf.models import (Event,ShelterChild,Slider,UserContact,GalleryImage,Rank)
+from psf.models import (VideoGallery,Event,ShelterChild,Slider,UserContact,GalleryImage,Rank)
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff,StaffRank
 from child.models import ChildProfile,Child,ChildProgress
@@ -812,3 +812,47 @@ def gallery_image_delete(request,image_id):
     return redirect('sadmin:gallery_image_list')
 # End Gallery Image section
 
+# video gallery section
+def video_gallery_list(request):
+    videos = VideoGallery.objects.all().order_by('-created_at')
+    context={
+        'videos':videos
+    }
+    return render(request,'super-admin/video-gallery/gallery-video-list.html',context)
+
+def video_add(request):
+    if request.method == 'POST':
+        video_title = request.POST['video_title']
+        video_description = request.POST['video_description']
+        video_link = request.POST['video_link']
+
+        video = VideoGallery.objects.create(
+            video_title = video_title,
+            video_description = video_description,
+            video_link = video_link
+        )
+        video.save()
+        messages.add_message(request,messages.SUCCESS,'new vedio add successfully')
+        return redirect('sadmin:video_gallery_list')
+    
+def gallery_video_get(request):
+    if request.method == 'POST':
+        video_id = request.POST['video_id']
+        video = VideoGallery.objects.filter(id = int(video_id)).values(
+            'id','video_title','video_description','video_link'
+        ).first()
+        return JsonResponse({'status':'success','video':video})
+    
+def video_update_save(request):
+    if request.method == 'POST':
+        video_id = request.POST['gallery_video_id']
+        video_title = request.POST['video_title']
+        video_description = request.POST['video_description']
+        video_link = request.POST['video_link']
+        video = VideoGallery.objects.get(id = int(video_id))
+        video.video_title = video_title
+        video.video_description = video_description
+        video.video_link = video_link
+        video.save()
+        messages.add_message(request,messages.SUCCESS,'Vedio Update successfully')
+        return redirect('sadmin:video_gallery_list')

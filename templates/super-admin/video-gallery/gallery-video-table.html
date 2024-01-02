@@ -1,0 +1,60 @@
+{% load static %}
+<div class="text-black">
+    <div class="flex justify-between px-6 py-4 bg-slate-400">
+        <div>
+            <h1 class="text-[1.5rem] text-bold">Video Gallery List</h1>
+        </div>
+
+        <div>
+            <button id="galleryImage" class="py-2 px-6 bg-blue-500 text-white text-[1.1rem] rounded-md hover:bg-blue-700">Add New</button>
+        </div>
+    </div>
+    <div class="overflow-auto shadow">
+        <table class="w-full">
+            <thead class="bg-blue-500 border-b-2 border-gray-300 text-white">
+              <tr>
+                <th class="p-3 w-[250px]">Video</th>
+                <th class="p-3 text-start">Title</th>
+                <th class="p-3 text-start">Description</th>
+                <th class="p-3 text-start">Created Date</th>
+                <th class="p-3 text-start">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for video in videos %}
+                <tr>
+                    <td class="flex justify-center">
+                        <iframe class="w-full h-[150px]  cursor-pointer"
+                            src="{{video.video_link}}" title="{{video.video_title}}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                       
+                    </td>
+                    <td class="whitespace-nowrap">{{video.video_title|truncatechars:80}}</td>
+                    <td class="whitespace-nowrap">{{video.video_description|truncatechars:50}}</td>
+                    <td class="whitespace-nowrap">
+                        {{video.created_at|date:"d-m-Y"}}
+                    </td>
+                    <td class="whitespace-nowrap">
+                        <div class="flex justify-center gap-x-3 px-2">
+                            {% comment %} <a href="{% url "sadmin:gallery_image_status_change" image.id %}">
+                                {% if image.image_status == True %}
+                                    <i class="far fa-eye-slash text-blue-500"></i>
+                                {% else %}
+                                    <i class="far fa-eye text-blue-500"></i>
+                                {% endif %}
+                            </a> {% endcomment %}
+                            <button id="editGalleryVideo" data-id="{{video.id}}" ><i class="far fa-edit text-green-500"></i></button>
+                            <a href="#"><i class="far fa-trash-alt text-red-500"></i></a>
+                        </div>
+                        
+                    </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</div>

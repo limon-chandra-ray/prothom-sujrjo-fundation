@@ -9,7 +9,7 @@ from sadmin.utlis import date_to_str
 
 def event_image_path(instance,filename):
     file_name,extension = os.path.splitext(filename)
-    new_file_path = f"{date_to_str()}.{extension}"
+    new_file_path = f"{date_to_str()}{extension}"
 
     return os.path.join('event',new_file_path)
 
@@ -46,7 +46,7 @@ class Event(models.Model):
 
 def member_image_path(instance,filename):
     file_name,extension = os.path.splitext(filename)
-    new_file_path = f"{date_to_str()}.{extension}"
+    new_file_path = f"{date_to_str()}{extension}"
 
     return os.path.join('team-member',new_file_path)
 class TeamMember(models.Model):
@@ -141,7 +141,7 @@ class ChildProgress(models.Model):
 
 def slider_image_path(instance,filename):
     file_name,extension = os.path.splitext(filename)
-    new_file_path = f"{date_to_str()}.{extension}"
+    new_file_path = f"{date_to_str()}{extension}"
     return os.path.join('slider',new_file_path)
 
 class Slider(models.Model):
@@ -198,9 +198,15 @@ class Slider(models.Model):
                 if p_image:
                     p_image.delete(save=False)
 
+def document_path(instance,filename):
+    file_name,extension = os.path.splitext(filename)
+    new_file_path = f"{date_to_str()}{extension}"
+
+    return os.path.join('document',new_file_path)
+
 class Document(models.Model):
     document_caption = models.CharField(max_length=250)
-    document_video = models.FileField(upload_to=f'document/{date.today()}/')
+    document_video = models.FileField(upload_to=document_path,null=True,blank=True)
     document_description = models.TextField(null=True,blank=True)
     document_status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -240,9 +246,9 @@ class UserContact(models.Model):
     
 def gallery_image_path(instance,filename):
     file_name,extension = os.path.splitext(filename)
-    new_file_path = f"{date_to_str()}.{extension}"
-
+    new_file_path = f"{date_to_str()}{extension}"
     return os.path.join('gallery',new_file_path)
+
 class GalleryImage(models.Model):
     image_title = models.CharField(max_length=250)
     image_description = models.TextField(null=True,blank=True)
@@ -273,3 +279,10 @@ class GalleryImage(models.Model):
                 if p_image:
                     p_image.delete(save=False)
     
+
+class VideoGallery(models.Model):
+    video_title = models.CharField(max_length =250)
+    video_description = models.TextField()
+    video_link = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
