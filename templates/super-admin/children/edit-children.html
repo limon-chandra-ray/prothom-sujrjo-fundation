@@ -54,6 +54,20 @@ update children data
                 </div>
                 <div class="flex gap-x-3">
                     <div class="py-1 w-1/3">
+                        <label for="admission_date" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Admission Date<span class="text-[12px]">(required)</span></label>
+                        <input type="date" id="admission_date" name="admission_date" value="{{child.child_join|date:"Y-m-d"}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                    </div>
+                    <div class="py-1 w-1/3">
+                        <label for="hobbie" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Child Hobby<span class="text-[12px]">(required)</span></label>
+                        <input type="text" id="hobbie" name="hobbie"  value="{{child.child_hobbie}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                    </div>
+                    <div class="py-1 w-1/3">
+                        <label for="study_now" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Child Study Class<span class="text-[12px]">(required)</span></label>
+                        <input type="text" id="study_now" name="study_now"  value="{{child.child_study}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                    </div>
+                </div>
+                <div class="flex gap-x-3">
+                    <div class="py-1 w-1/3">
                         <label for="child_height" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Height (feet)</label>
                         <input type="text" id="child_height" name="child_height" value="{{child.child_height}}" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
                     </div>
@@ -94,6 +108,7 @@ update children data
                 </div>
                 
                 <div class="py-1">
+                    <label class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Profile Image <span class="text-[12px]">(required)</span></label>
                     <label for="child_image" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">
                         <div class="flex justify-center w-full rounded border-dashed border-2 border-indigo-600">
                             <div class="w-1/3 py-5 flex flex-col items-center cursor-pointer">
@@ -109,7 +124,23 @@ update children data
                     </label>
                     <input type="file" name="child_image" id="child_image" class="hidden border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
                 </div>
-                
+                <div class="py-1">
+                    <label class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Profile Cover Image <span class="text-[12px]">(required)</span></label>
+                    <label for="child_cover_image" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">
+                        <div class="flex justify-center w-full rounded border-dashed border-2 border-indigo-600">
+                            <div class="w-1/3 py-5 flex flex-col items-center cursor-pointer">
+                                {% if child.child_cover_image %}
+                                    <img id="childCoverImageShow" src="{{child.child_cover_image.url}}" class="w-full h-[17rem]" alt="">
+                                {% else %}
+                                    <span class="py-5"><i class="fas fa-image text-[5rem] text-stone-950"></i></span>
+                                    <p>Upload a file or drag and drop </p>
+                                    <p>PNG,JPG OR GIF up to 2 MB</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </label>
+                    <input type="file" name="child_cover_image" id="child_cover_image" class="hidden border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]">
+                </div>
                 <div class="py-4 flex justify-center space-x-4 items-center">
                     <button type="submit" class="text-[#000] uppercase bg-green-400 py-2 px-8 hover:bg-[rgba(26,26,26,.9)] hover:text-[#FFCB05] font-semibold">Save</button>
                 </div>
@@ -123,6 +154,12 @@ update children data
     $("#child_image").on('change',()=>{
         var upload_image = document.getElementById('child_image');
         $("#uploadImage").attr('src',URL.createObjectURL(upload_image.files[0]))
+    })
+    $("#child_cover_image").on('change',()=>{
+        $("#childCoverImageShow").empty()
+        var upload_image = document.getElementById('child_cover_image');
+        var show_iamge_link = URL.createObjectURL(upload_image.files[0]);
+        $("#childCoverImageShow").attr('src',show_iamge_link);
     })
 </script>
 {% endblock sadminScript %}

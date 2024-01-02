@@ -67,3 +67,26 @@ class SponsorCall(models.Model):
     def __str__(self):
         return self.spcall_email
     
+
+class Donate(models.Model):
+    child = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
+    first_name = models.CharField(max_length=250)
+    last_name = models.CharField(max_length=250)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=11)
+    address = models.TextField()
+    occupation = models.CharField(max_length=50)
+    donate_type = models.CharField(max_length=50)
+    donate_month = models.PositiveIntegerField(null=True,blank=True)
+    amount = models.PositiveIntegerField()
+    donate_year = models.IntegerField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.email
+    
+    @property
+    def total_amount(self):
+        return self.donate_month*self.amount
+    

@@ -1,0 +1,91 @@
+{% extends "super-admin/base/index.html" %}
+{% block sadminTitle %}
+Event list
+{% endblock sadminTitle %}
+{% block sadminMain %}
+{% include "super-admin/children/donate/donate-table.html" %}
+{% include "super-admin/children/donate/donate-add-modal.html" %}
+{% include "super-admin/children/donate/donate-edit-modal.html" %}
+{% endblock sadminMain %}
+{% block sadminScript %}
+<script>
+    $("#addDonateButton").on('click',()=>{
+        $("#addDonateModal").removeClass('hidden')
+
+    })
+    var closeButton = document.querySelectorAll('#successCloseButton');
+    closeButton.forEach((c_button)=>{
+            c_button.addEventListener('click',()=>{
+                $("#addDonateModal").addClass("hidden");
+            })
+    })
+    var closeButton = document.querySelectorAll('#successCloseButton');
+    closeButton.forEach((c_button)=>{
+            c_button.addEventListener('click',()=>{
+                $("#editDonateModal").addClass("hidden");
+            })
+    })
+
+
+    
+    var donate_edit_button = document.querySelectorAll('.donate_edit_button');
+    donate_edit_button.forEach((data)=>{
+        data.addEventListener('click',()=>{
+            var donate_id = data.getAttribute('data-id');
+            $.ajax({
+                type:"POST",
+                url:"{% url 'sadmin:donate_data_get' %}",
+                data:{
+                    donate_id:donate_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success:(res)=>{
+                    
+                    if(res['status'] == 'success'){
+                        var data = res['data'];
+                        $("#efirst_name").val(data['first_name']);
+                        $("#elast_name").val(data['last_name']);
+                        $("#ephone_number").val(data['phone_number']);
+                        $("#eemail").val(data['email']);
+                        $("#eper_month").val(data['amount']);
+                        $("#eduration").val(data['donate_month']);
+                        $("#edonate_type").val(data['donate_type']);
+                        $("#eoccupation").val(data['occupation']);
+                        $("#eaddress").val(data['address']);
+                        $("#donate_id").val(data['id']);
+                        $("#edonate_year").val(data['donate_year'])
+                        $("#editDonateModal").removeClass('hidden');
+
+                        var today_date = new Date();
+                        var donate_start = today_date.getFullYear() - 10;
+                        var donate_end = today_date.getFullYear() + 10;
+                        var select_option = '';
+                        var get_year_edonate = $("#edonate_year").val()
+                        while (donate_start != donate_end) {
+                            if(donate_start == get_year_edonate){
+                                select_option = '<option value="'+donate_start+'" selected >'+donate_start+'</option>';
+                            }else{
+                                select_option = '<option value="'+donate_start+'" >'+donate_start+'</option>';
+                            }
+                            $("#updatedonate_year").append(select_option);
+                            donate_start++;
+                        }
+                    }
+                }
+            })
+        
+        })
+    })
+
+    var today_date = new Date()
+    var donate_start = today_date.getFullYear() - 10;
+    var donate_end = today_date.getFullYear() + 10;
+    var select_option = '';
+    while (donate_start != donate_end) {
+        select_option = '<option value="'+donate_start+'" >'+donate_start+'</option>';
+        $("#donate_year").append(select_option);
+        donate_start++;
+    }
+    
+</script>
+{% endblock sadminScript %}

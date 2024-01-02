@@ -5,7 +5,7 @@ from psf.models import (Event,ShelterChild,Slider,UserContact,GalleryImage,Rank)
 from user.models import CustomUser
 from staff.models import StaffProfile,Staff,StaffRank
 from child.models import ChildProfile,Child,ChildProgress
-from sponsor.models import SponsorCall
+from sponsor.models import SponsorCall,Donate
 from sadmin.decorators import super_admin_access_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -167,7 +167,11 @@ def children_save(request):
         child_height = request.POST['child_height']
         child_weight = request.POST['child_weight']
         child_blood = request.POST['child_blood']
+        hobbie = request.POST['hobbie']
+        study_now = request.POST['study_now']
+        admission_date = request.POST['admission_date']
         child_image = request.FILES['child_image']
+        child_cover_image = request.FILES['child_cover_image']
         pre_address = request.POST['pre_address']
         par_address = request.POST['par_address']
         description = request.POST['description']
@@ -191,6 +195,9 @@ def children_save(request):
             child_profile.child_last_name = last_name
             child_profile.child_phone_number = phone_number
             child_profile.child_image = child_image
+            child_profile.child_cover_image = child_cover_image
+            child_profile.child_hobbie = hobbie
+            child_profile.child_join = admission_date
             child_profile.child_father_name = father_name
             child_profile.child_mother_name = mother_name
             child_profile.child_date_of_birth = date_of_birth
@@ -201,6 +208,7 @@ def children_save(request):
             child_profile.child_present_address = pre_address
             child_profile.child_parmanent_address = par_address
             child_profile.child_description = description
+            child_profile.child_study = study_now
             child_profile.save()
             messages.add_message(request,messages.SUCCESS,'new children added successfully')
             return redirect('sadmin:children_list')
@@ -230,10 +238,17 @@ def children_info_update_save(request,children_id):
         child_height = request.POST['child_height']
         child_weight = request.POST['child_weight']
         child_blood = request.POST['child_blood']
+        hobbie = request.POST['hobbie']
+        admission_date = request.POST['admission_date']
+        study_now = request.POST['study_now']
         try:
             child_image = request.FILES['child_image']
         except:
             child_image = None
+        try:
+            child_cover_image = request.FILES['child_cover_image']
+        except:
+            child_cover_image = None
         pre_address = request.POST['pre_address']
         par_address = request.POST['par_address']
         description = request.POST['description']
@@ -244,8 +259,12 @@ def children_info_update_save(request,children_id):
             child_profile.child_first_name = first_name
             child_profile.child_last_name = last_name
             child_profile.child_phone_number = phone_number
+            child_profile.child_hobbie = hobbie
+            child_profile.child_join = admission_date
             if child_image is not None:
                 child_profile.child_image = child_image
+            if child_cover_image is not None:
+                child_profile.child_cover_image = child_cover_image
             child_profile.child_father_name = father_name
             child_profile.child_mother_name = mother_name
             child_profile.child_date_of_birth = date_of_birth
@@ -256,10 +275,13 @@ def children_info_update_save(request,children_id):
             child_profile.child_present_address = pre_address
             child_profile.child_parmanent_address = par_address
             child_profile.child_description = description 
+            child_profile.child_study = study_now
             child_profile.save()
-            user = CustomUser.objects.get(id = child_profile.child_user.id)
-            user.user_name = user_name
-            user.save()
+            CustomUser.objects.filter(id = child_profile.child_user.id).update(
+                user_name = user_name
+            )
+            # print(user)
+            # user.user_name = user_name
             messages.add_message(request,messages.SUCCESS,'new children added successfully')
             return redirect('sadmin:children_list')
         else:
@@ -344,6 +366,85 @@ def child_progress_delete(request,child_id,progress_id):
         progress.delete()
         messages.add_message(request,messages.SUCCESS,f'{progress.progress_title} deleted successfully')
         return redirect('sadmin:child_progress_list', child_id)
+
+# child Donate section
+def child_donate_list(request,child_id):
+    user = CustomUser.objects.get(id = int(child_id))
+    donates = Donate.objects.filter(child = user)
+    context = {
+        'donates':donates,
+        'child_id':child_id
+    }
+    return render(request,'super-admin/children/donate/donate-list.html',context)
+def child_donate_add(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        phone_number = request.POST['phone_number']
+        email = request.POST['email']
+        per_month = request.POST['per_month']
+        duration = request.POST['duration']
+        donate_type = request.POST['donate_type']
+        occupation = request.POST['occupation']
+        address = request.POST['address']
+        child_id = request.POST['child_id']
+        donate_year = request.POST['donate_year']
+        donate = Donate.objects.create(
+            child = CustomUser.objects.get(id= int(child_id)),
+            first_name = first_name,
+            last_name = last_name,
+            email = email,
+            phone_number = phone_number,
+            amount = per_month,
+            donate_month =duration,
+            donate_type = donate_type,
+            occupation = occupation,
+            address = address,
+            donate_year = donate_year
+        )
+        donate.save()
+        messages.add_message(request,messages.SUCCESS,'New donate add successfully')
+        return redirect('sadmin:child_donate_list', child_id)
+    
+def donate_data_get(request):
+    if request.method == 'POST':
+        donate_id = request.POST['donate_id']
+        donate = Donate.objects.filter(id = int(donate_id)).values('first_name',
+                                                          'last_name','email',
+                                                          'phone_number','amount',
+                                                          'donate_month',
+                                                          'donate_type',
+                                                          'address','occupation',
+                                                          'id','donate_year'
+                                                          ).first()
+        return JsonResponse({'status':'success','data':donate})
+    
+def donate_edit_data_save(request):
+    first_name = request.POST['first_name']
+    last_name = request.POST['last_name']
+    phone_number = request.POST['phone_number']
+    email = request.POST['email']
+    per_month = request.POST['per_month']
+    duration = request.POST['duration']
+    donate_type = request.POST['donate_type']
+    occupation = request.POST['occupation']
+    address = request.POST['address']
+    donate_id = request.POST['donate_id']
+    donate_year = request.POST['donate_year']
+    donate = Donate.objects.get(id = int(donate_id))
+    donate.first_name = first_name
+    donate.last_name = last_name
+    donate.email = email
+    donate.phone_number = phone_number
+    donate.amount = per_month
+    donate.donate_month =duration
+    donate.donate_type = donate_type
+    donate.occupation = occupation
+    donate.address = address
+    donate.donate_year = donate_year
+    donate.save()
+    messages.add_message(request,messages.SUCCESS,'New donate add successfully')
+    return redirect('sadmin:child_donate_list', donate.child.id)
 
 # Start Office staff section
 def office_staff_list(request):

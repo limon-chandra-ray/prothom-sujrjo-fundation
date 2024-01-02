@@ -1,0 +1,81 @@
+<div id="editDonateModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+        <div class="inline-block align-bottom bg-gray-400 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="flex flex-row">
+                <div class="grow text-center pt-2 text-[1rem] text-[500]">Edit Event</div>
+                <div id="successCloseButton" class="bg-white cursor-pointer p-1">
+                    <h1 class="mx-1 text-[rgba(26,26,26,.7)] text-[24px]">✕</h1>
+                </div>
+            </div>
+            <div class="bg-gray-300 px-4 py-5 sm:p-6">
+                <div class="flex justify-center">
+                    <div class="mt-3 sm:mt-0 sm:text-left">
+                        <form action="{% url "sadmin:donate_edit_data_save" %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input name="donate_id" id="donate_id" type="hidden">
+                            <input name="donate_year" id="edonate_year" type="hidden">
+                            <div class="py-1">
+                                <label for="donate_year" class="text-[rgba(26,26,26,.7)] text-xl font-['adobe-garamond-pro']">Donate Year<span class="text-[12px]">(required)</span></label>
+                                <select name="donate_year" id="updatedonate_year" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                                    <option >select donate year</option>
+                                </select>
+                            </div>
+                            <div class="flex  gap-x-3">
+                                <div class="py-1">
+                                    <label for="first_name" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">First Name<span class="text-[12px]">(required)</span></label>
+                                    <input type="text" id="efirst_name" name="first_name" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                                </div>
+                                <div class="py-1">
+                                    <label for="last_name" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Last Name<span class="text-[12px]">(required)</span></label>
+                                    <input type="text" id="elast_name" name="last_name" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                                </div>
+                            </div>
+                            <div class="py-1">
+                                <label for="phone_number" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Phone Number<span class="text-[12px]">(required)</span></label>
+                                <input type="text" id="ephone_number" name="phone_number" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                            </div>
+                            <div class="py-1">
+                                <label for="email" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Email Address<span class="text-[12px]">(required)</span></label>
+                                <input type="email" id="eemail" name="email" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                            </div>
+                            <div class="flex  gap-x-3">
+                                <div class="py-1">
+                                    <label for="per_month" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Per-Month Amount<span class="text-[12px]">(required)</span></label>
+                                    <input type="number" id="eper_month" name="per_month" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                                </div>
+                                <div class="py-1">
+                                    <label for="duration" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Duration (Monthly)<span class="text-[12px]">(required)</span></label>
+                                    <input type="number" id="eduration" name="duration" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                                </div>
+                            </div>
+                            <div class="flex  gap-x-3">
+                                <div class="py-1">
+                                    <label for="donate_type" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Donate Type<span class="text-[12px]">(required)</span></label>
+                                    <input type="text" id="edonate_type" name="donate_type" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                                </div>
+                                <div class="py-1">
+                                    <label for="occupation" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Occupation<span class="text-[12px]">(required)</span></label>
+                                    <input type="text" id="eoccupation" name="occupation" class="border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] h-[46px] p-[10px] w-[100%]" required>
+                                </div>
+                            </div>
+                            
+                            <div class="py-1">
+                                <label for="address" class="text-[rgba(26,26,26,.7)] text-[18px] font-['adobe-garamond-pro']">Address<span class="text-[12px]">(required)</span></label>
+                                <textarea rows="5"  name="address" id="eaddress" class=" border-2 border-solid border-[#a9a9a9] bg-[#fafafa] text-[#000] p-[10px] w-[100%]"
+                                required
+                                ></textarea>
+                            </div>
+                            <div class="py-4 flex justify-center space-x-4 items-center">
+                                <button type="submit" class="text-[#000] uppercase bg-green-400 py-2 px-8 hover:bg-[rgba(26,26,26,.9)] hover:text-[#FFCB05] font-semibold">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

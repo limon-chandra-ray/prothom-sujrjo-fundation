@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
+from django.http import JsonResponse
 from psf.models import ShelterChild,Slider,Event,GalleryImage
-from sponsor.models import Sponsor,SponsorProfile,SponsorCall
+from sponsor.models import Sponsor,SponsorProfile,SponsorCall,Donate
 from user.models import CustomUser
-from child.models import ChildProfile
+from child.models import ChildProfile,ChildProgress
 from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
@@ -57,11 +58,50 @@ def children_shelter_home(request):
     return render(request,'psf/shelter/shelter-home-children.html',context)
 def child_details(request, id):
     shelter_child = get_object_or_404(ChildProfile, id=id)
+    user = CustomUser.objects.get(id = shelter_child.child_user.id)
+
+    child_progress_years = ChildProgress.objects.filter(child_user = user).values('progress_year').order_by('-progress_year')
+    last_year = child_progress_years.first()['progress_year']
+    child_progress = ChildProgress.objects.filter(child_user=user,progress_year = last_year).order_by('created_at')
+    
+    donate_years = Donate.objects.filter(child = user).values('donate_year').order_by('-donate_year')
+    last_donate_year = donate_years.first()['donate_year']
+    child_doners = Donate.objects.filter(child = user,donate_year=last_donate_year).order_by('created_at')
     context = {
-        'shelter_child': shelter_child
+        'shelter_child': shelter_child,
+        'child_progress_years':child_progress_years,
+        'child_progress':child_progress,
+        'last_year':last_year,
+        'child_doners':child_doners,
+        'last_donate_year':last_donate_year,
+        'donate_years':donate_years
     }
     return render(request, 'psf/shelter/child_details.html', context)
 
+def child_progress_change(request):
+    if request.method == 'POST':
+        user_id = request.POST['child_id']
+        user = CustomUser.objects.get(id = int(user_id))
+        year = request.POST['year']
+        child_progress = ChildProgress.objects.filter(child_user=user,progress_year = int(year)).values('id',
+                                                                                        'progress_title',
+                                                                                        'progress_description',
+                                                                                        'progress_image').order_by('created_at')
+        return JsonResponse({"status":"success",'progress':list(child_progress)});
+
+def child_donate_change(request):
+    if request.method == 'POST':
+        user_id = request.POST['child_id']
+        user = CustomUser.objects.get(id = int(user_id))
+        year = request.POST['year']
+        donates = Donate.objects.filter(child=user,donate_year = int(year)).values('id',
+                                                                                        'first_name',
+                                                                                        'last_name',
+                                                                                        'donate_type',
+                                                                                        'created_at',
+                                                                                        'occupation'
+                                                                                        ).order_by('created_at')
+        return JsonResponse({"status":"success",'donates':list(donates)});
 # abouts us show
 def org_team(request):
     return render(request,'psf/about-us/org-team.html')

@@ -20,6 +20,8 @@ urlpatterns +=[
     path('about-shelter-home',views.about_shelter_home,name='about_shelter_home'),
     path('children-at-our-shelter-home',views.children_shelter_home,name='children_shelter_home'),
     path('child-details/<int:id>',views.child_details,name='child_details'),
+    path('child-progress-change',views.child_progress_change,name='child_progress_change'),
+    path('child-donate-change',views.child_donate_change,name='child_donate_change')
 ]
 
 # about us links

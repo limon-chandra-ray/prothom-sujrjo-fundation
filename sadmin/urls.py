@@ -34,7 +34,13 @@ urlpatterns +=[
     path('children-<int:child_id>-progress-<int:progress_id>-save',views.child_progress_edit_save,name='child_progress_edit_save'),
     path('children-<int:child_id>-progress-<int:progress_id>-delete',views.child_progress_delete,name='child_progress_delete'),
 ]   
-
+# children donar section
+urlpatterns +=[
+    path('children-<int:child_id>-donate-list',views.child_donate_list,name='child_donate_list'),
+    path('children-donate-add',views.child_donate_add,name='child_donate_add'),
+    path('chilfren-donate-data-get',views.donate_data_get,name='donate_data_get'),
+    path('chilfren-update-data-save',views.donate_edit_data_save,name='donate_edit_data_save'),
+]
 
 # staff urls section
 urlpatterns += [
